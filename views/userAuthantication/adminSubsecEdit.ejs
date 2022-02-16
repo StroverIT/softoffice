@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("../layouts/bootstrapStyle.ejs")%>
+    <link rel="stylesheet" href="/styles/adminProducts.css" />
+    <link rel="stylesheet" href="/styles/adminItemEdit.css" />
+    <title>Admin Products edit item</title>
+  </head>
+
+  <body>
+    <%- include("../layouts/headerAndFooter/adminPanelHeader.ejs")%>
+
+    <main>
+      <!-- Here are showed collections -->
+      <section class="container-lg">
+        <section class="buttonsTypes d-flex justify-content-between">
+          <div>
+          <a href="/admin/products/<%=itemForEdit.section._id%>/show" class="btn btn-danger returnOneStep">Назад</a>
+        </div>
+        <div>
+          <button class="btn btn-danger text-light promotionBtn" type="button">Премахни подсекцита</button>
+        </div>
+        </section>
+        <!-- 
+          TODO: 
+          When nothing is for edit => Make submit button not editable
+         -->
+           <section class="itemHeader my-2 p-3 editItemSection">
+             <form action="/admin/products/productEdit" method="POST">
+              <%const itemsForEdit = Object.entries(itemForEdit.foundItem)%>
+              <%for(let [itemKey, itemValue] of itemsForEdit){%>
+                <%if(itemKey != "_id" && itemKey != "items" && itemKey != "img"){%>
+
+                <section class="py-2 d-flex align-items-center">
+                  <div><button type="button" class="btn text-info toInput"><i class="fas fa-edit"></i></button></div>
+                <div class="px-3 itemKey"><%=itemKey%>:</div>
+                <div class="itemValue"><%=itemValue%></div>
+              </section>
+            <%}else if(itemKey == "img"){%>
+              <section class="py-2 d-flex align-items-center">
+                <div><a type="button" class="btn text-info toInput" href="/admin/products/editImage/<%=itemForEdit.section.name%>/<%=itemForEdit.foundItem._id%>"><i class="fas fa-edit"></i></a></div>
+              <div class="px-3 itemKey"><%=itemKey%>:</div>
+              <div class="itemValue"  style="width:150px"><img class="img-fluid" src="/uploads/<%=itemValue ? itemValue.originalname : ""%>" alt=""></div>
+            </section>
+            <%}else{%>
+           
+              <section class="py-2 d-flex align-items-center">
+              <div class="px-3 itemKey"><%=itemKey%>:</div>
+              <div class="itemValue"><input type="text" value="<%=itemValue%>" class="form-control" name="<%=itemKey == "_id" ? "_id" : itemKey%>" readonly ></div>
+            </section>
+           <%}%>
+
+             <% }%>
+             <div class="d-flex justify-content-center">
+              <button type="submit" class="btn btn-success">Потвърди</button>
+            </div>
+          </form>
+           </section> 
+            <section class="itemOnPromotionSec d-none ">
+              <!-- 
+                Todo:
+                If nothing is changed, make button disabled
+                Or if 
+               -->
+               <section class="d-flex flex-column">
+               <div class="d-flex justify-content-center">
+                   Желаете ли да премахнете подсекцията? Моля потвърдете!
+               </div>
+               <section class="d-flex justify-content-center">
+                   <div>
+                       <form action="/admin/products/removeSubsection/<%=itemForEdit.foundItem._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger" type="submit">
+                            Да
+                            </button>
+                       </form>
+                    </div>
+                   <div class="mx-5">
+                       <button class="reloadPage btn btn-info text-light">
+                        Не
+                       </button>
+                    </div>
+               </section>
+            </section>
+            </section>
+      </section>
+    </main>
+  </body>
+  <%- include("../layouts/bootstrapScripts.ejs")%> 
+  <%- include("../layouts/headerAndFooter/adminPanelScripts.ejs") %>
+
+  <script>
+    $(document).ready(() => {
+      $(".toInput").click(function(){
+        const icon = $(this).children()
+        const textInputDiv = $(this).parent().next().next()
+        const keyDiv = $(this).parent().next()[0]
+        const value = textInputDiv[0]
+        const child = $(value).children()[0]
+        if(child){
+          if(child.tagName == "IMG"){
+            return
+          }
+        }
+      
+        $(this).toggleClass("toInput")
+        if($(this).hasClass("toInput")){
+          // Removing red color from the button
+          $(this).removeClass("text-danger")
+          // Add blue color to the button
+          $(this).addClass('text-info')
+          // Removing classes for item to set new values
+          icon.removeClass()
+          // Setting icon to be edit
+          icon.addClass("fas fa-edit")
+
+          textInputDiv.replaceWith(`
+          <div class="itemValue">
+          ${value.value}
+          </div>
+          `)
+        }else{
+          // Removing blue color from the button
+          $(this).removeClass('text-info')
+          // Adding red color to the button
+          $(this).addClass("text-danger")
+          // Removing classes from the icon to set new values
+          icon.removeClass()
+          // Adding a X icon to the button
+          icon.addClass("fas fa-times")
+
+          textInputDiv.replaceWith(`
+          <input value="${value.innerText}" class="form-control" name="itemToChange[${keyDiv.innerText.replace(/[^a-zA-Z0-9 ]/g, '')}]">
+          `)
+
+        }
+ 
+      })
+   
+  // Promotions function
+  $(".promotionBtn").click(function(){
+    const promotionBtn = $(this)
+    promotionBtn.addClass("d-none")
+    $(".editItemSection").addClass("d-none")
+  const promSec = $(".itemOnPromotionSec")
+    promSec.removeClass('d-none')
+
+    const returnBtn = $(".returnOneStep")
+    const returnHref = returnBtn.attr("href")
+    returnBtn.removeAttr("href")
+    returnBtn.click(function(){
+      $(".editItemSection").removeClass("d-none")
+      promSec.addClass("d-none")
+      promotionBtn.removeClass("d-none")
+    })
+    const promInput = $(".promotionalPriceInput")
+  })
+  $(".reloadPage").click(function(){
+      location.reload()
+  })
+});
+    function isValid(el, evnt) {
+
+var charC = (evnt.which) ? evnt.which : evnt.keyCode;
+if (charC == 46) {
+    if (el.value.indexOf('.') === -1) {
+        return true;
+    } else {
+        return false;
+    }
+} else {
+    if (charC > 31 && (charC < 48 || charC > 57))
+        return false;
+}
+return true;
+}
+function GFG_Fun(t, evnt) {
+            const invalidDiv = $(t).next()[0]
+            const test = $(t)
+            var a = isValid(t, evnt);
+            if (a) {
+                test.removeClass("is-invalid")
+                invalidDiv.innerHTML = "";
+                invalidDiv.style.display = "none"
+            } else {
+                test.addClass("is-invalid")
+                invalidDiv.innerHTML = "Само числа! ";
+                invalidDiv.style.display = "block"
+            }
+            return a;
+        }
+  </script>
+</html>

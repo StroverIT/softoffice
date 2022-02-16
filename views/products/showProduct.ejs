@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Push 1-->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile first -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Removing zooming on mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- Boostrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <!-- Font awesome -->
+    <script src="https://kit.fontawesome.com/0593828612.js" crossorigin="anonymous"></script>
+    <!-- Style for nav and footer -->
+
+    <!-- Style for nav and footer -->
+    <link rel="stylesheet" href="../../styles/navAndFooter.css" />
+    <!-- Google fonts Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet" />
+    <!-- User stylesheet -->
+    <!-- hamburger -->
+    <link rel="stylesheet" href="/styles/hamburger.css" />
+    <link rel="stylesheet" href="/styles/showProductPage.css">
+    <!-- Main style sheet for contenct-->
+
+    <title>
+        <%=currentItem.item.nameToDisplay%>
+    </title>
+</head>
+
+<body>
+    <%- include("../layouts/headerAndFooter/header.ejs")%>
+        <main>
+            <section class="itemContainer container-lg ">
+                <section class="top-side-items d-flex mb-4"">
+                <div>
+                <button class=" btn btn-info text-light" id="returnBtn">Назад</button>
+                    </div>
+                    <div class="item-type-name d-flex justify-content-center align-items-center mx-auto">
+                        <%=currentItem.item.nameToDisplay%>
+                    </div>
+                </section>
+                <section class="current-item-container d-flex flex-md-row flex-column mb-5">
+                        <section class="img-section d-flex justify-content-center">
+                                <img src="/uploads/<%=currentItem.item.img ? currentItem.item.img.originalname : ""%>" alt="" class="img-fluid">
+
+                        </section>
+                        <section class="item-info container mx-auto mt-5 mt-md-0">
+                            <div class="row ">
+                               
+                            <div class="item-typeItems d-flex justify-content-center justify-content-md-start flex-column  mb-2 col-6 mx-auto">
+                                <div
+                                    class="dropdown d-flex  justify-content-center justify-content-md-start">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Избери типа
+                                    </button>
+                                    <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+                                        <ul class="columnsItems">
+                                        <%currentItem.item.items.forEach((itemSubsection,index)=>{%>
+                                            <button class="dropdown-item itemList" href="#" type="button"
+                                                name="<%=itemSubsection._id%>">
+                                                <ul class="list-group p-0">
+                                                    <%const itemTypes=itemSubsection.tipove.split(";")%>
+                                                        <%itemTypes.forEach((itemType)=>{%>
+                                                            <%if(itemType=="" ) return%>
+                                                                <li class="list-group-item">
+                                                                    <%=itemType%>
+                                                                </li>
+                                                                <%})%>
+                                                                    <li
+                                                                        class="pricingItem list-group-item text-center text-light d-flex justify-content-center">
+                                                                        
+                                                                        <div class="actualPrice d-flex justify-content-center  <%=itemSubsection.isOnPromotion ? "onPromotion" : ""%>">
+                                                                            <%const priceForOne = parseFloat(itemSubsection.cena).toFixed(2).split(".")%>
+                                                                            <div class="d-flex justify-content-center align-items-center item-total-pricing position-relative">
+                                                                            <%=priceForOne[0]%>
+                                                                              </div>
+                                                                                 <div class="d-flex flex-column m-0 pricingDots">
+                                                                            <div class="decimalPrice"><%=priceForOne[1]%></div>
+                                                                            <div class="currency">лв.</div> 
+                                                                          </div>
+                                                                          </div>
+                                                                          <%if(itemSubsection.isOnPromotion){%>
+                                                                            <div class="actualPrice d-flex justify-content-center ">
+                                                                              <%const promotion = parseFloat(itemSubsection.promotionalPrice).toFixed(2).split(".")%>
+                                                                              <div class="d-flex justify-content-center align-items-center item-total-pricing ">
+                                                                              <%=promotion[0]%>
+                                                                                </div>
+                                                                                   <div class="d-flex flex-column pricingDots m-0 ">
+                                                                              <div class="decimalPrice"><%=promotion[1]%></div>
+                                                                              <div class="currency">лв.</div> 
+                                                                            </div>
+                                                                            </div>
+                                                                          <%}%>
+                                                                    </li>
+                                                                    </li>
+                                                </ul>
+                                            </button>
+                                            <%})%>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                                <section
+                                    class="showItems d-flex justify-content-center justify-content-md-start align-items-start my-2 d-none">
+                                    <ul class="list-group d-flex justify-content-start">
+
+                                    </ul>
+                                </section>
+                            </div>
+                            <div class="itemBuying  d-flex justify-content-center flex-column d-none col-10 col-md-6 mx-auto">
+                                
+                                <div>
+                                    <ul></ul>
+                                </div>
+                                <div class="mt-auto">
+                                    <form action="" method="get">
+                                        <section class="form-group d-flex justify-content-center ">
+                                            <section class="w-100">
+                                                <input class="text-center form-control qtyInput " type="text"
+                                                    onkeypress="return GFG_Fun(this, event)" placeholder="Количество">
+                                                <div class="invalid-feedback text-center">
+                                                </div>
+                                            </section>
+                                            <button class="btn btn-success addToCart" type="button">Добави</button>
+                                        </section>
+                                    </form>
+                                </div>
+                            </div>
+                            </div>
+                        </section>
+                </section>
+                <section class="item-description-section">
+                    <section class="header text-center">
+                        <h3>Описание на продукта</h3>
+                    </section>
+                    <section>
+                        <%const opisanie=currentItem.item.opisanie.split(";")%>
+                            <ul>
+                                <%opisanie.forEach(opisanieItem=>{%>
+                                    <li>
+                                        <%=opisanieItem%>
+                                    </li>
+                                    <%})%>
+                            </ul>
+                    </section>
+                </section>
+            </section>
+        </main>
+        <%- include("../layouts/headerAndFooter/footer.ejs")%>
+</body>
+<!-- Js bootstrap -->
+
+<%- include("../layouts/bootstrapScripts.ejs")%>
+
+
+    <!-- Initialize Swiper -->
+
+    <script src="/scripts/index.js"></script>
+    <script src="/scripts/hamburger.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".itemList").click(function () {
+                const itemsValues = []
+                const buttonUl = $(this).children().find("li")
+                $.each(buttonUl, function (index, item) {
+                    itemsValues.push(item.innerText)
+                })
+                const ulDivWriting = $(this).parent().parent().parent().next().children()
+                const ulSectionWriting = $(this).parent().parent().parent().next()
+                const buySection = $(this).parent().parent().parent().parent().next()
+                // Adding the ul items
+                ulDivWriting.empty()
+            buySection.find("li").remove()
+               
+                // itemsValues.forEach((item, index) => {
+                //     if (index == itemsValues.length - 1) {
+                //         buySection.find("ul").empty()
+                //         return buySection.find("ul").append(`<div class="text-center py-2 d-flex justify-content-end itemShowText "><div class="mx-2 text-info">${item}</div></div>
+                // `)
+                //     }
+                //     ulDivWriting.append(`<li class="list-group">${item}</li>`)
+                // })
+                itemsValues.forEach((item,index)=>{
+
+        if(index == itemsValues.length - 1){
+         const str = itemsValues[itemsValues.length - 1].trim()
+          const matched = str.match(/(\d+)/)[0]
+          const documentTitle = document.title;
+          if(matched == 0 && documentTitle == "Обадете се"){
+            return buySection.prepend(`<li class="list-group bg-primary text-light text-center py-2">+359 888 884 687</li> `)
+          }
+          // IF is on promotion
+          const onPromotion= $(this).find(".onPromotion")
+          if(onPromotion[0]){
+          const firstNum = item.replace(/(\r\n|\n|\r)/gm, " ").split(" ")
+          console.log(firstNum);
+          return buySection.prepend(`<li class="justify-content-end py-2 d-flex pricingItem position-relative showing itemShowContainer">
+            <div class="actualPrice d-flex justify-content-center position-relative ${onPromotion[0] ? "onPromotion" : ""}">
+                     <div class="d-flex justify-content-center align-items-center item-total-pricing">
+                     ${firstNum[0]}
+                       </div>
+                          <div class="d-flex flex-column m-0 pricingDots">
+                     <div class="decimalPrice">${firstNum[1]}</div>
+                     <div class="currency">лв.</div> 
+                   </div>
+              </div>
+                   <div class="actualPrice d-flex justify-content-end mx-2 itemShowText">
+                          <div class="d-flex justify-content-center align-items-center item-total-pricing">
+                            ${firstNum[3]}
+                            </div>
+                               <div class="d-flex flex-column pricingDots">
+                          <div class="decimalPrice">${firstNum[4]}</div>
+                          <div class="currency">лв.</div> 
+                        </div>
+                        </div>     
+           </li>
+             `)
+            console.log("PROMOTION")
+          }
+          const firstNum = item.replace(/(\r\n|\n|\r)/gm, " ").split(" ")
+          return buySection.prepend(`<li class="list-group text-light text-center py-2 pricingItem itemShowText itemShowContainer">
+            <div class="actualPrice d-flex justify-content-end ${onPromotion[0] ? "onPromotion" : ""}">
+                     <div class="d-flex justify-content-center align-items-center item-total-pricing">
+                     ${firstNum[0]}
+                       </div>
+                          <div class="d-flex flex-column m-0 pricingDots">
+                     <div class="decimalPrice">${firstNum[1]}</div>
+                     <div class="currency">лв.</div> 
+                   </div>
+                   </div>
+            </li>
+             `)
+        }
+      
+        ulDivWriting.append(`<li class="list-group">${item}</li>`)
+      })
+                ulSectionWriting.removeClass("d-none")
+
+                buySection.removeClass("d-none")
+                // Adding action to form for buying by id(NO QTY)
+                const id = $(this).attr("name")
+                const form = buySection.find("form")
+                form.attr("action", `/cart/${id}/`)
+            })
+            // Removing the ul items
+            $(".addToCart").click(function (e) {
+                e.preventDefault()
+                const inputValue = $(this).parent().find(".qtyInput")[0].value
+                const formData = $(this).parent().parent()
+                const currentFormData = formData.attr("action")
+
+                const objForInput = {
+                    oldValue: currentFormData,
+                    currentValue: inputValue,
+                    totalValue: ""
+                }
+                objForInput.totalValue = objForInput.oldValue + objForInput.currentValue
+                formData.attr("action", objForInput.totalValue)
+                if (objForInput.currentValue > 0) {
+                    formData.submit()
+                }
+            })
+
+            $("#returnBtn").click(function () {
+                const path = (window.location.pathname).split("/")
+                window.location = `/products/${path[2]}`
+
+            })
+        })
+        function isValid(el, evnt) {
+
+            // var charC = (evnt.which) ? evnt.which : evnt.keyCode;
+            // if (charC == 46) {
+            //     if (el.value.indexOf('.') === -1) {
+            //         return true;
+            //     } else {
+            //         return false;
+            //     }
+            // } else {
+            //     if (charC > 31 && (charC < 48 || charC > 57))
+            //         return false;
+            // }
+            // return true;
+            var charC = (evnt.which) ? evnt.which : evnt.keyCode;
+         
+                if (charC > 31 && (charC < 48 || charC > 57)){
+                    return false;
+            }
+            return true;
+        }
+
+        function GFG_Fun(t, evnt) {
+            const invalidDiv = $(t).next()[0]
+            const test = $(t)
+
+            var a = isValid(t, evnt);
+            if (a) {
+                test.removeClass("is-invalid")
+                invalidDiv.innerHTML = "";
+                invalidDiv.style.display = "none"
+            } else {
+                test.addClass("is-invalid")
+                invalidDiv.innerHTML = "Само числа! ";
+                invalidDiv.style.display = "block"
+            }
+            return a;
+        }
+    </script>
+
+</html>

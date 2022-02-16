@@ -1,0 +1,173 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  overflow-x: hidden;
+  background-color: #f5f5f5;
+}
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap');
+main {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.img-fluid{
+  width: 200px; /* You can set the dimensions to whatever you want */
+  height: 100%;
+  min-height: 200px;
+  object-fit: scale-down;
+}
+/* shadow */
+.item-container{
+  margin-left: 10px;
+  width: 250px;
+  background-color: #fff;
+  /* border: 1px solid black; */
+  /* box-shadow: 1px 1px 4px 1px grey; */
+}
+.containerItemSection{
+  z-index: 100
+}
+.dropdown-menu{
+  /* top: 50% !important;
+  left: 50% !important; */
+  /* transform:  translate(-50%,-50%) !important; */
+  margin: 0 !important;
+  padding: 0 !important;
+  max-height: 320px;
+  width:  320px;
+  overflow-y: auto;
+  background-color: #fafafafa;
+}
+.dropdown-menu ul{
+  margin: 0 !important;
+  padding:0 !important;
+}
+.columnsItems{
+  list-style-type: none;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+  columns: 2;
+  list-style-position: inside;
+  margin:0 !important;
+  padding: 0 !important;
+  /* white-space: normal; */
+  column-gap: 0px;
+}
+
+.dropDownMenuBlack{
+ position:  fixed;
+ height: 100vh;
+ width: 100vw;
+top: 0;
+left: 0;
+background-color: rgba(0, 0, 0, 0.7);
+ z-index: 2000;
+}
+
+
+.dropdown-item{
+  padding:6px !important;
+  margin:0 !important;
+  word-wrap: break-word;
+}
+
+.dropdown-item ul{
+  margin:0 !important;
+  padding:0 !important;
+  max-width: 250px;
+  word-wrap: break-word;
+
+
+}
+  .dropdown-item > ul > li {
+    font-size: 0.9em !important;
+    word-wrap: break-word;
+    white-space: pre-line;
+    /* word-break: break-all; */
+    /* height: 0;
+    width: 0; */
+    padding: 0.25rem 1rem !important;
+ }
+.pricingItem {
+  white-space: normal !important;
+  background-color: rgba(13,202,240)!important;
+
+  border-radius: 4px;
+}
+.firstItemType{
+  font-family: 'Roboto Mono', monospace;
+
+}
+.secondItemType{
+  color: rgb(11, 163, 209);
+  font-family: 'Roboto Mono', monospace;
+}
+.withoutDds{
+  text-transform: uppercase;
+}
+.item-total-pricing{
+  font-size: 2em;
+  font-weight: 500;
+
+}
+.onPromotion{
+  font-size: 0.75em;
+  color: grey;
+}
+.onPromotion .pricingDots {
+  margin-top: 7px !important;
+  font-size: 0.7em !important;
+}
+.onPromotion .item-total-pricing::before{
+  content: "";
+  position: absolute;
+  left: 0%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 1px solid grey;
+  border-left: 30px solid grey;
+  transform: rotate(140deg) translate(10%, -0%);
+}
+
+.showing  .item-total-pricing::before{
+  /* top: 0 !important; */
+  /* left: 0 !important; */
+  
+}
+.itemShowContainer{
+  background-color: transparent !important;
+
+}
+.itemShowText{
+ color: rgba(13,202,240)!important;
+}
+.pricingDots{
+  font-size: 0.6em;
+  margin-top:7px !important;
+  padding:0 !important
+}
+.pricingDots div{
+  margin:0 !important;
+  padding:0 !important;
+font-size: 1.8em;
+
+  height: 10px;
+  
+}
+.decimalPrice{
+  margin-bottom: -30px !important;
+  font-weight: 500;
+  width: 20px;
+
+}
+.currencyTile{
+  margin-right: 30px;
+}
+.itemBuying {
+  margin: 0 !important;
+  
+}
+/* testvam */

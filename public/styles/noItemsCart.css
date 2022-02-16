@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.noItems{
+  margin-bottom: 100px;
+}
+.noItemsContainer p {
+  font-size: 1.1em;
+}
+.wrapperArrow{
+    position: absolute;
+    left:0;
+    top:50px;
+}
+
+.arrowItem i {
+  width: 100%;
+  padding: 15px;
+  border-radius: 3px;
+  color: rgb(35, 10, 68);
+  transition: background 0.5s ease;
+  font-size: 60px;
+}
+.arrow2 {
+  animation: slide2 1s ease-in-out infinite;
+}
+@keyframes slide2 {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(230deg);
+  }
+
+  50% {
+    transform: translate(10px, 10px) rotate(230deg);
+  }
+}

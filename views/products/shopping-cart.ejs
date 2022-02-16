@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Push 1-->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile first -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Removing zooming on mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <!-- Boostrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <!-- Font awesome -->
+    <script src="https://kit.fontawesome.com/0593828612.js" crossorigin="anonymous"></script>
+    <!-- Style for nav and footer -->
+    <!-- <link rel="stylesheet" href="styles/navAndFooter.css" /> -->
+    <!-- Google fonts Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet" />
+    <!-- User stylesheet -->
+    <!-- <link rel="stylesheet" href="../styles/user.css"> -->
+    <link rel="stylesheet" href="../styles/navAndFooter.css" />
+    <link rel="stylesheet" href="../styles/hamburger.css" />
+
+    <link rel="stylesheet" href="../styles/shoppingCart.css" />
+    <link rel="stylesheet" href="../styles/noItemsCart.css" />
+    <!-- hamburger -->
+    <!-- Main style sheet for contenct-->
+
+    <title>Количка</title>
+</head>
+
+<body>
+    <%- include("../layouts/headerAndFooter/header.ejs") %>
+        <main>
+            <% if(products && cart.totalQty> 0){%>
+                <section class="headContainer container-md">
+                    <div class="welcomeHeader text-center text-md-start mb-3">
+                        ТВОЯТА КОЛИЧКА
+                    </div>
+                    <section class="row">
+                        <section class="productsContainer col-12 col-lg-10">
+                            <%products.forEach((productSection)=>{%>
+                                <section class="itemSection shadow mb-5">
+                                    <div class="row">
+                                        <section class="img-section col-12 col-lg-4 d-flex justify-content-center">
+                                            <%if(productSection.item.subSection.img){%>
+                                            <img class="img-fluid"
+                                                src="/uploads/<%=productSection.item.subSection.img.originalname%>"
+                                                alt="" />
+                                                <%}%>
+                                        </section>
+                                        <section class="informatioinSection d-flex flex-column flex-sm-row justify-content-between col-12 col-lg-8">
+                                            <section
+                                                class="item-info d-flex justify-content-center flex-column align-items-center align-items-sm-start mt-3 m-md-0">
+                                                <section class="headerInfo align-items-center">
+                                                    <%=productSection.item.headSection.nameToDisplay%>
+                                                        <%=productSection.item.subSection.nameToDisplay%>
+                                                </section>
+                                                <ul>
+                                                    <%const
+                                                        arrayItem=productSection.item.typeSection.tipove.split(";")%>
+                                                        <%arrayItem.forEach(item=>{%> <%if(item !="" ){%>
+                                                                <li>
+                                                                    <%=item%>
+                                                                </li>
+                                                                <%}%>
+                                                                    <% })%>
+                                                </ul>
+                                            </section>
+                                            <section
+                                                class="itemValues-price d-flex justify-content-center flex-column align-items-center mb-4 m-md-0">
+                                                <section class="item-price">
+                                                    <div class="d-flex justify-content-between">
+                                                        <div>количество:</div>
+                                                        <div class="item-total-pricing">
+                                                            <%=productSection.totalQty%>
+                                                        </div>
+                                                    </div>
+
+                                                    <%let priceForOne%>
+                                                    <%const isOnPromotion = productSection.item.typeSection.isOnPromotion%>
+                                                    <%if(isOnPromotion){%>
+                                                        <%priceForOne=parseFloat(productSection.item.typeSection.promotionalPrice)%>
+                                                    <%}else{%>
+                                                        <%priceForOne=parseFloat(productSection.item.typeSection.cena)%>
+                                                    <%}%>
+                                                    <%let priceForOneDecimal = priceForOne.toFixed(2).split(".")%>
+                                                    <%let totalPrice=(priceForOne * parseFloat(productSection.totalQty)).toFixed(2).split(".")%>
+                                                        <div class="d-flex justify-content-between">
+                                                            <div
+                                                                class="d-flex justify-content-center align-items-center currencyTile">
+                                                                Ед. цена:
+                                                            </div>
+                                                            <div class="d-flex">
+                                                                <div
+                                                                    class="d-flex justify-content-center align-items-center item-total-pricing">
+                                                                    <%=priceForOneDecimal[0]%>
+                                                                </div>
+                                                                <div class="d-flex flex-column pricingDots">
+                                                                    <div class="decimalPrice">.<%=priceForOneDecimal[1]%>
+                                                                    </div>
+                                                                    <div class="currency">лв.</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex justify-content-around">
+                                                            <div
+                                                                class="d-flex justify-content-center align-items-center currencyTile">
+                                                                Обща цена:
+                                                            </div>
+
+                                                            <div class="d-flex">
+                                                                <div
+                                                                    class="d-flex justify-content-center align-items-center item-total-pricing">
+                                                                    <%=totalPrice[0]%>
+                                                                </div>
+                                                                <div class="d-flex flex-column pricingDots">
+                                                                    <div class="decimalPrice">.<%=totalPrice[1]%>
+                                                                    </div>
+                                                                    <div class="currency">лв.</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </section>
+                                                <section class="item-input-values row d-flex justify-content-center">
+                                                    <div
+                                                        class="d-flex justify-content-center align-items-center text-center col-1">
+                                                        <a href="/reduce/<%=productSection.item.typeSection._id%>"
+                                                            class="reduceQty">-</a>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center align-items-center col-9">
+                                                        <input type="text" class="text-center form-control qtyInput p-0"
+                                                            type="text" onkeypress="return GFG_Fun(this, event)"
+                                                            placeholder="Количество" />
+                                                        <div class="invalid-feedback text-center"></div>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex justify-content-center align-items-center text-center col-1">
+                                                        <a href="/cart/<%=productSection.item.typeSection._id%>"
+                                                            class="addQty">+</a>
+                                                    </div>
+                                                </section>
+                                            </section>
+                                            <section
+                                                class="removeItemSection d-flex justify-content-center align-items-center mx-lg-5">
+                                                <a href="/removeItem/<%=productSection.item.typeSection._id%>"><i
+                                                        class="far fa-trash-alt"></i></a>
+                                            </section>
+                                        </section>
+                                    </div>
+                                </section>
+                                <%})%>
+                        </section>
+                        <section class="asideSection col-12 col-lg-2 mb-5">
+                            <section class="avgSum d-flex justify-content-between w-100 p-2">
+                                <div>Междинна сума</div>
+                                <div>
+                                    <%=(cart.totalPrice).toFixed(2)%> лв.
+                                </div>
+                            </section>
+                            <section class="totalSum d-flex justify-content-between w-100 p-2">
+                                <div>Общо с ддс:</div>
+                                <div>
+                                    <%=(cart.ddsPrice).toFixed(2)%> лв.
+                                </div>
+                            </section>
+                            <section class="finish d-flex justify-content-center py-2">
+                                <a href="/checkout" class="finish">КЪМ ЗАВЪРШВАНЕ</a>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+                <!-- END OF IF STATEMENT -->
+                <%}else{%>
+                    <section class="noItems container mt-5">
+                        <div class="noItemsContainer">
+                            <div class="text-center">
+                                <h2>Нямате продукти в количката си ?</h2>
+                                <p>
+                                    Цъкнете хамбургера и си изберете вашият продукт!
+                                    <br />
+                                    или
+                                    <br />
+                                    <a href="/" class="text-light btn btn-info btn-lg">Към началната страница</a>
+                                </p>
+                                <div class="wrapperArrow">
+                                    <div class="arrowItem">
+                                        <i class="fa fa-long-arrow-right arrow2" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <%}%>
+                        <!-- Here -->
+        </main>
+        <%- include("../layouts/headerAndFooter/footer.ejs") %>
+</body>
+
+<!-- Js bootstrap -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+<script src="../scripts/hamburger.js"></script>
+<script src="../scripts/index.js"></script>
+
+<script>
+    $(document).ready(() => {
+        // If -1 0 or no value
+
+        $(".addQty").click(async function (e) {
+            console.log("clicked");
+            const value = $(this).parent().parent().find(":input")[0].value;
+            if (value > 0 && value != "") {
+                const buttonHref = await $(this).attr("href");
+                await $(this).removeAttr("href");
+                e.preventDefault();
+                window.location.pathname = `${buttonHref}/${value}`;
+            }
+            e.preventDefault();
+        });
+        $(".reduceQty").click(async function (e) {
+            console.log("clicked");
+            const value = $(this).parent().parent().find(":input")[0].value;
+            if (value > 0 && value != "") {
+                const buttonHref = await $(this).attr("href");
+                await $(this).removeAttr("href");
+                e.preventDefault();
+                window.location.pathname = `${buttonHref}/${value}`;
+            }
+            e.preventDefault();
+        });
+    });
+    function isValid(el, evnt) {
+        var charC = evnt.which ? evnt.which : evnt.keyCode;
+        if (charC == 46) {
+            if (el.value.indexOf(".") === -1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (charC > 31 && (charC < 48 || charC > 57)) return false;
+        }
+        return true;
+    }
+
+    function GFG_Fun(t, evnt) {
+        const invalidDiv = $(t).next()[0];
+        const test = $(t);
+
+        var a = isValid(t, evnt);
+        if (a) {
+            test.removeClass("is-invalid");
+            invalidDiv.innerHTML = "";
+            invalidDiv.style.display = "none";
+        } else {
+            test.addClass("is-invalid");
+            invalidDiv.innerHTML = "Само числа! ";
+            invalidDiv.style.display = "block";
+        }
+        return a;
+    }
+</script>
+
+</html>

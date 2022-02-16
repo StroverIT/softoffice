@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("../layouts/bootstrapStyle.ejs")%>
+    <!-- Style for nav and footer -->
+    <link rel="stylesheet" href="styles/navAndFooter.css" />
+    <!-- Google fonts Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- User stylesheet -->
+    <link rel="stylesheet" href="./styles/account.css" />
+    <!-- hamburger -->
+    <link rel="stylesheet" href="../styles/hamburger.css" />
+    <!-- Main style sheet for contenct-->
+
+    <title><%=name%> акаунт</title>
+  </head>
+
+  <body>
+    <%- include("../layouts/headerAndFooter/header.ejs") %>
+  
+    <main class="accountMain">
+      <div id="popupBox">
+        <i class="fas fa-times closeIcon btn btn-danger"></i>
+  <p>
+    Уважаеми клиенти, в резултат на динамиката на пазара и постоянното увеличение на цените на суровините и транспортните услуги се налага да актуализираме цените на голяма част от предлаганите от нас продукти, поради което цените в настоящия ни продуктов каталог вече не са валидни! 
+ <br>Актуална информация за цени, промоции, условия за доставка, монтаж и гаранция може да откриете в нашият сайт, <br>на телефон: +359 87 667 2848 или +359 87 998 8825  или от обслужващият ви търговки представител. 
+ <br>За артикули, които не поддържаме на склад, моля позвънете ни за актуална информация!
+  </p>
+      </div>
+      <div id="popupContainer">
+      
+      </div>
+      <section class="accountSection container-lg">
+        <section class="slideDownButtons d-flex justify-content-around text-center">
+          <div class="slideButtonAccount slideButton btnClicked">Акаунт</div>
+          <div class="slideButtonOrder slideButton">Поръчки</div>
+          <div class="">
+          <form action="/account/logout?_method=DELETE" method="POST">
+            <span class="glyphicon glyphicon-log-out"></span>
+            <button type="submit" class="btn btn-danger logout text-light"> <i
+                    class="fas fa-sign-out-alt"></i>
+                Изход</button>
+              </div>
+        </form>
+        
+        </section>
+        <hr class="lineBreaker">
+        <section class="aboutAccount hiddenButton sections">
+          <div class="accordion" id="accordionExample">
+            <!-- First acordion item -->
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                >
+                  Обща информация
+                </button>
+              </h2>
+              <div
+                id="collapseOne"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <ul>
+                    <li>
+                      Имейл: <span class="accountInfo"><%=user.email%></span>
+                    </li>
+                    <li>
+                      Име: <span class="accountInfo"><%=user.username%></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- Secon acordion item -->
+            <div class="accordion-item" >
+              <h2 class="accordion-header" id="headingTwo">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseTwo"
+                  aria-expanded="false"
+                  aria-controls="collapseTwo"
+                >
+                  Моите адреси
+                </button>
+              </h2>
+              <div
+                id="collapseTwo"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingTwo"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <ul>
+              <%orders.forEach((item)=>{%>
+                      <li><%=item.address%></li>
+               <%})%>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- End  -->
+        <section class="orderSection hiddenButton sections ">
+          <%if(orders){%>
+          <%orders.forEach((order)=>{%>
+     <section class="orderBox ">
+       <div class="d-flex justify-content-end"><%=order.name%></div>
+       <section class="header-item-section mb-4">
+       <div class="text-center orderAddress"><%=order.address%></div>
+       <div class="text-center orderAddress text-info">0<%=order.telephone%></div>
+      </section>
+      <%const entriesItems = Object.entries(order.items)%>
+      <section class="item-type-section">
+          <ul class="list-group ">
+              <%entriesItems.forEach((item)=>{%>
+            <li class="list-group-item my-2 pb-2">
+
+              <div class="head-type-section d-flex">
+               <section class="d-flex justify-content-center mx-auto">
+                <div class=" d-flex justify-content-center"> 
+                  <div class="mx-1"> <%=item[1].item.headSection.nameToDisplay%></div>
+                   <%=item[1].item.subSection.nameToDisplay%>
+                  </div>
+              </section>
+                <section class="d-flex justify-content-end">
+                  <div class="d-flex justify-content-end  flex-column">
+                <div><span>Бройки: <%=item[1].totalQty%></span></div>
+                <div>Цена: <span class="itemTotalQty"><%=(item[1].cena).toFixed(2)%> лв.</span> </div>
+              </div>
+              </section>
+              
+              </div>
+                <section class="itemTypes d-flex flex-column">
+             <%const itemTypes = (item[1].item.typeSection.tipove).split(";")%>
+                    <ul>
+                      <%itemTypes.forEach(itemtype=>{%>
+                          <%if(itemtype !==""){%>
+                      <li><%=itemtype%></li>  
+                        <%  }%>
+                      <%})%>
+              </ul>
+                </section>
+              </li>
+              <%})%>
+          
+          </ul>
+      
+        </section>
+       <div class="text-center d-flex justify-content-between totalPrice flex-column">
+              
+          <div class="d-flex justify-content-start ">
+              Цена: <%=order.cart.totalPrice.toFixed(2)%> лв.
+            </div>
+          <div class="d-flex justify-content-start">
+              Цена с ддс: <%=order.cart.ddsPrice.toFixed(2)%> лв.
+            </div>
+          <div class="d-flex justify-content-start">
+              Доставка: <%=order.cart.dostavkaPrice == 0 ? "Безплатна" : `${order.cart.dostavkaPrice.toFixed(2)} лв.` %>.
+            </div>
+          <div class="d-flex justify-content-start">
+              Общо: <%=order.cart.totalCheckout.toFixed(2)%> лв.
+            </div>
+
+        </div>
+        <div class="d-flex justify-content-end ">
+          Статус на поръчката:  <span class="orders px-2">
+          <%if (order.orderStatus == "waiting"){%>
+            <span class="waitingOrderStatus">
+                Изчаква се...
+            </span>
+                <%}else if(order.orderStatus == "taken"){%>
+                    <span class="takenOrderStatus text-info">
+                        Взета
+                    </span>
+               <%}else if(order.orderStatus == "finished"){%>
+                <span class="finishedOrderStatus text-success">
+                    Приключена
+                </span>
+                <%}%>
+              </span>
+       </div>
+        </section>
+        <% })%>
+    <%  }%>
+     
+        </section>
+      </section>
+    </main>
+    <%- include('../layouts/headerAndFooter/footer.ejs') %>
+  </body>
+
+  <%- include("../layouts/bootstrapScripts.ejs")%>
+
+  <script src="scripts/index.js"></script>
+  <script src="scripts/hamburger.js"></script>
+  <script>
+   
+    $(document).ready(()=>{
+      if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+    console.log("test1")
+} else {
+    window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+        console.log("test2")
+    }
+}
+      function showWindow(){
+        $("#popupContainer").show()
+        // Stop scroll
+        $("html body").css("overflow", "hidden")
+      }
+      showWindow()
+      function hideWindow(){
+        $("#popupContainer").hide()
+        $("#popupBox").hide()
+        $("html body").css("overflow-y", "scroll")
+        showSection()
+      }
+      $(".closeIcon").click(hideWindow)
+      $("#popupContainer").click(hideWindow)
+      function showSection(){
+        $(".aboutAccount").slideDown("slow")
+     
+     //  <div class="slideButtonAccount slideButton">Акаунт</div>
+           // <div class="slideButtonOrder slideButton">Поръчки</div>
+           // aboutAccount
+           // hidden
+           // if button is already clicked
+           $(".slideButton").click(function(){
+             $(".slideButton").removeClass("btnClicked")
+ 
+             $(this).addClass("btnClicked")
+           })
+           $(".slideButtonAccount").click(function(){
+            $(".orderSection").slideUp("slow")
+            $(".aboutAccount").slideDown("slow")
+ 
+           })
+           $(".slideButtonOrder").click(function(){
+             $(".aboutAccount").slideUp("slow")
+             $(".orderSection").slideDown("slow")
+           })
+      }
+
+    })
+   
+    // Pop up window
+  </script>
+</html>

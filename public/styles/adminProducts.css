@@ -1,0 +1,192 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Roboto+Slab:wght@100&display=swap");
+
+/* 
+font-family: 'Montserrat', sans-serif;
+font-family: 'Roboto Slab', serif
+*/
+body {
+  background-color: #f6f7fb;
+  /* background-color: black !important; */
+}
+
+/* Navbar */
+.navbar-collapse a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  font-size: 1.25em;
+}
+.tableContainer {
+  background-color: #fafafa;
+}
+
+/* Button */
+
+#sidebarCollapse {
+  width: 40px;
+  height: 40px;
+  background: #f5f5f5;
+  /* border: 2px solid rgb(66, 221, 157); */
+  border:none;
+  border-radius: 50%;
+  background-color: #4cc7be;
+  margin:20px;
+}
+
+/* Inside lines */
+#sidebarCollapse span {
+  width: 80%;
+  height: 2px;
+  margin: 0 auto;
+  display: block;
+  background: #555;
+  transition: all 0.8s cubic-bezier(0.81, -0.33, 0.345, 1.375);
+  background-color: white;
+}
+#sidebarCollapse span:first-of-type {
+  /* rotate first one */
+  transform: rotate(45deg) translate(2px, 2px);
+}
+#sidebarCollapse span:nth-of-type(2) {
+  /* second one is not visible */
+  opacity: 0;
+}
+#sidebarCollapse span:last-of-type {
+  /* rotate third one */
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+#sidebarCollapse.active span {
+  /* no rotation */
+  transform: none;
+  /* all bars are visible */
+  opacity: 1;
+  margin: 5px auto;
+}
+
+.wrapper {
+  display: flex;
+  align-items: stretch;
+  perspective: 1500px;
+  color: white;
+  width: 0%;
+}
+#content {
+  width: 90%;
+  padding-right: 100vw;
+  height: 20%;
+  background-color: #fafafa;
+  box-shadow: 2px 3px #eeeeee;
+}
+#sidebar {
+  height: 100vh;
+  padding-top: 10px;
+  min-width: 300px;
+  max-width: 300px;
+  width: 100%;
+  background: #7386d5;
+  color: #fff;
+  transition: all 0.6s cubic-bezier(0.945, 0.02, 0.27, 0.665);
+  transform-origin: center left; /* Set the transformed position of sidebar to center left side. */
+}
+.logout {
+  width: 100px;
+  position: relative;
+  margin-top:20px;
+}
+.sidebar-header {
+  font-weight: 700;
+  line-height: 2000px;
+  padding-left: 15px;
+}
+.components {
+  margin-top: 10px;
+  padding-left: 10px;
+}
+.components li {
+  margin-top: 15px;
+  font-weight: 500;
+  font-size: 1.15em;
+}
+.components a {
+  text-decoration: none;
+  color: #fff;
+}
+#sidebar.active {
+  margin-left: -250px;
+  transform: rotateY(100deg); /* Rotate sidebar vertically by 100 degrees. */
+}
+
+/* End button */
+/* ENd nav */
+.buttons .btn {
+  font-family: "Montserrat", sans-serif;
+  padding: 4px 30px;
+  border: 0;
+  border-radius: 0;
+  font-size: 15px;
+  font-weight: 100;
+}
+.buttons .createBtn {
+  background-color: #4268f6;
+  color: #fff;
+}
+
+.buttonHover:hover {
+  background-color: #f6f7fb;
+  cursor: pointer;
+}
+
+/* Show products */
+.buttons .editButton {
+  border: 1px solid #4268f6;
+  color: #4268f6;
+}
+.showItemBox {
+  padding-top: 30px;
+}
+.showItemBox ul {
+  list-style-type: none;
+}
+.showItemBox ul .list-item {
+  padding-top: 10px;
+}
+.tableBody {
+  color: #34383b;
+}
+
+.titleValue {
+  color: gray;
+}
+.arrayBox {
+  margin-top: 10px;
+}
+/* Array section */
+.arraySection {
+  border: 1px solid #cbd5fd;
+  border-left: 5px solid #cbd5fd;
+}
+.arrayContainer {
+  border: 1px solid #cbd5fd;
+  border-left: 5px solid #cbd5fd;
+
+  margin-top: 20px;
+}
+.arrayTitleValue {
+  color: gray;
+}
+.subsectionCreate {
+  border: 1px solid #cbd5fd;
+  border-left: 5px solid #cbd5fd;
+}
+.hidden {
+  display: none;
+}
+.subsectionInput {
+  border: 1px solid #cbd5fd;
+  border-left: 5px solid #cbd5fd;
+  margin: 10px;
+}

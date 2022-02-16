@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="bg" xml:lang="bg">
+
+<head>
+    <%- include("layouts/bootstrapStyle.ejs")%>
+
+        <!-- Style for nav and footer -->
+        <link href="/styles/navAndFooter.css" rel="stylesheet" />
+        <!-- Google fonts Roboto -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+        <link href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+        <link href="/styles/hamburger.css" rel="stylesheet">
+        <script href="/scripts/brandAnimation.js" defer></script>
+        <!-- Main style sheet for contenct-->
+        <link href="/styles/brandAnimation.css" rel="stylesheet">
+        <link href="/styles/index.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+        <title>SoftOffice</title>
+
+</head>
+
+<body>
+    <%- include('layouts/headerAndFooter/header.ejs') %>
+
+        <main>
+            <!-- First article -->
+            <section class="container-fluid carousel-container">
+                <div class="carousel">
+                    <button class="carousel__button carousel__button--left is-hidden">
+                        <!-- <i class="fas fa-long-arrow-alt-left"></i> -->
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="carousel__track-container">
+                        <ul class="carousel__track">
+                      
+                            <li class="carousel__slide">
+                                <a href="products/hartiq/xeroxPerformer">
+                                <img class="carousel__images" src="/images/carousel/hero_slides_1.png" alt="">
+                            </a>
+                            </li>
+                            <li class="carousel__slide">
+                                <img class="carousel__images" src="/images/carousel/hero_slides_2.png" alt="">
+                            </li>
+                            <li class="carousel__slide">
+                                <img class="carousel__images" src="/images/carousel/hero_slides_3.png" alt="">
+                            </li>
+                            <li class="carousel__slide">
+                                <a href="/products/hartiq/xeroxBusiness">
+                                <img class="carousel__images" src="/images/carousel/hero_slides_4.png" alt="">
+                            </a>
+                            </li>
+                            <li class="carousel__slide">
+                                <a href="/products/hartiq/navigatorUniversal">
+                                <img class="carousel__images" src="/images/carousel/hero_slides_5.png" alt="">
+                            </a>
+                            </li>
+                            <li class="carousel__slide current-slide">
+                                <img class="carousel__images" src="/images/carousel/freedeliveryLego.svg" alt="">
+                                <div class="blurBackground"></div>
+                            </li>
+                            <li class="carousel__slide current-slide">
+                                <img class="carousel__images" src="/images/carousel/ferero.svg" alt="">
+                                <div class="blurBackground"></div>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="carousel__nav">
+                        <button class="carousel__indicator current-slide"></button>
+                        <button class="carousel__indicator"></button>
+                        <button class="carousel__indicator"></button>
+                        <button class="carousel__indicator"></button>
+                        <button class="carousel__indicator"></button>
+                        <button class="carousel__indicator"></button>
+                        <button class="carousel__indicator"></button>
+                    </div>
+                    <button class="carousel__button carousel__button--right">
+                        <i class="fas fa-chevron-right carousel__button--right"></i>
+                        <!-- <i class="fas fa-long-arrow-alt-right"></i> -->
+                    </button>
+
+                </div>
+
+            </section>
+            <!-- Second article -->
+            <section>
+                <div class="container smallIconsContainer section-slider ">
+                    <div class="text-center smallIconsContainer-box">
+                        <div class="smallIconsBox ">
+                            <i class="fas fa-shield-alt"></i>
+                            <p>ЦЕНОВА ЗАЩИТА</p>
+                        </div>
+                        <div class="smallIconLine"></div>
+                        <div class="smallIconsBox">
+                            <i class="fas fa-stopwatch"></i>
+                            <p>ЕКСПРЕСНА ДОСТАВКА</p>
+                        </div>
+
+                    </div>
+            </section>
+            <section>
+                <div class="container campainContainer">
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-6 campainBox" data-aos="fade-right">
+                            <a href="/products/stolove">
+                                <div class="seeAll">Виж повече</div>
+
+                                <img class="img-fluid campainImg" src="/images/catalog/chairForOffices.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 " data-aos="fade-left">
+                            <a href="/products/skeneri">
+                                <div class="seeAll">Виж повече</div>
+                                <img class="img-fluid campainImg" src="/images/catalog/lazerenPrinter.jpg" alt="">
+                            </a>
+
+                        </div>
+                        <div class="col-12 col-md-6 offset-lg-3 col-lg-6 officeFurniture" data-aos="fade-up"
+                            data-aos-delay="50">
+                            <a href="">
+                                <div>
+                                    <div class="seeAll">Виж повече</div>
+                                    <div class="bg-text">
+                                        <p>Обзаведи твоят нов офис</p>
+                                    </div>
+                                    <div class="bg-image">
+                                        <img class="img-fluid campainImg" src="/images/office.jpg" alt="">
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scrolling images -->
+            <%if(promotions.length > 0){%>
+
+            <section class="promotionSection">
+                <section class="titlePromotion container my-3">
+                    <div class="promotionContainer d-flex flex-column justify-content-center align-items-center">
+                        <div class="promotionHeader" data-aos="fade-left" data-aos-delay="50">
+                            <h1 class=""><span class="px-2 px-sm-5">Промоции</span></h1>
+                        </div>
+                        <div  class="seeAllPromotions">
+                            <p data-aos="fade-up" data-aos-delay="50" style="font-size:0.95em"> <a href="/allPromotions" class="text-dark">Виж
+                                    всички </a></p>
+
+                        </div>
+                    </div>
+                </section>
+            </section>
+            <div class="container container-swiper position-relative">
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-container mySwiper">
+                    <div class="swiper-wrapper d-flex">
+                        <%const addedPromotions = []%>
+                        <%promotions.forEach((promotion,indexPromotion)=>{%>        
+                         <%const promotionName=  promotion.section.showName ?  promotion.section.showName.concat(" ", promotion.subSec.showName)  : promotion.subSec.showName%> 
+                         <%if(addedPromotions.includes(promotionName)) return%>
+                           <%console.log(promotionName)%>
+                        <div class="swiper-slide d-flex flex-column shadow ">
+                            <%const price = Number(promotion.foundItem.cena)%>
+                            <%const promPrice = Number(promotion.foundItem.promotionalPrice)%>
+                            <div class="position-absolute  precentageRate d-flex justify-content-center align-items-center"> 
+                            <div class="minusPer">-</div>
+                                        <%const sum = promPrice / price * 100%>
+                                        <%const percentageRate = (100 - sum).toFixed(2).split(".")%>
+                           <div class="d-flex justify-content-center align-items-end">
+                               <div><%=percentageRate[0]%></div>
+                           </div>
+                           <div class="percentAcc">%</div>
+                        </div>
+                        <a href="/products/<%=promotion.section.name%>/<%=promotion.subSec.tiput%>">
+                            <img src="/uploads/<%=promotion.subSec.img ? promotion.subSec.img.originalname : ""%>"  alt="">
+                        </a>
+                            <div class="card-description d-flex flex-column h-100">
+                          
+                                <div class="promotionText d-flex pt-2 justify-content-center">
+                                        <p class="">
+                                            <%=promotionName%>
+                                            <!-- Телбод  Eagle Galaxy S6083b Сив до 25 л. -->
+                                        </p>      
+                                </div>
+                                <div class="mt-auto pricingItems d-flex justify-content-center">
+                                    <div class="actualPrice d-flex justify-content-center itemPrice">
+                                        <%const itemPrice = parseFloat(promotion.foundItem.cena).toFixed(2).split(".")%>
+                                        <div class="d-flex justify-content-center align-items-center item-total-pricing">
+                                        <%=itemPrice[0]%>
+                                    </div>
+                                    <div class="d-flex flex-column pricingDots m-0">
+                                        <div class="decimalPrice"><%=itemPrice[1]%></div>
+                                        <div class="currency">лв.</div> 
+                                      </div>
+                                      </div>
+
+                                    <div class="actualPrice d-flex justify-content-center promotionalPrice mx-1">
+                                        <%const promotionalPrice = parseFloat(promotion.foundItem.promotionalPrice).toFixed(2).split(".")%>
+                                        <div class="d-flex justify-content-center align-items-center item-total-pricing">
+                                        <%=promotionalPrice[0]%>
+                                    </div>
+                                    <div class="d-flex flex-column pricingDots m-0">
+                                        <div class="decimalPrice"><%=promotionalPrice[1]%></div>
+                                        <div class="currency">лв.</div> 
+                                      </div>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%addedPromotions.push(promotionName)%>
+                    <%})%>
+                    <%console.log(addedPromotions)%>
+                    <%addedPromotions.splice(0,addedPromotions.length)%>
+                    </div>
+                </div>
+            </div>
+            </div>
+<%}%>
+         
+            <section>
+                <div class="marquee">
+                    <!-- <h1>Нашите партньори</h1> -->
+                    <ul class="marquee-content">
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/assistant.jpg" alt=""></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/axent.jpg" alt=""></li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/backToBoxes.jpg" alt=""></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/biOffice.jpg" alt=""></li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/eagle.jpg" alt=""></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/esselte.jpg" alt=""></li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/fiorello.jpg" alt=""></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/GBC.jpg" alt=""></li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="./images/brands/grand.jpg" alt=""></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/hsm.jpg" alt=""></li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/ico.jpg" alt=""></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/infoNotes.jpg" alt=""></li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/kite.jpg" alt=""></li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="./images/brands/Leitz.jpg" alt=""></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/officePoint.jpg" alt=""></li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/oval.jpg" alt=""></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/pigna.jpg" alt=""></li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/rapid.jpg" alt=""></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/rebell.jpg" alt=""></li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/rexel.jpg" alt=""></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/tarifold.jpg" alt=""></li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/theBoardsCompany.jpg" alt=""></li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center"><img
+                                src="/images/brands/xerox.jpg" alt=""></li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+        <!-- Footer -->
+        <%- include('layouts/headerAndFooter/footer.ejs') %>
+</body>
+<!-- Js bootstrap -->
+<%- include('layouts/bootstrapScripts.ejs')%>
+    <!-- Swiper js -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script type="module">
+        var swiper = new Swiper('.swiper-container', {
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
+            },
+            slidesPerView: 1.25,
+            spaceBetween: 10,
+            // init: false,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+
+
+            breakpoints: {
+                550: {
+                    slidesPerView: 1.75,
+                    spaceBetween: 10,
+                },
+                680: {
+                    slidesPerView: 2.25,
+                    spaceBetween: 10,
+                },
+                920: {
+                    slidesPerView: 3.5,
+                    spaceBetween: 10,
+                },
+                1240: {
+                    slidesPerView: 5.5,
+                    spaceBetween: 10,
+                },
+            }
+        });
+    </script>
+    <!-- Custom js -->
+
+    <script src="/scripts/brandAnimation.js"></script>
+    <script src="/scripts/carousel.js"></script>
+    <script src="/scripts/index.js"></script>
+    <script src="/scripts/hamburger.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+</html>

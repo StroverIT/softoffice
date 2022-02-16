@@ -1,0 +1,11 @@
+.allPromotionsSection{
+  margin-top: 100px;
+}
+
+.allPromotionsContainer{
+    width: 250px;
+    background-color: #fff !important;
+}
+.rounded{
+    border-radius: 50%;
+}

@@ -1,0 +1,16 @@
+
+main{
+    position: relative;
+    top: 240px;
+}
+.itemHeader{
+    background-color: #fafafafa;
+}
+.itemOnPromotionSec{
+    background-color: #fafafafa;
+}
+.itemOldPrice{
+    color: rgb(60, 60, 167);
+    font-weight: 500;
+    font-size: 1.25em;
+}

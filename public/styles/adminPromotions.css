@@ -1,0 +1,28 @@
+
+main{
+    margin-top:240px;
+}
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap');
+
+.itemsSection{
+    background-color: #fafafafa;
+
+}
+.viewItemSec a{
+    text-decoration: none;
+}
+.itemContainer{
+    border: 1px solid rgb(91, 91, 236);
+    border-left: 3px solid rgb(55, 55, 219);
+    padding: 10px;
+    margin: 2% 10%;
+}
+.titleSec{
+    font-size: 1.5em;
+    color: rgb(11, 11, 204);
+
+}
+.itemInfo{
+    font-family: 'Roboto Mono', monospace;
+    color: black;
+}
