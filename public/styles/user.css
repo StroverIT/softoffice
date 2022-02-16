@@ -1,0 +1,123 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+*:before, *:after{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --darkBlue: #0d6efd;
+  --lightBlue: #00a4ac;
+}
+body {
+  overflow-x: hidden;
+  background: linear-gradient(135deg, rgb(111, 221, 248), rgb(229, 235, 236));
+  /* background-color: #fff; */
+  display:flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+main {
+  margin-top: 80px;
+}
+.wrapper input {
+  position: relative; 
+}
+label{
+  background-color: grey;
+  width: 100%;
+  height: 2px;
+}
+input { 
+  padding: 10px;
+  font-family: 'FontAwesome', sans-serif; 
+  font-size: calc(1em + 0.5vw);
+  font-weight: 300;
+} /* This is for the placeholder */
+
+input:focus{
+  padding-left: 40px;
+}
+
+.placeholder{
+  position: absolute;
+  display:block;
+  top: calc(50% - 1px);
+  transform: translateY(-50%);
+  left:16px;
+  color: black;
+  font-size: large;
+  cursor: auto;
+  background-color: none !important;
+}
+.animated transition {
+  transition: all 0.5s
+}
+.noselect{
+  user-select: none;
+}
+.loginContainer{
+  background-color: white;
+  box-shadow: 1px 1px 10px grey;
+  max-width: 600px;
+
+
+}
+
+form{
+  border-radius: 8px;
+}
+form *{
+  border: none;
+  outline:none;
+}
+.buttonContainer{
+
+  font-weight: 300!important;
+
+}
+.loginBtn{
+  font-size: 1.25em;
+  background-color: var(--lightBlue);
+  color: white;
+  width: 100%;
+  min-width: 100px;
+  max-width: 300px;
+}
+.otherSection{
+  text-decoration: none;
+  margin-top: 10px;
+  font-size: 1.1em;
+  letter-spacing: 1px;
+  color: var(--lightBlue)
+}
+.forgotenPassword{
+  text-decoration: none;
+  margin-top: 10px;
+  font-size: 1.1em;
+  letter-spacing: 1px;
+  color: rgb(208, 50, 50)
+}
+.register-text{
+  max-width: 300px;
+}
+.invalidInput{
+  border: 1px solid red;
+}
+.passwordStrenght{
+  
+  margin-top:10px
+
+}
+.passwordStrenght ul{
+  margin:0;
+  padding:0;
+}
+.passwordStrenght ul li{
+  list-style-type: none;
+  color:rgb(255, 0, 0);
+  font-size: 1em;
+}

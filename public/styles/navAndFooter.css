@@ -1,0 +1,165 @@
+/* Global variables */
+* {
+  margin: 0;
+  padding: 0;
+}
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+html{
+  height: 100%;
+}
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "montserrat", roboto;
+  display:flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+:root {
+  --darkBlue: #0d6efd;
+  --lightBlue: #00a4ac;
+  --ligtherBlue: #2a5eac;
+  --ligtherBluePlus: #00a4ac;
+  --primary-color: rgba(13, 110, 139, 0.75);
+  --overlay-color: rgba(24, 39, 51, 0.85);
+  --menu-speed: 0.5s;
+}
+/* Navbar */
+.navbar {
+  background-color: var(--darkBlue);
+  z-index: 1000;
+}
+.navbar-brand {
+  font-weight: 900;
+  font-size: calc(70% + 1vw + 1vh);
+}
+.blueNavBrand {
+  color: blue;
+}
+
+.hidden {
+  display: inline;
+}
+.navbar-toggler {
+  font-size: calc(20% + 1vw + 1vh);
+}
+.navbar-toggler,
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+.navbar .fas {
+  font-size: calc(50% + 1vw + 1vh);
+  cursor: pointer;
+}
+
+.navbar > div > a {
+  color: white;
+  text-decoration: none;
+}
+.searchNavbar {
+  width: 10px;
+  height: 10px;
+  color: black;
+}
+.padding-0 {
+  padding-right: 0;
+  padding-left: 0;
+}
+.navSearch {
+  display: none;
+}
+
+#navSearch {
+  width: 100%;
+  height: 100%;
+  /* border-radius: 4% 0 0 4%; */
+}
+/* Box for button */
+.searchButton {
+  position: relative;
+  height: 100%;
+  background-color: var(--lightBlue);
+}
+
+/* Icon button */
+.buttonSearch {
+  text-align: center;
+  width: 100%;
+}
+
+/* End hambuergee */
+.navLinesContainer {
+  font-weight: 600;
+  font-size: calc(1.25em + 1vw);
+}
+.textLine {
+  color: rgb(65, 62, 62, 0.7);
+  z-index: 1;
+}
+.blueLine {
+  background-color: rgb(65, 62, 62, 0.7);
+  width: 120%;
+  height: 3px;
+  z-index: -1;
+}
+/* Fully customazable burger 121*/
+
+@media only screen and (min-width: 1045px) {
+  .navSearch {
+    display: inline;
+    top: 0;
+  }
+  .searchNavbar {
+    display: inline;
+  }
+  .hidden {
+    display: none;
+  }
+}
+@media only screen and (min-width: 768px) {
+}
+
+.navbar-brand {
+  font-weight: 900;
+  font-size: calc(70% + 1vw + 1vh);
+}
+
+/* FOOTER */
+footer {
+  background-color: var(--darkBlue);
+  font-weight: 100;
+  color:white !important;
+  font-size: 1.1em;
+
+}
+.footerTitle {
+  color: var(--lightBlue);
+  filter: brightness(1.5);
+  opacity: 0.75;
+  font-size: calc(1.4em + 0.25vw);
+  font-weight: bold;
+}
+/* Ul */
+.footer a{
+  list-style-type: none;
+  color:white;
+  text-decoration: none;
+}
+.footerByletinInput input, .footerByletin button{
+  padding:0 !important;
+  width: 20vw;
+  border-radius: 0;
+}
+.footerByletinInput input{
+  width: 50vw !important;
+  max-width: 360px;
+  height: 100%
+}
+.footerByletinInput button{
+  width: 25vw;
+  max-width: 100px;
+}

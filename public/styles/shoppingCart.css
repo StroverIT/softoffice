@@ -1,0 +1,158 @@
+
+body{margin-top:20px; overflow-x:hidden}
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Oswald:wght@200;300&family=Roboto+Condensed:wght@300&family=Roboto:wght@300&display=swap');
+main{
+    margin-top:100px !important;
+}
+.yourCartTitle{
+    font-weight: 500;
+    text-transform: uppercase;
+    font-weight: bold;
+    color:rgb(90, 86, 86);
+    font-size:2em;
+    font-family: 'Oswald', sans-serif;
+}
+/* .productTitle{
+    text-align: left !important;
+} */
+/* .productImgInner{
+    height: 25vw;
+    max-height: 100px;
+    min-height: 50px;
+}
+.productQtySection input{
+    width:50px;
+} */
+
+/* .productBox{
+    border-bottom:1px solid grey;
+} */
+/* .itemProductTitle{
+    font-size: calc(0.8em + 0.3vw);
+    text-decoration: none;
+    color: rgb(68, 68, 226);
+    
+} */
+/* .listItemProductType{
+    font-size: calc(0.6em + 0.3vw);
+    font-family: 'Open Sans', sans-serif;
+} */
+/* input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+} */
+/* .inputQty{
+    height:30px;
+    width: 5px;
+
+}
+.btn-dark{
+    padding:0 10px;
+    font-size:17px;
+    font-weight: 100;
+    border-radius: 0;
+} */
+/* .btn-toOrder:hover{
+    color:white;
+    background-color: rgb(83, 117, 148);
+
+}
+.btn-toOrder{
+    padding: 15px 5px;
+    background-color: rgb(19, 95, 165);
+    color:white;
+    font-weight: 100 !important;
+    text-decoration: none;
+    width:100%;
+    text-transform: uppercase;
+    font-family: 'Roboto Condensed', sans-serif;
+} */
+/* .totalPrice{
+    font-size: 1.1em;
+    background-color: #e8e4e4;
+    padding:0;
+    font-weight: 100 !important;
+    font-family: 'Open Sans', sans-serif;
+}
+.totalPricePrice{
+    font-size: 1.25em;
+font-weight: 600 !important;
+} */
+.welcomeHeader{
+    font-size: 2em;
+    font-weight: 600;
+}
+img{
+    width: 300px;
+    max-width: 300px;
+}
+.itemSection {
+    padding-bottom: 10px;
+    /* border-bottom: 1px solid black; */
+}
+.item-price{
+    font-size: 0.9em;
+}
+.item-input-values div{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.item-input-values a{
+    text-decoration: none;
+    color: white;
+    background-color: black;
+    width: 100%;
+    align-items: center;
+}
+.item-input-values input::placeholder{
+    font-size: 0.8em;
+}
+.item-info ul li{
+    color:grey;
+    font-size: 0.9em;
+}
+.asideSection{
+    padding:0 !important;
+    
+}
+.avgSum{
+    font-size: 0.94em;
+}
+.totalSum{
+    font-size: 0.94em;
+background-color:#e5e5e5e5;
+}
+.finish{
+    text-decoration: none;
+    color:white;
+    background-color: rgb(60, 60, 232);
+    font-weight: 500;
+}
+.finish:hover{
+    color:rgb(99, 99, 233);
+}
+.item-total-pricing{
+    font-size: 1.5em;
+}
+.pricingDots{
+    font-size: 0.6em;
+    margin-top:5px !important;
+    padding:0 !important
+}
+.pricingDots div{
+    margin:0 !important;
+    padding:0 !important;
+font-size: 1.25em;
+
+    height: 10px;
+    width: 0;
+    
+}
+.decimalPrice{
+    margin-bottom: -30px !important;
+    font-weight: 500;
+}
+.currencyTile{
+    margin-right: 30px;
+}

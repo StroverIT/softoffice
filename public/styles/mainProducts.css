@@ -1,0 +1,30 @@
+
+html,
+body {
+  position: relative;
+  margin: 0;
+  padding:0;
+  background: #eee;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #000;
+}
+main{
+    margin-top:200px;
+}
+.productsItems{
+    background-color: #fafafafa;
+}
+.btn{
+    /* font-weight: 600 !important; */
+    /* color: rgb(251, 222, 222) !important;  */
+
+}
+
+.removeItem{
+    text-decoration: none;
+    color:red;
+    font-size: 1.5em;
+}
+.tableRow:hover{
+   cursor: pointer;
+}

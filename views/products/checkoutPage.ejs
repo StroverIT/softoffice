@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Push 1-->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile first -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Removing zooming on mobile -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <!-- Boostrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <!-- Font awesome -->
+    <script
+      src="https://kit.fontawesome.com/0593828612.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Style for nav and footer -->
+    <link rel="stylesheet" href="../styles/navAndFooter.css" />
+    <!-- Google fonts Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- User stylesheet -->
+    <!-- hamburger -->
+    <link rel="stylesheet" href="../styles/hamburger.css" />
+    <!-- Main style sheet for contenct-->
+
+    <link rel="stylesheet" href="../styles/hamburger.css" />
+    <link rel="stylesheet" href="../styles/checkoutPage.css">
+        <title>Поръчай</title>
+</head>
+
+<body>
+    <%- include("../layouts/headerAndFooter/header.ejs")%>
+    <main>
+        <section>
+            <div class="container offset-md-1 offset-lg-3">
+                <h3>Ще изпратим доставката ти до:</h3>
+                <form action="/makeDelivery" method="post" id="checkout-form">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputName">Име:</label>
+                            <input type="text" name="name" class="form-control" id="inputName" placeholder="Иван Петров" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputTelephone">Телефон:</label>
+                            <input type="tel" name="telephone" class="form-control" id="inputTelephone" placeholder="0876 628 205" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <!-- <div class="form-group col-md-4">
+                <label for="inputState">Населено място</label>
+                <select id="inputState" class="form-control">
+                    <option selected>Град/Село</option>
+                    <option>...</option>
+                </select>
+            </div> -->
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">Град:</label>
+                            <input type="text" name="city" class="form-control" id="inputCity" placeholder="София"required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputAddress">Адрес:</label>
+                            <input type="text" name="address" class="form-control" id="inputAddress" placeholder="Улица габровска блок 123 вход б етаж 1" required>
+                        </div>
+
+                        <!-- <div class="form-group col-md-2">
+                            <label for="inputZip">Zip</label>
+                            <input type="text" class="form-control" id="inputZip">
+                        </div> -->
+                        <div class="form-group col-md-4 ">
+                            <label for="exampleFormControlTextarea1">Допълнителна информация</label>
+                            <textarea class="form-control" name="description"id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="totalSum">
+
+                        Междинна сума <%=cart.totalPrice.toFixed(2)%> лв.
+                        <%console.log(cart)%>
+                        <br>
+                            ДДС: <%=cart.ddsPrice.toFixed(2)%> лв.
+                            <br>
+                            <div class="deliveryPrice">
+                            Доставка: 
+                                <%=cart.dostavkaPrice == 0 ? "Безплатна" : `${cart.dostavkaPrice.toFixed(2)} лв.`%>
+                         
+                        </div>
+                            <div class="totalSumCalc mt-2">
+                            Общо: <%=cart.totalCheckout.toFixed(2)%> лв.
+                            </div>
+                    </div>
+                    <!-- Button for delivery pay-->
+                    <button type="submit" class="btn btn-primary">ЗАВЪРШИ ПОРЪЧКАТА</button>
+                    <!-- Button for paying with card -->
+                    <!-- <button class="btn btn-primary cardpay">Плати с карта</button> -->
+
+                </form>
+            </div>
+        </section>
+    </main>
+    <%- include("../layouts/headerAndFooter/footer.ejs")%>
+
+</body>
+<script
+src="https://code.jquery.com/jquery-3.6.0.min.js"
+integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+crossorigin="anonymous"
+></script>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+crossorigin="anonymous"
+></script>
+<script
+src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+crossorigin="anonymous"
+></script>
+
+<!-- Custom js -->
+
+<script src="../scripts/index.js"></script>
+<script src="../scripts/hamburger.js"></script>
+<!-- <script src="https://js.stripe.com/v3/"></script> -->
+
+<!-- <script src="scripts/checkoutcard.js"> -->
+<!-- </script> -->
+
+
+</html>

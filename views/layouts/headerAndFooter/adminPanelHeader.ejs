@@ -1,0 +1,38 @@
+<header class="wrapper fixed-top">
+    <nav id="sidebar" class="active">
+
+        <div class="sidebar-header ">
+
+            <h3>
+                <div style="color: #334ec7; font-weight: 700;">Админ Панел</div>
+                SoftOffice
+            </h3>
+        </div>
+        <hr>
+        <ul class="list-unstyled components">
+            <li><a href="/">Начало</a></li>
+            <li><a href="/admin/dostavki">Доставки</a></li>
+            <li><a href="/admin/products">Продукти</a></li>
+            <li><a href="/admin/promotions">Промоции</a></li>
+            <li><a href="/admin/products/getImages">Снимки</a></li>
+                    <li class="logoutButton">
+                        <form action="/account/logout?_method=DELETE" method="POST">
+                            <span class="glyphicon glyphicon-log-out"></span>
+                            <button type="submit" class="btn btn-danger logout text-light"> <i
+                                    class="fas fa-sign-out-alt"></i>
+                                Изход</button>
+                        </form>
+                    </li>
+        </ul>
+    </nav>
+    <div id="content">
+        <button type="button" id="sidebarCollapse" class="navbar-btn active">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+    <div class="wrapperBurger">
+        
+    </div>
+</header>

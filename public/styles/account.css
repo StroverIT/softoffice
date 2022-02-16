@@ -1,0 +1,108 @@
+*{
+  
+  margin: 0;
+  padding:0;
+  
+}
+body{
+  background-color: #f2f2f7;
+  overflow-x:hidden;
+
+}
+.sections{
+  margin:10% 10%;
+}
+.lineBreaker{
+  margin-top:-0.1%;
+}
+.accountSection{
+  margin-top:100px;
+  margin-bottom:100px;
+  padding: 200px 0;
+box-shadow: 10px 10px 10px grey;
+background-color: #fafafa;
+}
+.hiddenButton{
+  display: none;
+}
+
+.btnClicked::after{
+  content:"";
+  display: block;
+  width:calc(100px + 4vw);
+  height:2px;
+  color:red;
+  background-color: blue;
+}
+.slideButton{
+  font-size: calc(15px + 1vw);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.badgeQty{
+  background-color: blue;
+}
+
+/* ==== Account Section ==== */
+.accountInfo{
+  color:blue;
+}
+/* ==== Order container */
+
+.orderAddress{
+  color:rgb(82, 80, 80);
+  font-size: 1.5em;
+  font-weight: 700;
+
+}
+.orderBox{
+  position: relative;
+  margin-top:50px;
+  padding: 20px;
+  border:1px solid rgb(168, 166, 166);
+}
+.itemPrice{
+  color:rgb(92, 92, 240);
+}
+.totalPrice{
+  padding-top:20px;
+  font-weight: 1.25em;
+}
+#popupContainer{
+  z-index: 2;
+
+  width:100vw;
+  height: 120vh;
+  background: #0008;
+  position: absolute;
+top:50%;
+left:50%;
+transform: translate(-50%,-50%)
+}
+#popupBox{
+  z-index: 3;
+
+  background-color: white;
+  box-sizing: 20px;
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  width: 70%;
+  height: 60%;
+  border-radius: 10px;
+  overflow: scroll;  
+}
+#popupBox p{
+  font-size: 1em;
+  margin:40px 40px;
+}
+.closeIcon{
+  position: absolute;
+  right:0;
+  cursor: pointer;
+}
+.waitingOrderStatus{
+  font-weight: bold;
+  color:rgb(160, 160, 56);
+}

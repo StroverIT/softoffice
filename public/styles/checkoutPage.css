@@ -1,0 +1,25 @@
+*{
+    padding:0;
+    margin:0;
+}
+
+body{
+    overflow-x:hidden;
+}
+main{
+    margin: 150px 0;
+}
+h3{
+    padding-bottom: 20px;
+}
+.form-group {
+    padding-top:20px;
+}
+.totalSum{
+    padding: 10px 0;
+}
+.deliveryPrice{
+    border-bottom: 1px solid grey;
+    width:200px
+}
+

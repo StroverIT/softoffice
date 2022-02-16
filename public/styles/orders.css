@@ -1,0 +1,55 @@
+*{
+    margin: 0;
+    padding:0;
+}
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Oswald:wght@200;300&family=Roboto+Condensed:wght@300&family=Roboto:wght@300&display=swap');
+/* 
+font-family: 'Open Sans', sans-serif;
+font-family: 'Oswald', sans-serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Roboto Condensed', sans-serif; 
+*/
+.yourOrdersTitle{
+    font-weight: 700;
+    font-size: 2em;
+    text-transform: uppercase;
+    color:rgb(113, 113, 233);
+}
+.ordersSection{
+    margin-top:80px;
+    background-color: white;
+    box-shadow: 1px 1px 40px black;
+    padding: 5% 0;
+}
+.orderBox{
+    border: 1px solid rgb(92, 86, 86);
+    padding: 2% 2%;
+}
+
+.waitingOrderStatus{
+    font-weight: bold;
+    color:rgb(160, 160, 56);
+}
+@media (min-width: 500px) {
+    .orderContainer{
+        margin: 2% 10%
+    }
+}
+.itemTotalQty{
+    font-size: 1em;
+    color:rgb(243, 54, 54);
+}
+.takenOrderStatus{
+    color:blue;
+}
+.typeStatus{
+    font-size: 1.2em;
+}
+.address{
+font-family: 'Oswald', sans-serif;
+font-size: 1.5em;
+font-weight: 600;
+}
+.telephone{
+    color: #009200
+}

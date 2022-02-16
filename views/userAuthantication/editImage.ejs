@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("../layouts/bootstrapStyle.ejs")%>
+    <link rel="stylesheet" href="/styles/adminProducts.css" />
+    <link rel="stylesheet" href="/styles/adminItemEdit.css" />
+    <title>Admin Products edit item</title>
+  </head>
+
+  <body>
+    <%- include("../layouts/headerAndFooter/adminPanelHeader.ejs")%>
+
+    <main>
+      <!-- Here are showed collections -->
+      <section class="container-lg">
+        <section class="buttonsTypes d-flex justify-content-between">
+          <div>
+          <a href="/admin/products/<%=section%>/<%=imageId%>" class="btn btn-danger returnOneStep">Назад</a>
+        </div>
+        
+        </section>
+        <!-- 
+          TODO: 
+          When nothing is for edit => Make submit button not editable
+         -->
+           <section class="d-flex itemHeader my-2 p-3 editItemSection justify-content-center">
+            <form action="/admin/products/editImage/<%=section%>/<%=imageId%>" method="POST" enctype="multipart/form-data">
+                <div class="d-flex flex-column">
+            <div class="my-5">
+                <input type="file" name="image">
+            </div>
+            <div class="d-flex justify-content-center my-5">
+                <button type="submit" class="btn btn-success">Потвърди</button>
+            </div>
+            </div>
+
+            </form>
+           </section> 
+            <section class="itemOnPromotionSec d-none ">
+              <!-- 
+                Todo:
+                If nothing is changed, make button disabled
+                Or if 
+               -->
+               <section class="d-flex flex-column">
+               <div class="d-flex justify-content-center">
+                   Желаете ли да премахнете подсекцията? Моля потвърдете!
+               </div>
+     
+            </section>
+            </section>
+      </section>
+    </main>
+  </body>
+  <%- include("../layouts/bootstrapScripts.ejs")%> 
+  <%- include("../layouts/headerAndFooter/adminPanelScripts.ejs") %>
+
+  <script>
+
+  </script>
+</html>

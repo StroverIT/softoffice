@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("../layouts/bootstrapStyle.ejs")%>
+    <link rel="stylesheet" href="/styles/adminProducts.css" />
+    <link rel="stylesheet" href="/styles/adminPromotions.css" />
+    <title>Admin Products</title>
+  </head>
+
+  <body>
+    <%- include("../layouts/headerAndFooter/adminPanelHeader.ejs")%>
+    <main >
+      <!-- Here are showed collections -->
+      <section class="container-fluid container-md d-flex itemsSection flex-wrap justify-content-center shadow-lg">
+     
+           <%for(let promotion of promCollection){%>
+       
+            <section class="d-flex mx-3 flex-column itemContainer shadow">
+                <section class="viewItemSec">
+                    <a href="/admin/products/<%=promotion.section._id%>/show" class="viewItem">
+            <!-- IMG -->
+            <sectin class="titleSec d-flex justify-content-center">
+                    <div><%=promotion.section.showName%></div>
+                    <div class="mx-2"><%=promotion.subSec.showName%></div>
+            </sectin>
+            <section class="itemInfo">
+              <%const itemInfos = Object.entries(promotion.foundItem)%>
+             <%for(let [itemKey, itemValue] of itemInfos){%>
+                <section class="d-flex">
+                    <div><%=itemKey%>: </div>
+                    <div class="mx-2"><%=itemValue%></div>
+                </section>
+             <%}%>
+            </section>
+        </a>
+        </section>
+            <section class="d-flex justify-content-center my-2">
+                <form action="/admin/deletePromotion/<%=promotion._id%>/<%=promotion.foundItem._id%>/?_method=DELETE" method="POST">
+                <button class="btn btn-danger btn-sm">Премахни</button>
+            </form>
+            </section>
+       </section>
+
+           <%}%>
+      </section>
+    </main>
+  </body>
+  <%- include("../layouts/bootstrapScripts.ejs")%> <%-
+  include("../layouts/headerAndFooter/adminPanelScripts.ejs") %>
+
+  <script>
+   
+  </script>
+</html>

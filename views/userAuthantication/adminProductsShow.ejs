@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("../layouts/bootstrapStyle.ejs")%>
+        <link rel="stylesheet" href="/styles/adminProducts.css">
+        <link rel="stylesheet" href="/styles/adminProductsShow.css">
+        <title>Admin Products</title>
+</head>
+
+<body>
+    <%- include("../layouts/headerAndFooter/adminPanelHeader.ejs")%>
+
+        <main>
+            <!-- Here are showed collections -->
+
+         <section class="container-lg">
+            <a href="/admin/products" class="btn btn-danger"> Назад</a>
+                 <section class="itemHeader py-5">
+                     <%const sectionEntry = Object.entries(currentSection)%>
+                     <%sectionEntry.forEach((secItem,index)=>{%>
+                         <%const secKey = secItem[0]%>
+                         <%const secValue = secItem[1]%>
+                         <%if(Array.isArray(secValue)){%>
+                           <section class="mx-3 headSection">
+                               <section class="sectionName">
+                                   <%=secKey%>
+                               </section>
+                               <section class="itemSectionItems mx-2">
+
+                                <%secValue.forEach((subsecItem,subsecIindiex)=>{%>
+                                  
+                                    <section class="itemSectionCont m-3">
+                                        <div class="d-flex justify-content-end">
+                                            <a href="/admin/products/<%=currentSection.name%>/<%=subsecItem._id%>" class="btn btn-info btn-sm text-light editBtnSection">Редактирай</a>
+                                        </div>
+                                <%const subsecEntry = Object.entries(subsecItem)%>
+                                   <%subsecEntry.forEach((subsecElements,subIndex)=>{%>
+                                    <%const subsecKey = subsecElements[0]%>
+                                    <%const subsecValue = subsecElements[1]%>
+                                    <%if(Array.isArray(subsecValue)){%>
+                                            <section class="mx-3">
+                                                <div><%=subsecKey%></div>
+                                                <section class="mx-2 innerItemsSection">
+                                                  
+                                                <%subsecValue.forEach((subsecValueItem,index)=>{%>
+                                                    <%if(subsecValueItem){%>
+                                                    <section class="my-2 innerItemsCont">
+                                                        <div class="d-flex justify-content-end">
+                                                            <%console.log(subsecItem._id)%>
+                                                            <a href="/admin/products/<%=currentSection.name%>/<%=subsecItem.tiput%>/<%=subsecValueItem._id%>/edit"class="btn btn-info btn-sm text-light editsubSection" >Редактирай</a>
+                                                        </div>
+                                                    <%const subsecValueEntry = Object.entries(subsecValueItem)%>
+                                                <%subsecValueEntry.forEach((subsecInnerItem,subsecInnerIndex)=>{%>
+                                                    <%const subsecInnerKey = subsecInnerItem[0]%>
+                                                    <%const subsecInnerValue = subsecInnerItem[1]%>
+                                                    <section class="d-flex">
+                                                        <div class="px-2"><%=subsecInnerKey%>: </div>
+                                                        <div><%=subsecInnerValue%></div>
+                                                    </section>
+                                                <%})%>
+                                            </section>
+                                            <%}%>
+                                                <%})%>
+                                                </section>
+                                            </section>
+                                    <%}else if(typeof subsecValue == "object" && subsecKey != "_id" && subsecValue ){%>
+                                        <section>
+                                            <div class="mx-3"><%=subsecKey%></div>
+                                            <section class="mx-4">
+                                                <%const subsecValuesEntries  = Object.entries(subsecValue)%>
+                                                <%subsecValuesEntries.forEach((subsecElem, subsecIndex)=>{%>
+                                                    <%const subsecValuesKey = subsecElem[0]%>
+                                                    <%const subsecValuesValue = subsecElem[1]%>
+                                                    <section class="d-flex">
+                                                    <div class="px-2"><%=subsecValuesKey%>:</div>
+                                                    <div><%=subsecValuesValue%></div>
+                                                </section>
+                                                <%})%>
+                                               
+                                            </section>
+                                        </section>
+                                    <%}else{%>
+                                        <section class="d-flex m-2">
+                                        <div class="px-2"><%=subsecKey%>:</div>
+                                        <div><%=subsecValue%></div>
+                                    </section>
+                                   <%}%>
+                             
+                                   <%})%>
+                                    </section>
+                               <!-- Here -->
+                                <%})%>
+                            </section>
+                            </section>
+                            <section>
+                                <form action="/admin/products/newSubsection/<%=currentSection._id%>" method="post" enctype="multipart/form-data">
+                                <ul class="subsection d-none test"></ul>
+                                <div class="d-flex justify-content-center my-2">
+                                <button class="btn btn-secondary" id="newSection" type="button">Добави под секция</button>
+                               </div>
+                               <button type="submit" class="btn btn-success createNewSubsectionBtn d-none">Създай</button>
+                            </form>
+                            </section>
+                          
+                            </section>
+                         <%}else{%>
+                            <section class="d-flex m-2 headSection">
+                            <div class="px-2"><%=secKey%>: </div>
+                            <div><%=secValue%></div>
+                         </section>
+                          
+                        <% }%>
+                        
+                     <%})%>
+                     
+             </section>
+         </section>
+        </main>
+
+</body>
+<%- include("../layouts/bootstrapScripts.ejs")%>
+    <%- include("../layouts/headerAndFooter/adminPanelScripts.ejs") %>
+
+        <script>
+          
+                const path = location.pathname.split("/")
+
+            $(".returnButton").click(function(){
+                console.log(path)
+                window.location = `/admin/resources/${path[3]}`
+            })
+            console.log(location.pathname)
+            $(".editButton").click(function(){
+                window.location = `/admin/resources/${path[3]}/${path[4]}/edit`
+                })
+
+    $(document).ready(() => {
+      let lastHitted = 0
+      $(document).keydown(function(e){
+        $.fn.selectRange = function(start, end) {
+    if(end === undefined) {
+        end = start;
+    }
+    return this.each(function() {
+        if('selectionStart' in this) {
+            this.selectionStart = start;
+            this.selectionEnd = end;
+        } else if(this.setSelectionRange) {
+            this.setSelectionRange(start, end);
+        } else if(this.createTextRange) {
+            var range = this.createTextRange();
+            range.collapse(true);
+            range.moveEnd('character', end);
+            range.moveStart('character', start);
+            range.select();
+        }
+    });
+};
+$.fn.getCursorPosition = function() {
+        var el = $(this).get(0);
+        var pos = 0;
+        if('selectionStart' in el) {
+            pos = el.selectionStart;
+        } else if('selection' in document) {
+            el.focus();
+            var Sel = document.selection.createRange();
+            var SelLength = document.selection.createRange().text.length;
+            Sel.moveStart('character', -el.value.length);
+            pos = Sel.text.length - SelLength;
+        }
+        return pos;
+    }
+        // My current input I am writing on 
+        const currentTarget = $(e.target)
+        //Targeting next section for focusing
+      
+        const nextSection = currentTarget.parent().parent().parent().next()
+        const indexOfDoubleDots = currentTarget.val()
+
+        function getIndicesOfDots(inputVal){
+          // Pushing to array indices of double DOTS
+          const indicesOfDots = []
+          
+          // Regex for finding double dots
+          const regex = /:/gm
+          // This is for while cicle to find indices
+          let result
+          // While loop 
+          while((result = regex.exec(inputVal))){
+            indicesOfDots.push(result.index)
+          }
+          return indicesOfDots
+        }
+     
+        //Focus on the end into the next double dots in SAME input
+        if((e.key.toLowerCase() === "m"  || e.key.toLowerCase() === "м") && e.ctrlKey){
+          console.log("clicked m and control");
+          // Getting all indices of dots
+         const indexOfIndices = getIndicesOfDots(indexOfDoubleDots)
+          const currentPosition = currentTarget.getCursorPosition()
+         
+          const indicesLen = indexOfIndices.length
+          for(let i = 0;i < indicesLen;i++){
+            if(currentPosition <= indexOfIndices[i]){
+              lastHitted = i
+              currentTarget.selectRange(indexOfIndices[i]+ 2)
+              return  
+            }
+          }
+          if(currentPosition > indexOfIndices[indicesLen-1]){
+          currentTarget.selectRange(indexOfIndices[indexOfIndices-1]+ 2)
+          }
+        }
+        // Return if they are no next section
+        if(nextSection.length == 0) return
+        // Find the item section with that name
+        function findElement(input,type){
+          return input.find(type)
+        }
+        // Go to next item button and focus in the END of the input
+        if(e.key.toLowerCase() === "," && e.ctrlKey){
+          console.log("clicked m and control");
+          const tipove = findElement(nextSection, `label[for="tipove"]`).next()
+          const indexOfIndices = getIndicesOfDots(tipove.val())
+          tipove.selectRange(indexOfIndices[lastHitted] + 2)
+          
+          tipove.focus()
+        }
+        // Go to next button and focus on a section price || cena
+        if(e.key.toLowerCase() === "." && e.ctrlKey){
+          console.log("clicked dot and control");
+          // Get input for cena 
+          
+          const cena = findElement(nextSection, `label[for="cena"]`).next()
+          // Focus the input
+          cena.focus()
+        }
+    
+      })
+      //Logic for subsection
+      $("#newSection").click(async function () {
+        fetch("/admin/products/createProduct/newSubSection", {
+          method: "get",
+        })
+          .then(async (res) => {
+            const subsectionJson = await res.json();
+            // console.log(subsectionJson);
+
+            //Show subsection
+            if ($("ul.subsection li").length <= 0) {
+                $(".createNewSubsectionBtn").removeClass("d-none")
+              $(`ul.subsection`).removeClass("d-none");
+            }
+            // Create entries for subsection
+            const subsecEntries = Object.entries(subsectionJson);
+            // Get counter
+            const liCounter = $("ul.subsection li.subsectionItem").length;
+            // Create li elements
+            const subsection = $(`
+            <li class="my-2 subsectionItem"><div class="text-center text-danger">
+               ${liCounter}
+               </div></li>`);
+               //Head li creater
+               const subsectionUl = $(`<ul class="subsectionUlItems"></ul>`)
+            let i = 0;
+            while (subsecEntries[i][0] != "_id") {
+              const key = subsecEntries[i][0];
+              const value = subsecEntries[i][1];
+              // If image
+              if (key == "img") {
+                // itemUl.append(`<div class='imgTitle'>${key} Section</div>`)
+
+                // Section
+                // const sectionImg = $(`<li class="subsection-li"><section class="input-subsection"></section></li>`)
+                // UL FOR HEADER ITEMS
+                let imgEntries = Object.entries(value.items.properties);
+                // UL FOR ITEMS
+                const itemUl = $(`<ul class="imgSection"></ul>`)
+
+                // Start of while loop for images
+                let j = 0;
+                while (imgEntries[j][0] !== "_id") {
+                  const keyImg = imgEntries[j][0];
+                  const valueImg = imgEntries[j][1];
+                  if(valueImg.type !== "object"){
+                    itemUl.append(` <li><section class="imgSectionItems"><label for="${keyImg}">${keyImg}</label><input type="text" class="form-control" style="width:30%"> </section></li> `);
+                  }else{
+                    const imageUploadUl = $("<ul></ul>")
+                    const imgUploadEntries = Object.entries(valueImg.properties)
+                    imgUploadEntries.forEach((item)=>{
+                      const uploadKey = item[0]
+                      const uploadValue = item[1]
+                      if(uploadValue.type !== "buffer"){
+                        imageUploadUl.append(`
+                        <li>
+                          <section class="imgUpload">
+                            <label for="${uploadKey}"> ${uploadKey}</label>
+                            <input type="text" class="form-control" style="width:30% name="" ">
+                            </section>
+                          </li>
+                      `)
+                      }else{
+                        imageUploadUl.append(`
+                        <li>
+                          <section class="imgUpload">
+                            <label for="${uploadKey}"> ${uploadKey}</label>
+                            <input type="file" class="form-control" name="subsection[${liCounter}][img][img]" style="width:30%" multiple>
+                            </section>
+                          </li>
+                      `)
+                      }
+                      
+                    })
+                    itemUl.append(imageUploadUl)
+
+                  }
+                  // List items
+                  j++;
+                }
+                // itemUl.append(sectionImg);
+                subsection.append(itemUl)
+                // End of while looop
+                
+                // End of img if
+              } else {
+                if(value.type !== "array" && value.type !=="object"){
+                  // console.log(key, value)
+                  subsection.append(`<li class="subsection-li"><section class="input-subsection m-2">
+                          <label for="${key}">${key}</label>
+                            <input type="text" class="form-control" style="width: 60%"  name="subsection[${liCounter}][${key}]" >
+                        </section> </li>`);
+                }else{
+                  
+                   const section = $(`
+                   <li class="subsection-li">
+                    <section class="input-subsection m-2">
+                      <section class="valueForItemsSection text-center d-flex justify-content-center ">
+                                <button type="button" class="btn btn-info getFirstAddAll" id="getFirstAddToAll">Вземи от първата и сложи на всички типове</button>
+                                       <button type="button" class="btn btn-success createItemSub" id="createItemSub"> 
+                                            Добави тип
+                                        </button>
+                      </section>
+                          <ul class="d-flex flex-wrap" id="placedCreated">
+                           </ul>
+                  </section>
+                    </li>`)
+                     // Create subsection Items
+                 subsection.append(section)
+                // Get from first and add to all
+                const getFirstAddAll = subsection.find("#getFirstAddToAll").click(function(){
+                const allUl = $(this).parent().parent().find("#placedCreated").find("ul")
+
+                const firstUl = allUl.first()
+                const firstUlValues = []
+                if(allUl.length <=0) return
+                  const getAllLi = firstUl.find("li :input")
+                  $.each(getAllLi, function(index,product){
+                    firstUlValues.push(product.value)
+                  })
+                  $.each(allUl, function(index, ulItem){
+                    const liItemsUl = $(ulItem).find("li :input")
+                    $.each(liItemsUl, function(listIndex, item){
+                      item.value = firstUlValues[listIndex]
+                    })
+
+                  })
+                })
+                 const buttonAdd =subsection.find("#createItemSub")
+                 const ulListItems =subsection.find("#placedCreated")
+                 const valueOfItemChose = subsection.find("#itemChooseValue")[0]
+                buttonAdd.click(function(){
+                  const requiredItems = value.items.required
+                  const properties = Object.entries(value.items.properties)
+                  const counterItem =subsection.find("#placedCreated ul").length
+                  // This is global li
+                  const sectionList = $(`
+                  <ul class="itemListSection m-2 mt-4 pt-4">
+                    <div class="text-center text-info" id="itemListCounter">${counterItem} </div>
+                    <section class="itemBtn">
+                      ${ulListItems.find("ul").length > 0 ? ` <button class="btn btn-warning" type="button" id="copyBefore">Копирай предишната</button>`: "" }
+                    <button class="btn btn-danger" type="button" id="deleteItemSubsec">Изтрий</button>
+                    </section>
+                    </ul>
+                  `)
+                  // Items for creating more sections
+                  let j = 0;
+                  while(properties[j][0] !== "_id"){
+                    // get key value pairs
+                    const keyItems = properties[j][0]
+                    const valueItems= properties[j][1]
+                    // Inner if statement
+                   switch(valueItems.type){
+                      case "string":
+                      sectionList.append(`<li><section>
+                         <label for="${keyItems}">${keyItems}</label>
+                         <textarea name="subsection[${liCounter}][items][${counterItem}][${keyItems}]" type="text" class="form-control" ${(requiredItems.indexOf(keyItems) != -1) ? "required" : ""}></textarea>
+                         </section></li>`)
+                        break
+                        case "number":
+                      sectionList.append(`<li><section> 
+                        <label for="${keyItems}">${keyItems}</label>
+                        <input name="subsection[${liCounter}][items][${counterItem}][${keyItems}]" type="text" class="form-control" ${(requiredItems.indexOf(keyItems) != -1) ? "required" : ""}>
+                        </section></li>`)
+                          break
+                          case "boolean":
+                            // console.log(keyItems, valueItems, value.items)
+                      sectionList.append(`<li><section>
+                         <input class="form-check-input" type="checkbox" value="" id="${keyItems}"  ${(valueItems.default  == true) ? "checked"  : ""}>
+                          <label class="form-check-label" for="subsection[${liCounter}][items][${counterItem}][${keyItems}]">${keyItems}  </label>
+                          ${keyItems == "isOnPromotions" ? `<section class="isOnPromotions"> </section`: "" }
+                         </section></li>`)
+                            break
+                   }
+                    j++
+                  }
+                  sectionList.find("#isOnPromotions").click(function(){
+                    if($(this).is(":checked")){
+                      console.log("checked")
+                    $(this).parent().find(".isOnPromotions").append(`
+                    <section class="promotionInput d-flex flex-column">
+                      <div>
+                      <label for="oldPricePromotion">Стара Цена<label>
+                        <input type="text" class="form-control">
+                        </div>
+                        <div>
+                      <label for="oldPricePromotion">Нова Цена<label>
+                        <input type="text" class="form-control">
+                        </div>
+                      </section>
+                    `)
+
+                    }else if($(this).is(":not(:checked)")){
+                      console.log($(this).parent().find(".isOnPromotions").find(".promotionInput").remove())
+
+                    }
+                  })
+                  sectionList.find("#copyBefore").click(function(){
+                    const prevUl = $(this).parent().parent().prev()
+                    const prevUlValues = []
+                    const prevListItems = prevUl.find("li :input")
+                    $.each(prevListItems, function(index, record){
+                      prevUlValues.push(record.value)
+                    })
+                    const currentUl = $(this).parent().parent().find("li :input")
+                    $.each(currentUl, function(index, record){
+                      record.value = prevUlValues[index]
+
+                    })
+                  })
+                  sectionList.find("#deleteItemSubsec").click(function(){
+                    // ulListItems.find("ul").length > 0
+                    console.log(ulListItems.find("ul").length)
+                  $(this).closest("ul").fadeOut("slow",function(){
+                    $(this).remove()
+                  })
+                  })
+                  // Get value and append it that times
+                      ulListItems.append(sectionList)
+                })
+                // ---------- Of the the createItemSub
+                }
+             
+              }
+
+              i++;
+            }
+            $(".subsection").append(subsection);
+            
+          })
+          .catch((e) => {
+            if (e) {
+              console.log(e);
+            }
+          });
+      });
+      // End of create subsection
+     
+    });
+        </script>
+
+</html>

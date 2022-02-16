@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("../layouts/bootstrapStyle.ejs")%>
+    <link rel="stylesheet" href="../styles/adminProducts.css" />
+    <link rel="stylesheet" href="../styles/orders.css" />
+    <title>Доставки</title>
+  </head>
+
+  <body>
+    <%- include("../layouts/headerAndFooter/adminPanelHeader.ejs")%>
+
+    <main>
+      <%if(orders.length >0){%>
+      <section class="container ordersSection">
+        <div class="yourOrdersTitle text-center">Вашите поръчки</div>
+
+        <section class="orderContainer">
+          <%orders.forEach((orderContainer,index)=>{%>
+
+          <section class="orderBox mt-5 m-0">
+            <div class="d-flex justify-content-end">
+              <%if(orderContainer.name){%> <%=orderContainer.name%> <%}%>
+            </div>
+            <div class="address text-center my-3">
+              <div><%=orderContainer.address%></div>
+
+              <div>
+                <span class="telephone">0<%=orderContainer.telephone%></span>
+              </div>
+            </div>
+            <div class="cartContainer">
+              <section class="items">
+                <%const entries = Object.entries(orderContainer.cart.items)%>
+                <%entries.forEach((item)=>{%>
+                <div class="head-type-section d-flex text-center">
+                  <div>| <%=item[1].item.headSection.nameToDisplay%></div>
+                  <div class="mx-2"> <%=item[1].item.subSection.nameToDisplay%> |</div>
+                  <div class="mr-5">Бройки: <span> <%=item[1].totalQty%></span></div>
+                  <div class="mx-2">| Цена: <span class="itemTotalQty"><%=(item[1].cena).toFixed(2)%> лв.</span> |</div>
+                
+                </div>
+                  <section class="itemTypes d-flex flex-column">
+               <%const itemTypes = (item[1].item.typeSection.tipove).split(";")%>
+                      <ul>
+                        <%itemTypes.forEach(itemtype=>{%>
+                          <%console.log(itemtype)%>
+                            <%if(itemtype.length > 0){%>
+                        <li><%=itemtype%></li>  
+                          <%  }%>
+                        <%})%>
+                </ul>
+                  </section>
+                <%})%>
+              </section>
+              <section class="footerOrder d-flex justify-content-between py-2">
+                <section class="totalPrice">
+                <div>
+                  Цена:   <%=orderContainer.cart.totalPrice.toFixed(2)%> лв.
+                </div>
+                <div>
+                  Цена с ддс: <%=orderContainer.cart.ddsPrice.toFixed(2)%> лв.
+                </div>
+                <div>
+                  Доставка: <%=orderContainer.cart.dostavkaPrice == 0 ? "Безплатна" : `${orderContainer.cart.dostavkaPrice.toFixed(2)} лв.`%>
+                </div>
+                  <div>
+                    Общо: <%=orderContainer.cart.totalCheckout.toFixed(2)%> лв.
+                    
+                  </div>
+                </section>
+                <section class="statusOrderContainer">
+                  <span class="statusOrder"
+                    >Статус на поръчката:
+                    <div class="d-flex justify-content-end typeStatus">
+                      <%if (orderContainer.orderStatus == "waiting"){%>
+                      <span class="waitingOrderStatus"> Изчаква се... </span>
+                      <%}else if(orderContainer.orderStatus == "taken"){%>
+                      <span class="takenOrderStatus text-info"> Взета </span>
+                      <%}else if(orderContainer.orderStatus == "finished"){%>
+                      <span class="finishedOrderStatus text-success">
+                        Приключена
+                      </span>
+                      <%}%>
+                    </div>
+                  </span>
+                </section>
+              </section>
+            </div>
+            <section class="buttons d-flex justify-content-center mt-md-3">
+              <div class="px-sm-2 px-md-5">
+                <form
+                  action="/admin/dostavki/<%=orderContainer._id%>/taken"
+                  method="post"
+                >
+                  <button type="submit" class="btn btn-info text-light">
+                    Вземи
+                  </button>
+                </form>
+              </div>
+              <div class="px-sm-2 px-md-5">
+                <form
+                  action="/admin/dostavki/<%=orderContainer._id%>/finished"
+                  method="post"
+                >
+                  <button type="submit" class="btn btn-success">
+                    Приключи
+                  </button>
+                </form>
+              </div>
+              <div class="px-sm-2 px-md-5">
+                <!-- change it to remove, but for not is that -->
+                <form
+                  action="/admin/dostavki/<%=orderContainer._id%>?_method=DELETE"
+                  method="post"
+                >
+                  <button type="submit" class="btn btn-danger">Изтрий</button>
+                </form>
+              </div>
+            </section>
+          </section>
+
+          <% })%>
+        </section>
+      </section>
+      <%}else{%>
+      <section class="container ordersSection">
+        <div class="yourOrdersTitle text-center">Нямате поръчки</div>
+      </section>
+      <%}%>
+    </main>
+  </body>
+  <%- include("../layouts/bootstrapScripts.ejs")%> <%-
+  include("../layouts/headerAndFooter/adminPanelScripts.ejs") %>
+
+  <script>
+    const path = location.pathname.split("/");
+
+    $(".returnButton").click(function () {
+      console.log(path);
+      window.location = `/admin/resources/${path[3]}`;
+    });
+    console.log(location.pathname);
+    $(".editButton").click(function () {
+      window.location = `/admin/resources/${path[3]}/${path[4]}/edit`;
+    });
+  </script>
+</html>

@@ -1,0 +1,53 @@
+
+main{
+    margin-top:240px;
+}
+body{
+         background-color: rgb(230, 228, 228);
+}
+.itemHeader{
+    background-color: #fafafafa;
+}
+.headSection{
+    border: 1px solid rgb(105, 105, 237);
+    border-left: 3px solid rgb(105, 105, 237);
+}
+.itemSectionCont{
+    /* margin: 1% 8%; */
+    border: 1px solid rgb(105, 105, 237);
+    border-left: 3px solid rgb(105, 105, 237);
+}
+.itemSectionItems{
+        /* border: 1px solid rgb(105, 105, 237);
+    border-left: 3px solid rgb(105, 105, 237); */
+}
+.editBtnSection{
+}
+.innerItemsCont{
+    border: 1px solid rgb(105, 105, 237);
+    border-left: 3px solid rgb(105, 105, 237);
+}
+.createItem{
+    background-color: rgb(230, 228, 228);
+}
+label{
+    color:rgb(77, 70, 70);
+    font-weight: 600;
+}
+ul li{
+    list-style-type: none;
+}
+.subsection{
+    border: 1px solid black
+}
+.subsectionItem{
+    margin: 50px 0!important;
+    border: 1px solid black
+}
+.imgSection{
+    border:  1px solid grey;
+}
+.imgTitle{
+    color:grey;
+    font-size: 1.25em;
+}

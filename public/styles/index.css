@@ -1,0 +1,474 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Roboto:wght@500;700&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Roboto+Condensed:wght@700&family=Roboto:wght@500;700&display=swap");
+
+html,
+body {
+  position: relative;
+  overflow-x: hidden;
+margin: 0;
+padding:0;
+background: #eee;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+color: #000;
+
+}
+
+
+/* Colors */
+:root {
+  --darkBlue: #0d6efd;
+  --lightBlue: #00a4ac;
+}
+ul li {
+  font-family: "Roboto", sans-serif;
+}
+h5 {
+  font-family: "Roboto", sans-serif;
+}
+.very-light-blue {
+  background-color: #bfe6e7;
+}
+.dark-blue {
+  background-color: var(--darkBlue);
+}
+/* Global styles */
+.container-fluid {
+  margin: 0;
+  padding: 0% 6%;
+}
+main {
+  background-color: #f2f2f7;
+}
+
+.carousel {
+  position: relative;
+  height: 70vh;
+  width: 100%;
+  margin: 0 auto;
+  z-index: 1;
+}
+@media (min-width: 768px) {
+  .carousel {
+    height: 100vh;
+  }
+}
+.carousel-container {
+  padding: 0;
+}
+.carousel__images {
+  width: 100%;
+  height: 100%;
+  /* object-fit: fit; */
+  object-fit: cover;
+  object-position:20% 100%;
+}
+.carousel__track-container {
+  height: 100%;
+  overflow: hidden;
+}
+.carousel__track {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  position: relative;
+  height: 100%;
+  transition: transform 250ms ease-in;
+}
+
+.freeDeliveryBox {
+  margin-top: 15%;
+}
+.carousel__track .freeDeliveryContainer {
+  background: linear-gradient(rgb(179, 213, 245), rgb(0, 55, 100));
+}
+.darkBlueText {
+  font-weight: 800;
+  /* color: orange; */
+
+  /* color: black; */
+}
+
+.freeDeveliveryText {
+  margin-top: 15%;
+  font-family: "Comfortaa", cursive;
+  color: white;
+  word-wrap: break-word;
+  /* color: rgb(179, 63, 64); */
+  letter-spacing: 0.2em;
+  font-size: 2em;
+}
+
+.freedelivery img {
+  position: absolute;
+
+  height: 75%;
+  width: 50%;
+  object-fit: contain;
+
+  /* filter: drop-shadow(0.75rem 0.75rem 0.75rem 0.75rem white); */
+}
+.blurBackground {
+  background: black;
+  height: 100px;
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  left: 49%;
+  transform: translate(-50%, -50%);
+  filter: blur(49px);
+}
+.carousel__slide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+@media (max-width: 500px) {
+  .carousel__slide {
+    height: 100%;
+  }
+}
+.carousel__button {
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 200px;
+  background: transparent;
+  border: none;
+}
+.carousel__button i {
+  width: 100px;
+  font-size: calc(35px + 2vw);
+  color: var(--lightBlue);
+  opacity: 80%;
+}
+.carousel__button--left {
+  left: -20px;
+}
+.carousel__button--right {
+  right: -20px;
+}
+.carousel__nav {
+  /* background: pink; */
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 0;
+}
+.carousel__indicator {
+  /* border: 0; */
+  border-radius: 50%;
+  width: calc(10px + 2vw);
+  height: calc(10px + 2vw);
+  border: 1px solid var(--lightBlue);
+  background: none;
+  margin: 0 4px;
+}
+.carousel__indicator.current-slide {
+  background: var(--lightBlue);
+  opacity: 75%;
+}
+.fa-chevron-left {
+  font-size: 100px;
+  color: black;
+}
+.fa-chevron-right {
+  font-size: 100px;
+  color: black;
+}
+.is-hidden {
+  display: none;
+}
+
+/* Second section */
+.smallIconsContainer {
+  margin: 20px auto;
+}
+.smallIconsBox {
+  margin: 10px 20px;
+  font-size: calc(1rem + 3vw);
+}
+
+.smallIconsBox p {
+  white-space: nowrap;
+  font-size: calc(0.5rem + 1vw);
+  font-weight: 500;
+}
+
+/* Section sliding effect */
+.smallIconsContainer {
+  position: relative;
+}
+.smallIconsContainer-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-points-x: repeat(300px);
+  scroll-snap-type: mandatory;
+  text-align: justify;
+}
+.smallIconLine {
+  height: calc(70px + 1vw);
+  width: 2px;
+  margin: auto 2vw;
+  background: rgb(136, 136, 136);
+  opacity: 0.4;
+  transform: rotate(20deg);
+}
+
+/* Catalogue */
+.campainContainer {
+  margin-top: -20px;
+  position: relative;
+}
+.campainContainer .officeFurniture .bg-image {
+  /* Add the blur effect */
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+
+  /* Center and scale the image nicely */
+  /* background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; */
+}
+.officeFurniture > a > div {
+  position: relative;
+}
+.officeFurniture .bg-text {
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: 500;
+  letter-spacing: 3px;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 35%;
+  left: 10%;
+  z-index: 3;
+  padding: 20px;
+  width: 80%;
+  text-align: center;
+}
+.campainImg {
+  padding-top: 20px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.campainContainer > div > div {
+  position: relative;
+}
+.seeAll {
+  background-color: var(--lightBlue);
+  color: white;
+  position: absolute;
+  padding: calc(1px + 0.5vw);
+  top: 85%;
+  left: 80%;
+  border-radius: 2px;
+  z-index: 1;
+  font-size: calc(0.5em + 0.5vw);
+}
+
+/* About soft office */
+
+/* Swiper */
+.promotionContainer {
+  margin-top: 60px;
+
+}
+.promotionHeader span{
+  background: #f2f2f7;
+  color: var(--lightBlue)
+
+}
+.promotionHeader::after{
+  content:"";
+  /* background-color: grey; */
+  background-color: var(--lightBlue);
+
+  display: block;
+  position: absolute;
+  top:40%;
+  right: 50%;
+  width: 80vw;
+  height: 2px;
+  z-index: -1;
+}
+.promotionHeader::before{
+  content:"";
+  /* background-color: grey; */
+  background-color: var(--lightBlue);
+
+  display: block;
+  position: absolute;
+  top:40%;
+  left:50%;
+  width: 80vw;
+  height: 2px;
+  z-index: -1;
+}
+.promotionContainer p a {
+  text-decoration: none;
+  color: var(--lightBlue);
+}
+
+.promotionHeader{
+  background: #f2f2f7;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+}
+.container-swiper{
+  width: 90% !important;
+
+  padding: 10px 40px !important;
+}
+
+.container .swiper-container{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.container .swiper-slide {
+  position: relative;
+  text-align: center;
+  font-size: calc(14px + 0.25vw);
+  font-weight: 500;
+  background: #fff;
+  border-radius: 15px;
+  text-align: start;
+  box-shadow: 0px 4px 4px rgba(196, 196, 196, 0.25);
+  height: 600px;
+  min-height: 30vh;
+  max-height: 400px;
+}
+.swiper-wrapper{
+  padding: 20px 0;
+}
+.container .swiper-slide img{
+   display: block;
+    width: 100%;
+    height: 180px;
+    /* min-height: 400px; */
+    object-fit: fill;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+}
+.promotionText{
+  font-size: calc(0.81em);
+  font-family: 'Roboto Mono', monospace;
+
+}
+.container .swiper-slide .card-description{
+    padding:2rem 1rem;
+}
+.container .swiper-slide .card-title,.container .swiper-slide .card-text{
+   margin-bottom: .5rem;
+}
+.container .swiper-slide .card-link{
+   /* text-align: center; */
+   margin-top: auto ;
+
+   /* color: #1d6ce2; */
+
+  
+}
+/* Pricing in promotions */
+.precentageRate{
+  top: -2%;
+  right:-4%;
+padding: 5px;
+  background-color:rgb(11, 163, 209) ;
+  color:rgb(255, 255, 255);
+  border-radius: 200px;
+  font-size: 0.8em;
+}
+
+.item-total-pricing{
+  font-size: 1.6em;
+  font-weight: 500;
+
+}
+.pricingDots{
+  font-size: 0.5em;
+  margin-top:5px !important;
+  padding:0 !important;
+}
+.pricingDots div{
+  margin:0 !important;
+  padding:0 !important;
+  font-size: 1.8em;
+  height: 10px;
+}
+.decimalPrice{
+  margin-bottom: -30px !important;
+  font-weight: 400;
+  width: 20px;
+
+}
+.currency{
+  font-weight: 100;
+
+}
+.itemPrice{
+  position: relative;
+  color:grey;
+}
+.itemPrice::before{
+  content: "";
+  position: absolute;
+  border: 1.25px solid grey;
+  border-left: 30px solid grey;
+  width: 0;
+  height: 0;
+transform:  rotate(130deg);
+top: 52%;
+left: -17%;
+  border-radius: 10px;
+}
+.promotionalPrice{
+  color: rgb(11, 163, 209);
+
+}
+/* 
+.swiper-button-next{
+    right: 26px !important;
+}
+.swiper-button-prev{
+    left: 26px !important;
+} */
+/* About soft office */
+.aboutSoftOffice {
+  margin-top: 4em;
+  margin-bottom: 4rem;
+}
+.aboutSoftOffice h1 {
+  color: var(--lightBlue);
+  font-weight: 350;
+}
+.aboutSoftOffice .badge {
+  color: black;
+  padding-top: 20px;
+  font-size: calc(0.5rem + 1vw);
+  line-height: 150%;
+  font-weight: 350;
+  text-align: left;
+}
+.aboutImage {
+  width: calc(150px + 1vw);
+  height: calc(150px + 1vw);
+}
