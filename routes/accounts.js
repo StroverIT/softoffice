@@ -137,7 +137,7 @@ router.post("/register", checkNotAuthenticated, async (req, res) => {
     <br>
     <a href="https://${process.env.BASE_URL}/account/verify/${user._id}/${token.token}">Цъкни тук</a>
     `
-await sendEmail(user.email, "verify email", message)
+await sendEmail("softofficepayment@gmail.com",user.email, "verify email", message)
 
     res.redirect("/account/login");
  
@@ -192,7 +192,7 @@ router.post("/forgotenPassword",checkNotAuthenticated, async(req,res)=>{
     <br>
     <a href="https://${process.env.BASE_URL}/account/resetPassword/${isFound._id}/${token.token}">Цъкни тук</a>
     `
-  await sendEmail(isFound.email, "verify email", message)
+  await sendEmail("softofficepayment@gmail.com",isFound.email, "verify email", message)
 
   }else{
     req.flash("forgottenPass", "Не беше намерен такъв имейл!")

@@ -3,7 +3,7 @@ const {google} = require("googleapis")
 
 const oAuth2Client = new google.auth.OAuth2(process.env.CLIENT_ID, process.env.CLIENT_SECRET, process.env.REDIRECT_URI)
 oAuth2Client.setCredentials({refresh_token: process.env.REFRESH_TOKEN})
-const sendEmail = async (email, subject, text) => {
+const sendEmail = async (fromEmail, email, subject, text) => {
   try {
     const accessToken = await oAuth2Client.getAccessToken()
 
@@ -21,7 +21,8 @@ const sendEmail = async (email, subject, text) => {
     });
 
     await transporter.sendMail({
-      from: "softofficepayment@gmail.com",
+      // from: "softofficepayment@gmail.com",
+      from: fromEmail,
       to: email,
       subject: subject,
       html: text,

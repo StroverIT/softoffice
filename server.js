@@ -37,6 +37,8 @@ const Token = require("./models/token")
 const { array_jsonSchema } = require("mongoose-schema-jsonschema/lib/types");
 //Collections
 const promotionCollection = db.collection("promotion")
+//Functions
+const emailSender = require("./utils/email.js")
 // Public
 app.use(
   session({
@@ -114,34 +116,12 @@ app.get("/contactUs", (req, res, next) => {
   res.render(path.resolve("views/otherPages/contactUs.ejs"));
 });
 app.post("/contactUs", (req, res, next) => {
-  // console.log(req.body);
-  // const transporter = nodemailer.createTransport({
-  //   secure: true,
-  //   service: "abv",
-  //   auth: {
-  //     user: `emilzlatinov1@gmail.bg`,
-  //     pass: `nqmamBrat`,
-  //   },
-  //   tls: {
-  //     rejectUnauthorized: false,
-  //   },
-  // });
-
-  // const mailOptions = {
-  //   from: req.body.email,
-  //   to: `emilzlatinov1@gmail.bg`,
-  //   subject: `Message from ${req.body.email}: ${req.body.problem}`,
-  //   text: req.body.message,
-  // };
-  // transporter.sendMail(mailOptions, (error, info) => {
-  //   if (error) {
-  //     console.log(error);
-  //     res.send("error");
-  //   } else {
-  //     console.log(`Email send: ${info.response}`);
-  //     res.send("success");
-  //   }
-  // });
+  const name = req.body.name
+  const email = req.body.email
+  const problem = req.body.problem //Subject
+  const message = `${name} ви изпрати следното съобщение: </br>${req.body.message}`
+  
+  emailSender(email, "softofficepayment@gmail.com", problem, message)
 });
 //Cart
 app.get("/cart/:id/:qty", async (req, res, next) => {
