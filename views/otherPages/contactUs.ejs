@@ -18,7 +18,7 @@
     <!-- Font awesome -->
     <script src="https://kit.fontawesome.com/0593828612.js" crossorigin="anonymous"></script>
     <!-- Style for nav and footer -->
-    <link rel="stylesheet" href="../styles/navAndFooter.css" />
+    <link rel="stylesheet" href="/styles/navAndFooter.css" />
     <!-- Google fonts Roboto -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -30,8 +30,8 @@
     <link rel="stylesheet" href="/styles/hamburger.css" />
     <!-- Main style sheet for contenct-->
 
-    <link rel="stylesheet" href="../styles/hamburger.css" />
-    <link rel="stylesheet" href="../styles/contactForm.css">
+    <link rel="stylesheet" href="/styles/hamburger.css" />
+    <link rel="stylesheet" href="/styles/contactForm.css">
     <title>За нас</title>
 </head>
 
@@ -56,7 +56,9 @@
                    </div>
                    <div class="col-12 col-md-6 formContainer" data-aos="fade-left" data-aos-duration="1000">
                      <div class="message text-success">
-                      
+                       <%if(contactMess){%>
+                         <%=contactMess[0]%>
+                       <%}%>
                      </div>
             <form class="contact-form">
                 <div class="form-group">
