@@ -59,7 +59,6 @@ app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 app.set("layout", "layouts/layout");
 app.use(express.static(__dirname + "/public"));
-app.use(flash())
 // app.use("/", express.static(__dirname + "public"))
 app.use((req, res, next) => {
   console.log(`Incoming request: ${req.path}`);
@@ -68,6 +67,7 @@ app.use((req, res, next) => {
 });
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash())
 app.use(async function (req, res, next) {
   if(req.session &&req.session.passport && req.session.passport ){
     const userId = req.session.passport.user
@@ -81,7 +81,6 @@ app.use(async function (req, res, next) {
   }
   }
 
-  console.log(req.session);
   res.locals.session = req.session;
   next();
 });
@@ -116,20 +115,16 @@ app.get("/contactUs", (req, res, next) => {
   const contactMess = req.flash("contactMess")
   res.render(path.resolve("views/otherPages/contactUs.ejs"), {contactMess});
 });
-app.post("/contactUs", async (req, res, next) => {
-  const name = req.body.name
-  const email = req.body.email
-  const problem = req.body.problem 
-  const message = `${name} ви изпрати следното съобщение: ${req.body.message}`
+app.post("/contactUs", async (req, res, next) => {  
   try{
-    await sendEmail(email, "softofficepayment@gmail.com", problem, message)
-    req.flash("contactMess", "Съобщението ви беше изпратено успешно!")
+
+  const message = `от ${req.body.user} - ${req.body.message}`
+    await sendEmail( req.body.email, "softofficepayment@gmail.com", req.body.problem , message)
+    req.flash("contactMess", "Съобщението ви беше изпратено успешно")
     res.redirect("/contactUs")
   }catch(e){
     if(e) console.log(e);
   }
-
-
 });
 //Cart
 app.get("/cart/:id/:qty", async (req, res, next) => {

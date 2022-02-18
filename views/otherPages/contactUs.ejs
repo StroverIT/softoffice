@@ -55,23 +55,23 @@
                        </div>
                    </div>
                    <div class="col-12 col-md-6 formContainer" data-aos="fade-left" data-aos-duration="1000">
-                     <div class="message text-success">
-                       <%if(contactMess){%>
-                         <%=contactMess[0]%>
-                       <%}%>
-                     </div>
-            <form class="contact-form">
+                    <div class="message d-flex justify-content-center text-success">
+                      <%if(contactMess){%>
+                        <%=contactMess[0]%>
+                      <%}%>
+                    </div>
+            <form class="contact-form" action="/contactUs" method="POST">
+              <div class="form-group">
+                <input id="user" type="text" class="form-control"  placeholder="Име" name="user" required>
+              </div>
                 <div class="form-group">
-                  <input id="name" type="text" class="form-control" id="formGroupExampleInput"  placeholder="Име"required>
+                  <input id="email" type="email" class="form-control"  placeholder="И-мейл" name="emai" required>
                 </div>
                 <div class="form-group">
-                  <input id="email" type="email" class="form-control" id="formGroupExampleInput2" placeholder="И-мейл" required>
-                </div>
-                <div class="form-group">
-                    <input id="problem" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Молба/Проблем"required>
+                    <input id="problem" type="text" class="form-control" placeholder="Молба/Проблем" name="problem" required>
                   </div>
                   <div class="form-group">
-                    <textarea id="message" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Описание" required></textarea>
+                    <textarea id="message" class="form-control" rows="3" placeholder="Описание" name="message" required></textarea>
                   </div>
                   <div class="d-flex justify-content-center p-2">
                   <button type="submit" class="btn btn-info text-light ">Изпрати</button>
@@ -102,6 +102,6 @@
 
 <script src="../scripts/index.js"></script>
 <script src="../scripts/hamburger.js"></script>
-<script src="../scripts/contactUs.js"></script>
+<!-- <script src="../scripts/contactUs.js"></script> -->
 
 </html>
