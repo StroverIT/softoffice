@@ -1,0 +1,13 @@
+main{
+    margin-top:200px;
+}
+.important-info-section{
+    color:red;
+    font-weight: 700;
+    font-size: 2em;
+}
+.important-info{
+    font-size: 0.5em;
+    color: black;
+    font-weight: 500;
+}
