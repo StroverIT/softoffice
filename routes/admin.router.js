@@ -230,14 +230,17 @@ outer: for(const item of foundSection.subsection){
   if(item._id == id){
     if(item.img){
       itemImg = item.img.originalname
-
     }
     break outer
   }
 }
-if(itemImg){
+if(itemImg  ){
+
   const filePath = path.resolve(`public/uploads/${itemImg}`)
-  fs.unlinkSync(filePath);
+  if(fs.existsSync(filePath)){
+    fs.unlinkSync(filePath);
+  }
+
 }
 
  db.collection('products').updateOne({"subsection._id": ObjectId(id)},{$pull:{"subsection":{"_id":ObjectId(id)}}},{multi:true},function(err,result){
