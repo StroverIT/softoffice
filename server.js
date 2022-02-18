@@ -113,7 +113,7 @@ app.get("/aboutUs", (req, res, next) => {
   res.render(path.resolve("views/otherPages/aboutUs.ejs"));
 });
 app.get("/contactUs", (req, res, next) => {
-  const contactMess = req.flash("contactMess")
+  // const contactMess = req.flash("contactMess")
   res.render(path.resolve("views/otherPages/contactUs.ejs"), {contactMess});
 });
 app.post("/contactUs", (req, res, next) => {
@@ -123,7 +123,7 @@ app.post("/contactUs", (req, res, next) => {
   const message = `${name} ви изпрати следното съобщение: </br>${req.body.message}`
   
   emailSender(email, "softofficepayment@gmail.com", problem, message)
-  req.flash("contactMess", "Съобщението ви беше изпратено успешно!")
+  // req.flash("contactMess", "Съобщението ви беше изпратено успешно!")
   res.redirect(req.get("referer"))
 
 });
