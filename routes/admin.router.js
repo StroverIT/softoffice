@@ -281,6 +281,7 @@ router.post("/products/editImage/:section/:imageId",checkAuthanticatedAdmin, upl
       const filePath = path.resolve(`public/uploads/${origName}`)
       console.log(filePath);
       if(fs.existsSync(filePath)){
+        console.log("FOUND")
         fs.unlinkSync(filePath);
       }
     }
