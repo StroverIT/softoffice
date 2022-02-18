@@ -114,7 +114,7 @@ app.get("/aboutUs", (req, res, next) => {
 });
 app.get("/contactUs", (req, res, next) => {
   // const contactMess = req.flash("contactMess")
-  res.render(path.resolve("views/otherPages/contactUs.ejs"), {contactMess});
+  res.render(path.resolve("views/otherPages/contactUs.ejs"));
 });
 app.post("/contactUs", (req, res, next) => {
   const name = req.body.name
