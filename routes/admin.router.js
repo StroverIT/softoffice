@@ -277,13 +277,23 @@ router.post("/products/editImage/:section/:imageId",checkAuthanticatedAdmin, upl
     }
     
     const origName = img.img.originalname
+
     if(img && origName){
       const filePath = path.resolve(`public/uploads/${origName}`)
-      console.log(filePath);
-      if(fs.existsSync(filePath)){
-        console.log("FOUND")
+      console.log("filePath", filePath);
+      try {
+        fs.accessSync(filePath, fs.constants.R_OK | fs.constants.W_OK);
+        console.log("can read/write:", path);
         fs.unlinkSync(filePath);
+
+      } catch (err) {
+        console.log("no access:", path);
+        console.error(err);
       }
+      // if(fs.existsSync(filePath)){
+      //   console.log("FOUND")
+      //   fs.unlinkSync(filePath);
+      // }
     }
     console.log(imageId);
     if(req.files){
