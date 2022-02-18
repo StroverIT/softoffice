@@ -59,7 +59,7 @@ app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 app.set("layout", "layouts/layout");
 app.use(express.static(__dirname + "/public"));
-
+app.use(flash())
 // app.use("/", express.static(__dirname + "public"))
 app.use((req, res, next) => {
   console.log(`Incoming request: ${req.path}`);
@@ -113,7 +113,8 @@ app.get("/aboutUs", (req, res, next) => {
   res.render(path.resolve("views/otherPages/aboutUs.ejs"));
 });
 app.get("/contactUs", (req, res, next) => {
-  res.render(path.resolve("views/otherPages/contactUs.ejs"));
+  const contactMess = req.flash("contactMess")
+  res.render(path.resolve("views/otherPages/contactUs.ejs"), {contactMess});
 });
 app.post("/contactUs", (req, res, next) => {
   const name = req.body.name
@@ -122,6 +123,9 @@ app.post("/contactUs", (req, res, next) => {
   const message = `${name} ви изпрати следното съобщение: </br>${req.body.message}`
   
   emailSender(email, "softofficepayment@gmail.com", problem, message)
+  req.flash("contactMess", "Съобщението ви беше изпратено успешно!")
+  res.redirect(req.get("referer"))
+
 });
 //Cart
 app.get("/cart/:id/:qty", async (req, res, next) => {
