@@ -234,8 +234,7 @@ outer: for(const item of foundSection.subsection){
     break outer
   }
 }
-if(itemImg  ){
-
+if(itemImg){
   const filePath = path.resolve(`public/uploads/${itemImg}`)
   if(fs.existsSync(filePath)){
     fs.unlinkSync(filePath);
@@ -280,9 +279,9 @@ router.post("/products/editImage/:section/:imageId",checkAuthanticatedAdmin, upl
     const origName = img.img.originalname
     if(img && origName){
       const filePath = path.resolve(`public/uploads/${origName}`)
+      console.log(filePath);
       if(fs.existsSync(filePath)){
         fs.unlinkSync(filePath);
-
       }
     }
     console.log(imageId);
