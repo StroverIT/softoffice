@@ -282,7 +282,7 @@ router.post("/products/editImage/:section/:imageId",checkAuthanticatedAdmin, upl
       console.log(filePath);
       if(fs.existsSync(filePath)){
         console.log("FOUND")
-        // fs.unlinkSync(filePath);
+        fs.unlinkSync(filePath);
       }
     }
     console.log(imageId);
