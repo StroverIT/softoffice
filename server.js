@@ -279,6 +279,8 @@ app.post("/getProductsSearch", async (req, res) => {
               foundItems.push({
                 section: searchedItem.name,
                 subsection: subItem.tiput,
+                secDisplay: searchedItem.nameToDisplay,
+                subSecDisplay: subItem.nameToDisplay
               })
             }
         }

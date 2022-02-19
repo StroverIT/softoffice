@@ -107,8 +107,8 @@ function sendData(e){
           searchResult.innerHTML +=`
           <a href="/products/${item.section}/${item.subsection}">
         <div class="itemSearch">
-        ${item.section}
-        ${item.subsection}
+        ${item.secDisplay}
+        ${item.subSecDisplay}
         </div>
         </a>
           `
