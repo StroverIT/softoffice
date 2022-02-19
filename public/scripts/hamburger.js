@@ -91,11 +91,27 @@ function sendData(e){
       }, 
       body: JSON.stringify({payload: e.value})
     }).then(res=> res.json()).then(data=>{
+      console.log(data)
+      let subsectionItems = data.subsection 
       let payload = data.payload
       searchResult.innerHTML = ""
-      if(payload.length < 1){
+      if(payload.length < 1 && subsectionItems.length < 1){
         searchResult.innerHTML = "<p>Няма намерен резултат</p>"
         return
+      }
+      if(subsectionItems.length > 0){
+        subsectionItems.forEach((item,index)=>{
+          
+          if(index > 0 )searchResult.innerHTML +=" <hr>"
+          console.log(item);
+          searchResult.innerHTML +=`
+          <a href="/products/${item.section}/${item.subsection}">
+        <div class="itemSearch">
+        ${item.subsection}
+        </div>
+        </a>
+          `
+        })
       }
       payload.forEach((item,index)=>{
         // console.log(item)
@@ -106,7 +122,6 @@ function sendData(e){
         ${item.nameToDisplay}
         </div>
         </a>
-
         `
       })
       return

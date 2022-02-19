@@ -262,12 +262,35 @@ app.post("/getProductsSearch", async (req, res) => {
   // console.log("Nodejs payload",payload)
   let search = await Products.find({
     nameToDisplay: { $regex: new RegExp("^" + payload + ".*", "i") },
+    "subsection.items.katNomer":  { $regex: new RegExp("^" + payload + ".*", "i") },
   }).exec();
+  let subsectionFound = await Products.find({
+    "subsection.items.katNomer": payload
+  })
+  const foundItems = []
+ if(subsectionFound.length > 0){
+  //  Section
+    outer: for(const searchedItem of subsectionFound){
+      // subsection
+      inner: for(const subItem of searchedItem.subsection){
+        // Items
+        innerItems: for(const items of subItem.items){
+            if(items.katNomer == payload){
+              foundItems.push({
+                section: searchedItem.name,
+                subsection: subItem.tiput,
+              })
+            }
+        }
+      }
+    }
+ }
 
-  // let search = await Products.find({nameToDisplay: {payload}}).exec()
+
   //Limit search results to 10
-  search = search.slice(0, 4);
-  res.send({ payload: search });
+  search = search.slice(0, 6);
+  console.log(search);
+  res.send({ payload: search, subsection: foundItems });
   // console.log(search)
 });
 
