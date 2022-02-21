@@ -225,6 +225,7 @@ router.delete("/products/removeSubsection/:subsecId", checkAuthanticatedAdmin,as
 //  Delete image
 const collection = db.collection("products")
 const foundSection = await collection.findOne({"subsection._id": ObjectId(id)})
+ 
 let itemImg 
 outer: for(const item of foundSection.subsection){
   if(item._id == id){
@@ -246,7 +247,7 @@ if(itemImg){
    if(err)return console.log(err)
    console.log(result);
  })
- res.redirect("/admin/products");
+ res.redirect(`/admin/products/${foundSection._id}/show`);
 
 })
 router.get("/products/editImage/:section/:imageId", checkAuthanticatedAdmin, async(req,res)=>{
