@@ -489,22 +489,18 @@ router.post("/products/newSubsection/:sectionId",checkAuthanticatedAdmin, upload
     }
   })
   if(req.files){
-    // console.log(req.files)
     item.forEach((section,index)=>{
   section[1].img = req.files[index]
     })
   }
-
   const collection = db.collection("products")
   item.forEach(subItem =>{
     collection.updateOne({_id: ObjectId(req.params.sectionId)}, {$push: {subsection: subItem[1] }}, function(err,result){
       if(err) return console.log(err)
       console.log(result);
-      res.redirect(req.get("referer"));
-
     })
   })
-  
+  res.redirect(req.get("referer"));
 
 } )
 
