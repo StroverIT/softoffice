@@ -275,10 +275,11 @@ router.post("/products/editImage/:section/:imageId",checkAuthanticatedAdmin, upl
         break outer
       }
     }
-    
+  
+
+    if(img && img.img){
     const origName = img.img.originalname
 
-    if(img && origName){
       const filePath = path.resolve(`public/uploads/${origName}`)
       console.log("filePath", filePath);
       try {
