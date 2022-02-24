@@ -7,17 +7,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Roboto:wght@500;700&display=swap");
 
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Roboto+Condensed:wght@700&family=Roboto:wght@500;700&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
 html,
 body {
   position: relative;
   overflow-x: hidden;
-margin: 0;
-padding:0;
-background: #eee;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-color: #000;
-
+  margin: 0;
+  padding:0;
+  background: #eee;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #000;
 }
 
 
@@ -282,9 +281,8 @@ main {
   font-size: calc(0.5em + 0.5vw);
 }
 
-/* About soft office */
 
-/* Swiper */
+/* Promotions || SWIPEr */
 .promotionContainer {
   margin-top: 60px;
 
@@ -298,7 +296,6 @@ main {
   content:"";
   /* background-color: grey; */
   background-color: var(--lightBlue);
-
   display: block;
   position: absolute;
   top:40%;
@@ -460,15 +457,56 @@ left: -17%;
   color: var(--lightBlue);
   font-weight: 350;
 }
-.aboutSoftOffice .badge {
-  color: black;
-  padding-top: 20px;
-  font-size: calc(0.5rem + 1vw);
-  line-height: 150%;
-  font-weight: 350;
-  text-align: left;
-}
+
 .aboutImage {
   width: calc(150px + 1vw);
   height: calc(150px + 1vw);
+}
+.infoAbout{
+  /* margin: 2% 27%; */
+  position: relative;
+}
+
+.test{
+  position: relative;
+}
+.test h1{
+  position: relative;
+  background-color: #f2f2f7;
+  z-index: 1;
+}
+.test::after{
+  content:"";
+  /* background-color: grey; */
+  background-color: var(--lightBlue);
+
+  display: block;
+  position: absolute;
+  top:50%;
+  right: 50%;
+  width: 80vw;
+  height: 2px;
+  /* z-index: -1; */
+}
+.test::before{
+  content:"";
+  /* background-color: grey; */
+  background-color: var(--lightBlue);
+
+  display: block;
+  position: absolute;
+  top:50%;
+  left:50%;
+  width: 80vw;
+  height: 2px;
+  /* z-index: 0; */
+}
+
+.infoAbout p{
+  font-size: clamp(0.1rem,4vw,1.5rem);
+  font-weight: 300 !important;
+  line-height: 1.7;
+}
+.nameAbout{
+  font-weight: 500;
 }
