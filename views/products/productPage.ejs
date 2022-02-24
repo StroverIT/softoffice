@@ -97,6 +97,7 @@
                             <li class="list-group-item"><span class="firstItemType"><%=itemToSplit[0]%></span>:<span class="secondItemType"><%=itemToSplit[1]%></span></li>
                       <%})%>
                     <li class="pricingItem list-group-item text-center bg-info text-light d-flex flex-column justify-content-center <%=sectionName =="Обадете се" && itemSubsection.cena == parseFloat(0)? "d-none" : "" %>">
+                      <div class="d-flex justify-content-center">
                       <div class="actualPrice d-flex justify-content-center <%=itemSubsection.isOnPromotion ? "onPromotion" : ""%>">
                         <%const priceForOne = parseFloat(itemSubsection.cena).toFixed(2).split(".")%>
                         <div class="d-flex justify-content-center align-items-center item-total-pricing position-relative">
@@ -119,7 +120,8 @@
                         </div>
                         </div>
                       <%}%>
-                      <div class="d-flex justify-content-center">Без ддс</div>
+                    </div>
+                      <div class="d-flex justify-content-center">Без ДДС</div>
                     </li>
                       </li>
                   </ul>
