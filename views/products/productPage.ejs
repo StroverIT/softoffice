@@ -96,15 +96,15 @@
                           <%const itemToSplit = itemType.split(":")%>
                             <li class="list-group-item"><span class="firstItemType"><%=itemToSplit[0]%></span>:<span class="secondItemType"><%=itemToSplit[1]%></span></li>
                       <%})%>
-                    <li class="pricingItem list-group-item text-center bg-info text-light d-flex justify-content-center <%=sectionName =="Обадете се" && itemSubsection.cena == parseFloat(0)? "d-none" : "" %>">
+                    <li class="pricingItem list-group-item text-center bg-info text-light d-flex flex-column justify-content-center <%=sectionName =="Обадете се" && itemSubsection.cena == parseFloat(0)? "d-none" : "" %>">
                       <div class="actualPrice d-flex justify-content-center <%=itemSubsection.isOnPromotion ? "onPromotion" : ""%>">
                         <%const priceForOne = parseFloat(itemSubsection.cena).toFixed(2).split(".")%>
                         <div class="d-flex justify-content-center align-items-center item-total-pricing position-relative">
                         <%=priceForOne[0]%>
                           </div>
-                             <div class="d-flex flex-column m-0 pricingDots">
-                        <div class="decimalPrice"><%=priceForOne[1]%></div>
-                        <div class="currency">лв.</div> 
+                        <div class="d-flex flex-column m-0 pricingDots">
+                              <div class="decimalPrice"><%=priceForOne[1]%></div>
+                            <div class="currency">лв.</div> 
                       </div>
                       </div>
                       <%if(itemSubsection.isOnPromotion){%>
@@ -119,6 +119,7 @@
                         </div>
                         </div>
                       <%}%>
+                      <div class="d-flex justify-content-center">Без ддс</div>
                     </li>
                       </li>
                   </ul>
