@@ -83,7 +83,7 @@
                   Избери типа
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <ul  class="columnsItems" style="list-style-type:none ;">
+                <ul  class="<%=section[1].items.length > 1 ? "columnsItems" : ""%>" style="list-style-type:none ;">
                   <%if(section[1].items){%>
                   <%section[1].items.forEach((itemSubsection,index)=>{%>
                     <%if(itemSubsection){%>
