@@ -127,12 +127,11 @@ app.post("/contactUs", async (req, res, next) => {
   }
 });
 //Cart
-app.get("/cart/:id/:qty", async (req, res, next) => {
+app.get("/cart/:id/:qty/:multiplePrice?", async (req, res, next) => {
   try {
     const productQty = req.params.qty;
     const productId = req.params.id;
-    console.log(productQty)
-    console.log(productId)
+  
     const cart = new Cart(req.session.cart ? req.session.cart : {});
     const productCollection = db.collection("products");
 
@@ -141,13 +140,41 @@ app.get("/cart/:id/:qty", async (req, res, next) => {
     });
    const name = item.name
    const displayName = item.nameToDisplay
+
     let matched = {}
     const subsectionLen = item.subsection.length
  for(let i = 0; i < subsectionLen; i++){
    let subsection = item.subsection[i]
    subsection.items.forEach((item,index)=>{
      if(item._id == productId){
+    
       matched["typeSection"]=  item
+      if(req.params.multiplePrice){
+      let typesToAdd = ""
+      let mPrices= []
+        const types =  item.tipove.split(";")
+        for(let type of types){
+          if(type.includes("Цена")){
+            mPrices.push(type)
+            continue
+          }
+
+          typesToAdd+= `${type};`
+        }
+        
+        outer: for(let currItem of mPrices){
+          if(currItem.includes(productQty)){
+          currItem = currItem.split(":")
+          const price = currItem[1].trim()
+          typesToAdd+= currItem
+          matched["typeSection"].cena = price
+            console.log("FOUND ITEM");
+            break outer
+          }
+        }
+
+        matched["typeSection"].tipove= typesToAdd
+      }
       matched["subSection"] = {
         tiput: subsection.tiput,
         nameToDisplay: subsection.nameToDisplay,
@@ -162,10 +189,11 @@ app.get("/cart/:id/:qty", async (req, res, next) => {
      }
    })
  }
+ console.log(matched);
    cart.add(
     matched,
           matched.typeSection._id,
-          productQty
+          req.params.multiplePrice ? 1 :productQty
         );
         req.session.cart = cart;
         // console.log(req.session.cart)
@@ -207,6 +235,7 @@ app.get("/cart", (req, res, next) => {
   }
   
   let cart = new Cart(req.session.cart);
+  console.log(cart);
   // console.log(cart)
   res.render(path.resolve("views/products/shopping-cart.ejs"), {
     cart: cart,
