@@ -47,13 +47,17 @@
                
                     </div>
                     <div class="item-type-name d-flex justify-content-center align-items-center mx-auto">
-                        <%=currentItem.item.nameToDisplay%>
+                        <%=currentItem.item.nameToDisplay%> 
+                        <%if(section == "Обадете се"){%>
+                                <span class="d-none obadeteSe"><%=section%></span>
+                        <%}%>
+                      
                     </div>
                 </section>
                 <section class="current-item-container d-flex flex-md-row flex-column mb-5">
                         <section class="img-section d-flex justify-content-center">
                                 <img src="/uploads/<%=currentItem.item.img ? currentItem.item.img.originalname : ""%>" alt="" class="img-fluid">
-
+                            
                         </section>
                         <section class="item-info container mx-auto mt-5 mt-md-0">
                             <div class="row ">
@@ -74,7 +78,7 @@
                                                 <ul class="list-group p-0">
                                                     <%const itemTypes = itemSubsection.tipove.split(";")%>
                                                     <%itemTypes.forEach((itemType)=>{%>
-                                                        <%console.log(itemType)%>
+                                                        
                                                       <%if(itemType == "" || itemType.includes("Устройства:")) return%>
                                                       <%const itemToSplit = itemType.split(":")%>
                                                         <li class="list-group-item"><span class="firstItemType"><%=itemToSplit[0]%></span>:<span class="secondItemType"><%=itemToSplit[1]%></span></li>
@@ -190,7 +194,7 @@
                      }
                     itemsValues.push(item.innerText)
                 })
-                console.log(multiplePrices);
+               
                 const ulDivWriting = $(this).parent().parent().parent().next().children()
                 const ulSectionWriting = $(this).parent().parent().parent().next()
                 const buySection = $(this).parent().parent().parent().parent().next()
@@ -212,10 +216,11 @@
          const str = itemsValues[itemsValues.length - 1].trim()
 
           const matched = str.match(/(\d+)/)[0]
-         console.log(matched);
+  
             
-          const documentTitle = document.title;
-          if(matched == 0 && documentTitle == "Обадете се"){
+          const obadeteSe = $(".obadeteSe");
+          console.log(obadeteSe.length);
+          if(matched == 0 && obadeteSe.length > 0 ){
             return buySection.prepend(`<li class="list-group bg-primary text-light text-center py-2">+359 888 884 687</li> `)
           }
           if(matched == 0 && multiplePrices.length > 1){
@@ -225,7 +230,7 @@
           const onPromotion= $(this).find(".onPromotion")
           if(onPromotion[0]){
           const firstNum = item.replace(/(\r\n|\n|\r)/gm, " ").split(" ")
-          console.log(firstNum);
+
           return buySection.prepend(`<li class="justify-content-end py-2 d-flex pricingItem position-relative showing itemShowContainer">
             <div class="actualPrice d-flex justify-content-center position-relative ${onPromotion[0] ? "onPromotion" : ""}">
                      <div class="d-flex justify-content-center align-items-center item-total-pricing">
@@ -310,7 +315,7 @@ $.each(mpBtn, function(index,item){
 
   
   const price = multiplePrices[index][1]
-  console.log(price);
+  
   buySection.empty()
   $(".mpPrice").remove()
   $("#multiplePriceForm").remove()
