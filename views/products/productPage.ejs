@@ -219,7 +219,10 @@
       itemsValues.forEach((item,index)=>{
         if(index == itemsValues.length - 1){
          const str = itemsValues[itemsValues.length - 1].trim()
+         console.log(str);
           const matched = str.match(/(\d+)/)[0]
+         console.log(matched);
+
           const documentTitle = document.title;
           if(matched == 0 && documentTitle == "Обадете се"){
             return ulDivWriting.append(`<li class="list-group bg-primary text-light text-center py-2">+359 888 884 687</li> `)

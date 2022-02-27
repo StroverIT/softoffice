@@ -44,6 +44,7 @@
                 <section class="top-side-items d-flex mb-4"">
                 <div>
                 <button class=" btn btn-info text-light" id="returnBtn">Назад</button>
+               
                     </div>
                     <div class="item-type-name d-flex justify-content-center align-items-center mx-auto">
                         <%=currentItem.item.nameToDisplay%>
@@ -71,14 +72,14 @@
                                             <button class="dropdown-item itemList" href="#" type="button"
                                                 name="<%=itemSubsection._id%>">
                                                 <ul class="list-group p-0">
-                                                    <%const itemTypes=itemSubsection.tipove.split(";")%>
-                                                        <%itemTypes.forEach((itemType)=>{%>
-                                                            <%if(itemType=="" ) return%>
-                                                                <li class="list-group-item">
-                                                                    <%=itemType%>
-                                                                </li>
-                                                                <%})%>
-                                                                    <li class="pricingItem list-group-item text-center text-light d-flex flex-column justify-content-center">
+                                                    <%const itemTypes = itemSubsection.tipove.split(";")%>
+                                                    <%itemTypes.forEach((itemType)=>{%>
+                                                        <%console.log(itemType)%>
+                                                      <%if(itemType == "" || itemType.includes("Устройства:")) return%>
+                                                      <%const itemToSplit = itemType.split(":")%>
+                                                        <li class="list-group-item"><span class="firstItemType"><%=itemToSplit[0]%></span>:<span class="secondItemType"><%=itemToSplit[1]%></span></li>
+                                                  <%})%>
+                                                                    <li class="pricingItem list-group-item text-center text-light d-flex flex-column justify-content-center <%=section =="Обадете се" || itemSubsection.cena == parseFloat(0)? "d-none" : "" %>">
                                                                         <div class="d-flex justify-content-center">
                                                                         <div class="actualPrice d-flex justify-content-center  <%=itemSubsection.isOnPromotion ? "onPromotion" : ""%>">
                                                                             <%const priceForOne = parseFloat(itemSubsection.cena).toFixed(2).split(".")%>
@@ -126,6 +127,7 @@
                                     <ul></ul>
                                 </div>
                                 <div class="mt-auto">
+                                   
                                     <form action="" method="get">
                                         <section class="form-group d-flex justify-content-center ">
                                             <section class="w-100">
@@ -174,10 +176,21 @@
         $(document).ready(function () {
             $(".itemList").click(function () {
                 const itemsValues = []
+      const multiplePrices = []
+
                 const buttonUl = $(this).children().find("li")
                 $.each(buttonUl, function (index, item) {
+        const type = $(item).find(".firstItemType")
+                                    
+                    if(type.text().includes("Цена")){
+                        const price = $(item).find(".secondItemType")    
+                        multiplePrices.push([type.text(), Number(price.text().trim())])
+                        console.log("find multiplePrice");
+                        return
+                     }
                     itemsValues.push(item.innerText)
                 })
+                console.log(multiplePrices);
                 const ulDivWriting = $(this).parent().parent().parent().next().children()
                 const ulSectionWriting = $(this).parent().parent().parent().next()
                 const buySection = $(this).parent().parent().parent().parent().next()
@@ -197,10 +210,16 @@
 
         if(index == itemsValues.length - 1){
          const str = itemsValues[itemsValues.length - 1].trim()
+
           const matched = str.match(/(\d+)/)[0]
+         console.log(matched);
+            
           const documentTitle = document.title;
           if(matched == 0 && documentTitle == "Обадете се"){
             return buySection.prepend(`<li class="list-group bg-primary text-light text-center py-2">+359 888 884 687</li> `)
+          }
+          if(matched == 0 && multiplePrices.length > 1){
+            return
           }
           // IF is on promotion
           const onPromotion= $(this).find(".onPromotion")
@@ -230,6 +249,7 @@
              `)
             console.log("PROMOTION")
           }
+        //   Here write
           const firstNum = item.replace(/(\r\n|\n|\r)/gm, " ").split(" ")
           return buySection.prepend(`<li class="list-group text-light text-center py-2 pricingItem itemShowText itemShowContainer">
             <div class="actualPrice d-flex justify-content-end ${onPromotion[0] ? "onPromotion" : ""}">
@@ -247,13 +267,90 @@
         
         ulDivWriting.append(`<li class="list-group">${item}</li>`)
       })
-                ulSectionWriting.removeClass("d-none")
+      const form = buySection.find("form")
+      const id = $(this).attr("name")
 
-                buySection.removeClass("d-none")
-                // Adding action to form for buying by id(NO QTY)
-                const id = $(this).attr("name")
-                const form = buySection.find("form")
-                form.attr("action", `/cart/${id}/`)
+      if(multiplePrices.length > 1){
+        const dropDown = `
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Избери бройки
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          </div>
+    </div>
+` 
+
+const dropDownHtml = $.parseHTML(dropDown)[1]
+const dropMenu = $(dropDownHtml).find(".dropdown-menu")
+multiplePrices.forEach(item=>{
+  dropMenu.append(`
+  <button class="multiplePricesBtn btn">
+  <li class="list-group-item">
+  <span class="firstItemType">
+    ${item[0]}:
+    </span>
+    <span class="secondItemType">
+    ${item[1]}
+    </span>
+  </li>
+</button>
+  `)
+})
+// To hide inputs for buying when is no numbers
+
+const mpBtn = $(dropMenu).find(".multiplePricesBtn")
+$.each(mpBtn, function(index,item){
+  $(item).click(function(){
+  const currentBtn = $(this)
+  const type = multiplePrices[index][0]
+  const regTypeNum = /\d+/g;
+
+  const typeQty  = regTypeNum.exec(type)[0]
+
+  
+  const price = multiplePrices[index][1]
+  console.log(price);
+  buySection.empty()
+  $(".mpPrice").remove()
+  $("#multiplePriceForm").remove()
+          const firstNum = price.toString().split(".")
+          buySection.append(`
+      <li class="list-group text-light text-center py-2 pricingItem itemShowText itemShowContainer mpPrice">
+            <div class="actualPrice d-flex justify-content-center">
+                     <div class="d-flex justify-content-center align-items-center item-total-pricing">
+                     ${firstNum[0]}
+                       </div>
+                          <div class="d-flex flex-column m-0 pricingDots">
+                     <div class="decimalPrice">${firstNum[1]}</div>
+                     <div class="currency">лв.</div> 
+                   </div>
+                   </div>
+            </li>`)
+            buySection.append(`
+            <div class="mt-auto">
+            <form action="/cart/${id}/${typeQty}/multiplePrices" id="multiplePriceForm">
+              <div class="d-flex justify-content-center align-items">
+            <button class="btn btn-success form-control"  type="submit">Купи</button>
+            </div>
+            </form>
+            </div>
+            `)
+            buySection.removeClass("d-none")
+
+            
+  })
+  
+})
+        ulDivWriting.append(dropDownHtml)
+}else{
+      buySection.removeClass("d-none")
+      form.attr("action", `/cart/${id}/`)
+}
+ulSectionWriting.removeClass("d-none")
+
+
+
             })
             // Removing the ul items
             $(".addToCart").click(function (e) {

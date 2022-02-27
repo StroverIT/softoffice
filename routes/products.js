@@ -35,7 +35,7 @@ router.get("/:section/:typeProduct", async(req,res,next)=>{
  }
 //  console.log(currentItem)
     res.render(path.resolve("views/products/showProduct.ejs"),{
-        currentItem
+        currentItem,section
     })
 })
 // Get product collection to array
