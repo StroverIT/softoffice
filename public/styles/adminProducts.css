@@ -190,3 +190,11 @@ body {
   border-left: 5px solid #cbd5fd;
   margin: 10px;
 }
+.deliveries-count{
+  background-color: rgb(175, 61, 61);
+  font-size: 1rem;
+  color: rgb(216, 216, 216);
+  border-radius: 10px;
+  border:0;
+  padding: 0 10px;
+}

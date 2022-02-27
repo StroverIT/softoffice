@@ -4,11 +4,6 @@ To show how much deliveries are and make cliener design
 Add icons to the admin panel
 And to send notifications FROM THE SITE when is a delivery
 TO show katNomer on showProduct
--------------------------------------------
-Bugs OR Forget to do
-Route : /products/skeneri
-On show product is showing 0.00, but not the number and must be show number +359 888 884 687
-Problem is that there is no "Обадете се" in the title
 
 -------------------------------------------
 1. Product Page add to have multiple page

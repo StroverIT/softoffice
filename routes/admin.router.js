@@ -504,7 +504,16 @@ router.post("/products/newSubsection/:sectionId",checkAuthanticatedAdmin, upload
   res.redirect(req.get("referer"));
 
 } )
-
+ 
+router.get("/getDostavkiLength", checkAuthanticatedAdmin, async(req,res)=>{
+  try{
+    const totalOrder = await db.collection("orders").find({}).toArray()
+    res.json(totalOrder.length)
+  }catch(e){
+    console.log(e);
+  }
+ 
+})
 async function checkAuthanticatedAdmin(req, res, next) {
   if (req.isAuthenticated()) {
     const Users = require("../models/Users");
