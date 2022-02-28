@@ -94,8 +94,13 @@
                         Междинна сума <%=cart.totalPrice.toFixed(2)%> лв.
                         <%console.log(cart)%>
                         <br>
-                            ДДС: <%=cart.ddsPrice.toFixed(2)%> лв.
+                            ДДС: +<%=cart.ddsPrice.toFixed(2)%> лв.
                             <br>
+                            <%if(cart.promotionPrice > 0){%>
+                                 Отстъпка: -<%=cart.promotionPrice.toFixed(2)%> лв.
+                            <br>
+                            <%}%>
+                           
                             <div class="deliveryPrice">
                             Доставка: 
                                 <%=cart.dostavkaPrice == 0 ? "Безплатна" : `${cart.dostavkaPrice.toFixed(2)} лв.`%>

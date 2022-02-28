@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("../../layouts/bootstrapStyle.ejs")%>
+    <link rel="stylesheet" href="/styles/adminProducts.css" />
+    <link rel="stylesheet" href="/styles/mainProducts.css" />
+    <title>Admin Products</title>
+  </head>
+
+  <body>
+    <%- include("../../layouts/headerAndFooter/adminPanelHeader.ejs")%>
+
+    <main>
+      <!-- Here are showed collections -->
+      <section class="container d-flex flex-column">
+        <section class="buttons my-2 d-flex justify-content-between">
+          <div>
+            <a href="/admin/users" class="btn btn-dark text-light">Назад</a>
+          </div>
+          <div class="">
+            <a href="/admin/users/<%=user._id%>/edit" class="btn btn-info text-light">РЕДАКТИРАЙ</a>
+          </div>
+        </section>
+
+        <section class="productsItems">
+            <ul>
+            <%const userEntries = Object.entries(user)%>
+            <%userEntries.forEach((info,index)=>{%>
+                <%const key = info[0]%>
+                <%const value = info[1]%>
+                <li>
+                    <span><%=key%>:</span>
+                    <span><%=value%></span>
+                </li>   
+          <%  })%>
+        </ul>
+        </section>
+      </section>
+     
+    </main>
+  </body>
+  <%- include("../../layouts/bootstrapScripts.ejs")%> 
+  <%- include("../../layouts/headerAndFooter/adminPanelScripts.ejs") %>
+
+  <script>
+
+  </script>
+  <%- include("../../layouts/headerAndFooter/adminPanelHeaderFunc.js")%>
+
+</html>

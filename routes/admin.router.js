@@ -66,6 +66,88 @@ function xmlToJson(url, callback) {
 //--- Models ---\\
 const Products = require("../models/Products")
 
+router.get("/users", checkAuthanticatedAdmin, async(req,res)=>{
+  const users = await db.collection("users").find({}).toArray()
+
+  res.render(path.resolve("views/userAuthantication/adminPanelUsers/users.ejs"),{users})
+})
+router.get("/users/:id/show", checkAuthanticatedAdmin, async(req,res)=>{
+  const user = await db.collection("users").findOne({
+    _id: ObjectId(req.params.id)
+  })
+
+  res.render(path.resolve("views/userAuthantication/adminPanelUsers/userShow.ejs"),{user})
+
+})
+router.get("/users/:id/edit", checkAuthanticatedAdmin, async(req,res)=>{
+  const user = await db.collection("users").findOne({
+    _id: ObjectId(req.params.id)
+  })
+  res.render(path.resolve("views/userAuthantication/adminPanelUsers/userEdit.ejs"),{user})
+})
+router.delete("/user/:id/:value/removeItem", checkAuthanticatedAdmin, (req,res)=>{
+  const id = req.params.id
+  const inputToDelete = req.params.value
+  db.collection("users").updateOne({_id: ObjectId(id)}, {$unset: {[`${inputToDelete}`]: 1}}, false,true, function(err,result){
+    if(err) return console.log(err);
+    console.log(result);
+  })
+  res.redirect(req.get("referer"))
+  console.log(inputToDelete);
+})
+router.get("/users/:id/permissions", checkAuthanticatedAdmin, async(req,res)=>{
+  const user = await db.collection("users").findOne({
+    _id: ObjectId(req.params.id)
+  })
+  res.render(path.resolve("views/userAuthantication/adminPanelUsers/userPermissions.ejs"),{user})
+})
+router.post("/users/editUser", checkAuthanticatedAdmin, (req,res)=>{
+  const id = req.body._id
+  const itemsForEdit = Object.entries(req.body.itemToChange)
+  itemsForEdit.forEach((item,index)=>{
+    const key = item[0]
+    const value = item[1]
+    db.collection("users").updateOne({
+      _id: ObjectId(id)
+    },
+    {$set: {[`${key}`]: value}},function(err,result){
+      if(err) console.log(err);
+      console.log(result);
+    }
+    )
+  })
+  console.log("TEST");
+  res.redirect(req.get("referer"))
+})
+router.get("/users/:id/addPromotions", checkAuthanticatedAdmin, async(req,res)=>{
+  const user = await db.collection("users").findOne({
+    _id: ObjectId(req.params.id)
+  })
+  const products = await db.collection("products").find({}).toArray()
+  res.render(path.resolve("views/userAuthantication/adminPanelUsers/userPromotions.ejs"),{user, products})
+
+})
+router.post("/users/:id/addPromotions", checkAuthanticatedAdmin, async(req,res)=>{
+  const items = Object.entries(req.body)
+  const id = req.params.id
+
+  const promotionToAdd = []
+  for(const item of items){
+    const key = item[0]
+    const value = item[1]
+    if(value == "on"){
+      promotionToAdd.push(key)
+    }
+  }
+  console.log(promotionToAdd);
+      db.collection("users").updateOne({_id: ObjectId(id)}, 
+      {$set: {havePromotion: true, promotions: promotionToAdd}},function(err,result){
+        if(err) return console.log(err)
+        console.log(result);
+      })
+  res.redirect(`/admin/users/${id}/edit`)
+
+})
 // Dostavki 
 router.get("/dostavki", checkAuthanticatedAdmin, async(req,res,next)=>{
   // const orders = require("../models/Order")
@@ -512,7 +594,14 @@ router.get("/getDostavkiLength", checkAuthanticatedAdmin, async(req,res)=>{
   }catch(e){
     console.log(e);
   }
- 
+})
+router.get("/getUsersLength", checkAuthanticatedAdmin, async(req,res)=>{
+  try{
+    const totalUsers = await db.collection("users").find({}).toArray()
+    res.json(totalUsers.length)
+  }catch(e){
+    console.log(e);
+  }
 })
 async function checkAuthanticatedAdmin(req, res, next) {
   if (req.isAuthenticated()) {

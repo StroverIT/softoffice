@@ -8,7 +8,15 @@ $(document).ready(function(){
         ${subsectionJson}
         </span>
         `)
+    }),
+    fetch("/admin/getUsersLength")
+    .then(async res=>{
+        const usersJson = await res.json()
+        $(".users").append(`
+        <span class="deliveries-count">
+        ${usersJson}
+        </span>
+        `)
     })
-   
 })
    </script>

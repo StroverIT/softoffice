@@ -1,7 +1,6 @@
 
 UI
 make cliener design
-Add icons to the admin panel
 How much users are and show who have more permissions
 And to send notifications FROM THE SITE when is a delivery
 TO show katNomer on showProduct
@@ -10,6 +9,8 @@ TO show katNomer on showProduct
 1. Product Page add to have multiple page
 2. Add Sorting
 3. Play more with the colors
+4. Add Permission Admin
+5. To add button, remove all unverified users
 --------------------------------------------
 Цветовете не са вкарани
 Остана само мебели и офиси

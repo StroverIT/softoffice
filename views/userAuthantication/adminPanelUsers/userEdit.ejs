@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("../../layouts/bootstrapStyle.ejs")%>
+    <link rel="stylesheet" href="/styles/adminProducts.css" />
+    <link rel="stylesheet" href="/styles/mainProducts.css" />
+    <style>
+      .removeItem{
+        margin-left:auto;
+        margin-right: 20px;
+      }
+      .removeItem button{
+        font-size: 1.25rem;
+        font-weight: 500;
+        padding:1px 10px;
+      }
+    </style>
+    <title>Admin Products</title>
+  </head>
+
+  <body>
+    <%- include("../../layouts/headerAndFooter/adminPanelHeader.ejs")%>
+
+    <main>
+      <!-- Here are showed collections -->
+      <section class="container d-flex flex-column">
+          
+        <section class="buttons my-2 d-flex justify-content-between">
+            <div>
+                <a href="/admin/users/<%=user._id%>/show" class="btn btn-dark text-light">Назад</a>
+              </div>
+            <div>
+                <a href="/admin/users/<%=user._id%>/permissions" class="btn btn-info text-light">Добави права</a>
+              </div>
+          
+        </section>
+
+        <section class="productsItems">
+            <div class="d-flex justify-content-center text-danger my-3">
+                <h4>Да не се сменя паролата(Не е оптимизирано)</h4>
+            </div>
+            <form action="/admin/users/editUser" method="POST">
+            <ul>
+            <%const userEntries = Object.entries(user)%>
+            <%for(let [itemKey, itemValue] of userEntries){%>
+                <%if(itemKey != "_id" ){%>
+
+                <section class="py-2 d-flex align-items-center">
+                  <div><button type="button" class="btn text-info toInput"><i class="fas fa-edit"></i></button></div>
+                <div class="px-3 itemKey"><%=itemKey%>:</div>
+                <div class="itemValue"><%=itemValue%></div>
+                <div class="removeItem">
+                  <form action="/admin/user/<%=user._id%>/<%=itemKey%>/removeItem?_method=DELETE" method="POST">
+                  <button class="btn btn-danger"><span>-</span></button>
+                </form>
+
+                </div>
+              </section>
+            <%}else{%>
+              <section class="py-2 d-flex align-items-center">
+              <div class="px-3 itemKey"><%=itemKey%>:</div>
+              <div class="itemValue"><input type="text" value="<%=itemValue%>" class="form-control" name="_id" readonly ></div>
+            </section>
+           <%}%>
+             <% }%>
+
+        </ul>
+        
+        <div class="d-flex justify-content-center"><button class="btn btn-success">Потвърди</button></div>
+
+    </form>
+        </section>
+      </section>
+     
+    </main>
+  </body>
+  <%- include("../../layouts/bootstrapScripts.ejs")%> 
+  <%- include("../../layouts/headerAndFooter/adminPanelScripts.ejs") %>
+
+  <script>
+  $(document).ready(() => {
+      $(".toInput").click(function(){
+        const icon = $(this).children()
+        const textInputDiv = $(this).parent().next().next()
+        const keyDiv = $(this).parent().next()[0]
+        const value = textInputDiv[0]
+        $(this).toggleClass("toInput")
+        if($(this).hasClass("toInput")){
+          console.log("Text");
+          // Removing red color from the button
+          $(this).removeClass("text-danger")
+          // Add blue color to the button
+          $(this).addClass('text-info')
+          // Removing classes for item to set new values
+          icon.removeClass()
+          // Setting icon to be edit
+          icon.addClass("fas fa-edit")
+
+          textInputDiv.replaceWith(`
+          <div class="itemValue">
+          ${value.value}
+          </div>
+          `)
+        }else{
+          // Removing blue color from the button
+          $(this).removeClass('text-info')
+          // Adding red color to the button
+          $(this).addClass("text-danger")
+          // Removing classes from the icon to set new values
+          icon.removeClass()
+          // Adding a X icon to the button
+          icon.addClass("fas fa-times")
+
+          textInputDiv.replaceWith(`
+          <input value="${value.innerText}" class="form-control" name="itemToChange[${keyDiv.innerText.replace(/[^a-zA-Z0-9 ]/g, '')}]">
+          `)
+
+        }
+ 
+      })
+   
+  // Promotions function
+  $(".promotionBtn").click(function(){
+    const promotionBtn = $(this)
+    promotionBtn.addClass("d-none")
+    $(".editItemSection").addClass("d-none")
+  const promSec = $(".itemOnPromotionSec")
+    promSec.removeClass('d-none')
+
+    const returnBtn = $(".returnOneStep")
+    const returnHref = returnBtn.attr("href")
+    returnBtn.removeAttr("href")
+    returnBtn.click(function(){
+      $(".editItemSection").removeClass("d-none")
+      promSec.addClass("d-none")
+      promotionBtn.removeClass("d-none")
+    })
+    const promInput = $(".promotionalPriceInput")
+   
+  })
+});
+  </script>
+  <%- include("../../layouts/headerAndFooter/adminPanelHeaderFunc.js")%>
+
+</html>

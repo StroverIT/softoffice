@@ -213,7 +213,8 @@ app.get("/reduce/:id/:qty", (req, res, next) => {
     cart.totalQty = 0;
     cart.totalPrice = 0;
     cart.ddsPrice = 0
-    this.totalCheckout = 0
+    cart.totalCheckout = 0
+    cart.promotionPrice = 0
   }
   req.session.cart = cart;
   res.redirect(req.get("referer"));
@@ -223,11 +224,17 @@ app.get("/removeItem/:id", (req, res, next) => {
   const cart = new Cart(req.session.cart ? req.session.cart : {});
 
   cart.removeItem(productId);
-  
+  if (cart.totalQty <= 0) {
+    cart.totalQty = 0;
+    cart.totalPrice = 0;
+    cart.ddsPrice = 0
+    cart.totalCheckout = 0
+    cart.promotionPrice = 0
+  }
   req.session.cart = cart;
   res.redirect("/cart");
 });
-app.get("/cart", (req, res, next) => {
+app.get("/cart", async(req, res, next) => {
   if (!req.session.cart) {
     return res.render(path.resolve("views/products/shopping-cart.ejs"), {
       products: null,
@@ -235,11 +242,42 @@ app.get("/cart", (req, res, next) => {
   }
   
   let cart = new Cart(req.session.cart);
-  console.log(cart);
-  // console.log(cart)
+  let cartArray = cart.generateArray()
+  if(req.session.passport){
+    const userId = req.session.passport.user
+    const user = await db.collection("users").findOne({_id: ObjectId(userId)})
+    const promotions = user.promotions
+    if(cart.promotionPrice <= 0){
+
+    cartArray.forEach((item,index)=>{
+      if(promotions.includes(item.item.headSection.name)){
+        // const price = Number(item.item.typeSection.cena) * 0.80
+        const id = item.item.typeSection._id
+        
+        const price =(cart.items[id].cena * cart.items[id].totalQty) * 0.20
+        cart.addPromotionPrice(price)
+      }
+    })
+  console.log(cart.priceCart);
+
+      req.session.cart = cart;
+
+  }
+
+  }
+  // console.log(promotions);
+
+  // If(typeSection.isOnPromotion == false && promotions.includes(headSection.name){
+
+  // }
+  //  cartArray[0].item
+// cartArray[1].item.typeSection.cena = 1
+// cart.items = cartArray
+
+// console.log(cart);
   res.render(path.resolve("views/products/shopping-cart.ejs"), {
     cart: cart,
-    products: cart.generateArray(),
+    products: cartArray,
     totalPrice: cart.totalPrice,
   });
 });
@@ -249,6 +287,7 @@ app.get("/checkout", checkAuthanticated, (req, res, next) => {
     return res.redirect("cart");
   }
   const cart = new Cart(req.session.cart);
+  console.log(cart);
   res.render(path.resolve("views/products/checkoutPage.ejs"), {
     cart
   });

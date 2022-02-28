@@ -160,15 +160,29 @@
                         </section>
                         <section class="asideSection col-12 col-lg-2 mb-5">
                             <section class="avgSum d-flex justify-content-between w-100 p-2">
-                                <div>Междинна сума</div>
+                                <div>Междинна сума:</div>
                                 <div>
                                     <%=(cart.totalPrice).toFixed(2)%> лв.
                                 </div>
                             </section>
-                            <section class="totalSum d-flex justify-content-between w-100 p-2">
-                                <div>Общо с ддс:</div>
+                            <section class="avgSum d-flex justify-content-between w-100 p-2">
+                                <div>ДДС:</div>
                                 <div>
-                                    <%=(cart.ddsPrice).toFixed(2)%> лв.
+                                    +<%=(cart.ddsPrice).toFixed(2)%> лв.
+                                </div>
+                            </section>
+                            <%if(cart.promotionPrice > 0){%>
+                            <section class="avgSum d-flex justify-content-between w-100 p-2">
+                                <div>Отстъпка:</div>
+                                <div>
+                                   -<%=(cart.promotionPrice).toFixed(2)%> лв.
+                                </div>
+                            </section>
+                            <%}%>
+                            <section class="totalSum d-flex justify-content-between w-100 p-2">
+                                <div>Общо:</div>
+                                <div>
+                                    <%=(cart.priceCart).toFixed(2)%> лв.
                                 </div>
                             </section>
                             <section class="finish d-flex justify-content-center py-2">
