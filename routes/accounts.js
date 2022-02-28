@@ -171,6 +171,35 @@ router.get("/verify/:id/:token", checkNotAuthenticated, async(req,res)=>{
     res.status(400).send("Възникна проблем")
   }
 })
+router.get("/resendVerification",checkNotAuthenticated,(req,res)=>{
+  const forgottenPassMess = req.flash("forgottenPass")
+  const isFound = req.flash("isFound")
+  res.render(path.resolve("views/userAuthantication/resendVerification.ejs"), {forgottenPassMess, isFound})
+})
+router.post("/resendVerification",checkNotAuthenticated, async(req,res)=>{
+  const email = req.body.email
+  const isFound = await users.findOne({email})
+  
+  if(isFound){
+    const id = isFound._id
+    const token = await db.collection("tokens").findOne({userId: ObjectId(id)})
+    req.flash("forgottenPass", "Заявката беше изпратена успешно!")
+    req.flash("isFound", "true")
+    console.log(token);
+    const message = `
+    <h3>За връщане на паролата цъкнете линка:</h2>
+    <br>
+    <a href="https://${process.env.BASE_URL}/account/resetPassword/${id}/${token.token}">Цъкни тук</a>
+    `
+  await sendEmail("softofficepayment@gmail.com",isFound.email, "verify email", message)
+
+  }else{
+    req.flash("forgottenPass", "Не беше намерен такъв имейл!")
+    req.flash("isFound", "false")
+  }
+
+  res.redirect("/account/resendVerification")
+})
 router.get("/forgotenPassword",checkNotAuthenticated,(req,res)=>{
   const forgottenPassMess = req.flash("forgottenPass")
   const isFound = req.flash("isFound")

@@ -14,10 +14,6 @@
         <!-- hamburger -->
         <link rel="stylesheet" href="../styles/hamburger.css">
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-
-
-
         <title>SoftOffice Вход</title>
 </head>
 
@@ -27,15 +23,14 @@
             <section class="d-flex justify-content-center align-items-center flex-column my-5"
                 data-aos="zoom-out-up" data-aos-duration="1000">
                 <div class="container loginContainer py-5">
-                    <div class="text-center text-danger">
-                        <% if (messages.error) {%>
-                            <%= messages.error %>
-                                <% } %>
-                          
-                            </div>
+                    <% if (isFound == "false") {%>
+                    <div class="text-center text-danger mb-4"><%= forgottenPassMess %></div>
+                    <%}else{%>
+                        <div class="text-center text-success mb-4"><%= forgottenPassMess %></div>
+                    <%}%>
                                     <div class="container-md formContainer">
-                                    <h3 class="text-center">Влезте в профила си</h1>
-                                        <form action="/account/login" method="Post" class="loginForm">
+                                    <h3 class="text-center">Напишете имейла на акаунта</h1>
+                                        <form action="/account/resendVerification" method="Post" class="loginForm">
 
                                             <div
                                                 class="d-flex flex-column justify-content-center align-items-center ">
@@ -49,40 +44,18 @@
                                                     </label>
 
                                                 </div>
-                                                <div class="form-group d-flex flex-column justify-content-center align-items-start py-md-2">
-                                                    
-                                                            <input type="password" class="" id="password"
-                                                                name="password" required placeholder="&#xf023; Парола">
-                                                                <label for="password" > 
-                                                                </label>
-                                                    
-                                                </div>
+                                           
                                                 <div class="d-flex justify-content-center align-items-center py-2 w-75 ">
-                                                    <button type="submit" class="bt loginBtn">Вход</button>
+                                                    <button type="submit" class="bt loginBtn">Изпрати</button>
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
-                <div class="forRegisterText d-flex justify-content-center align-items-center pt-3">
-                    <p>
-                        Все още нямате профил? 
-                        <a href="register" class="otherSection">Регистрирай се!</a>
-                    </p>
+                <!-- <div class="forRegisterText d-flex justify-content-center align-items-center pt-3">
+                       
+                        <a href="register" class="otherSection">Обратно към вход-а</a>
                 </div>
-                <div class="forRegisterText d-flex justify-content-center align-items-center">
-
-                    <p>
-                        <a href="forgotenPassword" class="forgotenPassword">Забравена парола</a>
-                        </p>
-                        
-                </div>
-                <div class="forRegisterText d-flex justify-content-center align-items-center">
-
-                <p>
-                    <a href="resendVerification" class="forgotenPassword">Потвържадавне на акаунт</a>
-
-                    </p>
-                    </div>
+                -->
             </div>
             </section>
 
