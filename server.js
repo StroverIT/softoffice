@@ -129,6 +129,7 @@ app.post("/contactUs", async (req, res, next) => {
 //Cart
 app.get("/cart/:id/:qty/:multiplePrice?", async (req, res, next) => {
   try {
+
     const productQty = req.params.qty;
     const productId = req.params.id;
   
@@ -168,7 +169,6 @@ app.get("/cart/:id/:qty/:multiplePrice?", async (req, res, next) => {
           const price = currItem[1].trim()
           typesToAdd+= currItem
           matched["typeSection"].cena = price
-            console.log("FOUND ITEM");
             break outer
           }
         }
@@ -189,14 +189,24 @@ app.get("/cart/:id/:qty/:multiplePrice?", async (req, res, next) => {
      }
    })
  }
- console.log(matched);
+ if(req.session.passport){
+  const userId = req.session.passport.user
+  const user = await db.collection("users").findOne({_id: ObjectId(userId)})
+  const promotions = user.promotions
+  console.log(matched);
+      if((promotions.includes(matched.headSection.name) && !matched.typeSection.isOnPromotion)){
+        console.log("Found promotion", matched.typeSection._id, matched.headSection.name);
+        cart.addPromotionsList(matched.typeSection._id)
+      }
+
+}
    cart.add(
     matched,
           matched.typeSection._id,
           req.params.multiplePrice ? 1 :productQty
         );
+       
         req.session.cart = cart;
-        // console.log(req.session.cart)
         res.redirect(req.get("referer"));
   } catch (e) {
     console.log(e.error);
@@ -215,6 +225,8 @@ app.get("/reduce/:id/:qty", (req, res, next) => {
     cart.ddsPrice = 0
     cart.totalCheckout = 0
     cart.promotionPrice = 0
+    cart.promotionsItems = []
+
   }
   req.session.cart = cart;
   res.redirect(req.get("referer"));
@@ -230,6 +242,7 @@ app.get("/removeItem/:id", (req, res, next) => {
     cart.ddsPrice = 0
     cart.totalCheckout = 0
     cart.promotionPrice = 0
+    cart.promotionsItems = []
   }
   req.session.cart = cart;
   res.redirect("/cart");
@@ -243,38 +256,7 @@ app.get("/cart", async(req, res, next) => {
   
   let cart = new Cart(req.session.cart);
   let cartArray = cart.generateArray()
-  if(req.session.passport){
-    const userId = req.session.passport.user
-    const user = await db.collection("users").findOne({_id: ObjectId(userId)})
-    const promotions = user.promotions
-    if(cart.promotionPrice <= 0){
-
-    cartArray.forEach((item,index)=>{
-      if(promotions.includes(item.item.headSection.name)){
-        // const price = Number(item.item.typeSection.cena) * 0.80
-        const id = item.item.typeSection._id
-        
-        const price =(cart.items[id].cena * cart.items[id].totalQty) * 0.20
-        cart.addPromotionPrice(price)
-      }
-    })
-  console.log(cart.priceCart);
-
-      req.session.cart = cart;
-
-  }
-
-  }
-  // console.log(promotions);
-
-  // If(typeSection.isOnPromotion == false && promotions.includes(headSection.name){
-
-  // }
-  //  cartArray[0].item
-// cartArray[1].item.typeSection.cena = 1
-// cart.items = cartArray
-
-// console.log(cart);
+console.log(cart.promotionsItems);
   res.render(path.resolve("views/products/shopping-cart.ejs"), {
     cart: cart,
     products: cartArray,

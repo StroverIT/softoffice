@@ -59,8 +59,13 @@
                   Цена:   <%=orderContainer.cart.totalPrice.toFixed(2)%> лв.
                 </div>
                 <div>
-                  Цена с ддс: <%=orderContainer.cart.ddsPrice.toFixed(2)%> лв.
+                  ДДС: <%=orderContainer.cart.ddsPrice.toFixed(2)%> лв.
                 </div>
+                <%if(orderContainer.cart.promotionPrice> 0){%>
+                <div>
+                  Отстъпка: <%=orderContainer.cart.promotionPrice.toFixed(2)%> лв.
+                </div>
+                <%}%>
                 <div>
                   Доставка: <%=orderContainer.cart.dostavkaPrice == 0 ? "Безплатна" : `${orderContainer.cart.dostavkaPrice.toFixed(2)} лв.`%>
                 </div>

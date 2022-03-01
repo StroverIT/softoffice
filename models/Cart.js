@@ -1,3 +1,4 @@
+
 module.exports = function Cart(oldCart) {
   this.items = oldCart.items || {};
   this.totalQty = oldCart.totalQty || 0;
@@ -5,14 +6,13 @@ module.exports = function Cart(oldCart) {
   this.ddsPrice = oldCart.totalPrice * 0.2 || 0
   this.dostavkaPrice = oldCart.dostavkaPrice || 5
   this.promotionPrice = oldCart.promotionPrice || 0
-
+  this.promotionsItems = oldCart.promotionsItems || []
   if(this.totalCheckout >=50){
     this.dostavkaPrice = 0
   }
   // Without deliveryPrice
   console.log("PROMOTION", this.promotionPrice);
   this.priceCart = this.ddsPrice + this.totalPrice - this.promotionPrice
-  console.log(this.priceCart);
   this.totalCheckout = (this.ddsPrice + this.totalPrice + this.dostavkaPrice) - this.promotionPrice
 
   this.add = function (item, id,  addQty) {
@@ -29,6 +29,11 @@ module.exports = function Cart(oldCart) {
       addPrice = +storedItem.item.typeSection.promotionalPrice
     }else{
       addPrice = +storedItem.item.typeSection.cena
+    }
+    if(this.promotionsItems.includes(storedItem.item.typeSection._id.toString())){
+      // console.log(storedItem);
+      const price = Number(storedItem.item.typeSection.cena) * 0.20
+      this.promotionPrice+= price * addQty
     }
     storedItem.cena += addPrice * addQty
 
@@ -48,6 +53,11 @@ module.exports = function Cart(oldCart) {
     }else{
       removePrice = +storedItem.item.typeSection.cena
     }
+    if(this.promotionsItems.includes(id.toString())){
+      // console.log(storedItem);
+      const price = Number(storedItem.item.typeSection.cena) * 0.20
+      this.promotionPrice-= price * quanity
+    }
     this.items[id].cena -= removePrice * +quanity
 
     this.totalQty -= +quanity;
@@ -63,10 +73,15 @@ module.exports = function Cart(oldCart) {
   }
   this.removeItem = function(id){
     // console.log(this.items[id])
+    const index = this.promotionsItems.indexOf(id)
+    if(index != -1){
+      this.promotionsItems.splice(index, 1)
+    }
     this.totalQty -= this.items[id].totalQty
     this.totalPrice -= this.items[id].cena
     delete this.items[id]
   }
+
   this.generateArray = function () {
     var arr = [];
     for (var id in this.items) {
@@ -74,7 +89,15 @@ module.exports = function Cart(oldCart) {
     }
     return arr;
   };
-  this.addPromotionPrice = function(price){
-    this.promotionPrice += price
+
+  this.addPromotionsList = function(id){
+    const idString = id.toString()
+    console.log(this.promotionsItems);
+    console.log(id);
+    console.log("INDEX",this.promotionsItems.indexOf(idString));
+    if(this.promotionsItems.indexOf(idString) == -1){
+      this.promotionsItems.push(idString)
+    }
+    
   }
 };
