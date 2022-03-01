@@ -189,7 +189,7 @@ app.get("/cart/:id/:qty/:multiplePrice?", async (req, res, next) => {
      }
    })
  }
- if(req.session.passport){
+ if(req.session.passport.user){
   const userId = req.session.passport.user
   const user = await db.collection("users").findOne({_id: ObjectId(userId)})
   const promotions = user.promotions
@@ -209,7 +209,7 @@ app.get("/cart/:id/:qty/:multiplePrice?", async (req, res, next) => {
         req.session.cart = cart;
         res.redirect(req.get("referer"));
   } catch (e) {
-    console.log(e.error);
+    console.log(e);
     console.log("error found!");
   }
 });
