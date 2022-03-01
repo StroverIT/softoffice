@@ -12,3 +12,7 @@ ul li{
     font-size: 1rem;
     color: black;
 }
+ol li {
+    font-size: 0.9rem;
+    color: blue ;
+}
