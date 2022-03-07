@@ -191,7 +191,6 @@ router.get("/products/createProduct", checkAuthanticatedAdmin, async(req,res)=>{
 // Create a item 
 router.post("/products/createProduct",checkAuthanticatedAdmin,upload.any(), async (req,res)=>{
 
-  // console.log(req.files)
   const item = Object.entries(req.body)
   const currentObj = {}
   // Adding to object
@@ -201,7 +200,6 @@ router.post("/products/createProduct",checkAuthanticatedAdmin,upload.any(), asyn
     currentObj[key] = value
   })
   if(req.files){
-    // console.log(req.files)
     currentObj.subsection.forEach((section,index)=>{
   section.img = req.files[index]
     })

@@ -10,7 +10,6 @@ const productCollection = db.collection("products")
 router.get("/:section", async(req,res,next)=>{
     const section = req.params.section
     const currentSection = await productCollection.findOne({name: section})
-    // console.log(currentSection)
     res.render(path.resolve("views/products/productPage.ejs"),{
         currentSection
     })
@@ -29,11 +28,9 @@ router.get("/:section/:typeProduct", async(req,res,next)=>{
     const itemType = item.subsection[i]
     if(itemType.tiput == typeProduct){
         currentItem["item"] = itemType
-        console.log("found")
         break
     }
  }
-//  console.log(currentItem)
     res.render(path.resolve("views/products/showProduct.ejs"),{
         currentItem,section: item.nameToDisplay
     })
