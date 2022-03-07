@@ -93,7 +93,6 @@ router.delete("/user/:id/:value/removeItem", checkAuthanticatedAdmin, (req,res)=
     console.log(result);
   })
   res.redirect(req.get("referer"))
-  console.log(inputToDelete);
 })
 router.get("/users/:id/permissions", checkAuthanticatedAdmin, async(req,res)=>{
   const user = await db.collection("users").findOne({
@@ -116,7 +115,6 @@ router.post("/users/editUser", checkAuthanticatedAdmin, (req,res)=>{
     }
     )
   })
-  console.log("TEST");
   res.redirect(req.get("referer"))
 })
 router.get("/users/:id/addPromotions", checkAuthanticatedAdmin, async(req,res)=>{
@@ -139,7 +137,6 @@ router.post("/users/:id/addPromotions", checkAuthanticatedAdmin, async(req,res)=
       promotionToAdd.push(key)
     }
   }
-  console.log(promotionToAdd);
       db.collection("users").updateOne({_id: ObjectId(id)}, 
       {$set: {havePromotion: true, promotions: promotionToAdd}},function(err,result){
         if(err) return console.log(err)
@@ -219,7 +216,6 @@ router.post("/products/createProduct",checkAuthanticatedAdmin,upload.any(), asyn
     }
  
   })
-  // console.log(currentObj.subsection)
      const collection = db.collection("products")
     const inserting = collection.insertOne(currentObj, function(err,result){
        if(err){
@@ -290,13 +286,11 @@ router.post("/products/productEdit", checkAuthanticatedAdmin, async (req,res)=>{
   const id =req.body._id
   if(!req.body.itemToChange) return res.redirect(req.get("referer"));
   const items= Object.entries(req.body.itemToChange)
-console.log(req.body);
 
   for(let [itemKey, itemValue] of items){
     // console.log(itemKey)
      collection.updateOne({ "subsection._id": ObjectId(id) }, { $set: { [`subsection.$[i].${itemKey}`]: itemValue } }, {arrayFilters: [{"i._id": {$eq: ObjectId(id)}}]}, function(err, result){
        if(err) return console.log(err)
-       console.log("YES");
        console.log(result)
      })
   }
@@ -343,7 +337,6 @@ router.get("/products/editImage/:section/:imageId", checkAuthanticatedAdmin, asy
         img["img"] = foundImg.img
       }
     }
-    console.log(img);
   res.render(path.resolve("views/userAuthantication/editImage.ejs"), {section,imageId})
 })
 router.post("/products/editImage/:section/:imageId",checkAuthanticatedAdmin, upload.any(), async(req,res)=>{
@@ -364,7 +357,6 @@ router.post("/products/editImage/:section/:imageId",checkAuthanticatedAdmin, upl
     const origName = img.img.originalname
 
       const filePath = path.resolve(`public/uploads/${origName}`)
-      console.log("filePath", filePath);
       try {
         fs.accessSync(filePath, fs.constants.R_OK | fs.constants.W_OK);
         console.log("can read/write:", path);
@@ -379,13 +371,9 @@ router.post("/products/editImage/:section/:imageId",checkAuthanticatedAdmin, upl
       //   fs.unlinkSync(filePath);
       // }
     }
-    console.log(imageId);
     if(req.files){
-      console.log(req.files);
       collection.updateOne({ "subsection._id": ObjectId(imageId) }, { $set: { [`subsection.$[i].img`]: req.files[0] } }, {arrayFilters: [{"i._id": {$eq: ObjectId(imageId)}}]}, function(err, result){
         if(err) return console.log(err)
-        console.log("YES");
-        console.log(result)
         res.redirect(`/admin/products/${section}/${imageId}`)
       })
     }
@@ -398,8 +386,6 @@ router.get("/products/:sectionName/:subsectionName/:itemId/edit", checkAuthantic
   outer: for(const el of section.subsection){
     for(const item of el.items){
     if(item._id == itemId){
-      console.log("True");
-      // console.log(item);
       itemForEdit["foundItem"] = item
       itemForEdit["subSec"] = {
         tiput: el.tiput,
@@ -415,7 +401,6 @@ router.get("/products/:sectionName/:subsectionName/:itemId/edit", checkAuthantic
   }
   
   // db.products.updateOne({ "subsection.items._id": ObjectId("61f5740f9cb334a8d97657f4") }, { $set: { "subsection.$[i].items.$.cena": "2.99" } }, {arrayFilters: [{"i.items._id": {$eq: ObjectId("61f5740f9cb334a8d97657f4")}}]})
-  // console.log("itemForEdit", itemForEdit);
   res.render(path.resolve("views/userAuthantication/adminItemEdit.ejs"),{
     itemForEdit
   })
@@ -441,9 +426,7 @@ router.post("/products/editItem", checkAuthanticatedAdmin, async(req,res,next)=>
     if(e !== "Break") throw e
   }
  
-  // console.log(foundIndex);
   for(let [itemKey, itemValue] of items){
-    // console.log(itemKey)
      collection.updateOne({ "subsection.items._id": ObjectId(id) }, { $set: { [`subsection.$[i].items.${foundIndex}.${itemKey}`]: itemValue } }, {arrayFilters: [{"i.items._id": {$eq: ObjectId(id)}}]}, function(err, result){
        if(err) return console.log(err)
        console.log("YES");
@@ -484,8 +467,7 @@ async function addingToCollection(){
   outer: for(const el of itemFound.subsection){
     for(const item of el.items){
     if(item._id == id){
-      // console.log("3. Added item");
-      // console.log(item);
+      console.log("3. Added item");
       itemForProm["foundItem"] = item
       itemForProm["subSec"] = {
         tiput: el.tiput,
@@ -502,23 +484,19 @@ async function addingToCollection(){
     }
     }
   }
-  // console.log("itemForProm",itemForProm);
   const inserting = collection.insertOne(itemForProm, function(err,result){
     if(err)return console.log(err)
     console.log("4.inserting!");
-    // console.log(result)
   })
 }
     editCollection.updateOne({"subsection.items._id": ObjectId(id) }, {$set: {[`subsection.$[i].items.${foundIndex}.${nameProm}`]: priceProm} },{arrayFilters: [{"i.items._id": {$eq: ObjectId(id)}}]}, function(err,result){
       if(err) return console.log(err)
       console.log("1. UPDATE FOR Price prom");
-      // console.log(result);
     })
    editCollection.updateOne({"subsection.items._id": ObjectId(id) }, {$set: {[`subsection.$[i].items.${foundIndex}.isOnPromotion`]: true} },{arrayFilters: [{"i.items._id": {$eq: ObjectId(id)}}]}, function(err,result){
       if(err) return console.log(err)
 console.log("2. UPDATE FOR IS ON PROMOTION");
 addingToCollection()
-      // console.log(result);
     })
 
 
