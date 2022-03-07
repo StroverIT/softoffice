@@ -44,7 +44,6 @@
                <%const itemTypes = (item[1].item.typeSection.tipove).split(";")%>
                       <ul>
                         <%itemTypes.forEach(itemtype=>{%>
-                          <%console.log(itemtype)%>
                             <%if(itemtype.length > 0){%>
                         <li><%=itemtype%></li>  
                           <%  }%>
@@ -142,10 +141,8 @@
     const path = location.pathname.split("/");
 
     $(".returnButton").click(function () {
-      console.log(path);
       window.location = `/admin/resources/${path[3]}`;
     });
-    console.log(location.pathname);
     $(".editButton").click(function () {
       window.location = `/admin/resources/${path[3]}/${path[4]}/edit`;
     });

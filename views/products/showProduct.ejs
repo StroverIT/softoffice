@@ -136,7 +136,7 @@
                                         <section class="form-group d-flex justify-content-center ">
                                             <section class="w-100">
                                                 <input class="text-center form-control qtyInput " type="text"
-                                                    onkeypress="return GFG_Fun(this, event)" placeholder="Количество">
+                                                    onkeypress="GFG_Fun(this, event)" placeholder="Количество">
                                                 <div class="invalid-feedback text-center">
                                                 </div>
                                             </section>
@@ -189,7 +189,6 @@
                     if(type.text().includes("Цена")){
                         const price = $(item).find(".secondItemType")    
                         multiplePrices.push([type.text(), Number(price.text().trim())])
-                        console.log("find multiplePrice");
                         return
                      }
                     itemsValues.push(item.innerText)
@@ -219,7 +218,6 @@
   
             
           const obadeteSe = $(".obadeteSe");
-          console.log(obadeteSe.length);
           if(matched == 0 && obadeteSe.length > 0 ){
             return buySection.prepend(`<li class="list-group bg-primary text-light text-center py-2">+359 888 884 687</li> `)
           }
@@ -252,7 +250,6 @@
                         </div>     
            </li>
              `)
-            console.log("PROMOTION")
           }
         //   Here write
           const firstNum = item.replace(/(\r\n|\n|\r)/gm, " ").split(" ")

@@ -70,11 +70,9 @@
     $(document).ready(() => {
       $(".tableRow")
       $(".tableRow").click(function(){
-        console.log("item");
         const itemId = $(this).attr("id")
         window.location = `/admin/products/${itemId}/show`
       })
-        console.log("READY");
      
     });
   </script>

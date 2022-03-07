@@ -143,7 +143,7 @@
                 <form action="" method="get">
                   <section class="form-group d-flex justify-content-center">
                     <section>
-                      <input  class="text-center form-control qtyInput" type="text" onkeypress="return GFG_Fun(this, event)" placeholder="Количество">
+                      <input  class="text-center form-control qtyInput" type="text" onkeypress=" GFG_Fun(this, event)" placeholder="Количество">
                       <div class="invalid-feedback text-center" >
                       </div>
                     </section>
@@ -201,13 +201,11 @@
       const multiplePrices = []
       const buttonUl = $(this).children().find("li")
       $.each(buttonUl, function(index,item){
-        // console.log(item);
         const type = $(item).find(".firstItemType")
       
         if(type.text().includes("Цена")){
         const price = $(item).find(".secondItemType")    
           multiplePrices.push([type.text(), Number(price.text().trim())])
-          console.log("find multiplePrice");
           return
         }
         itemsValues.push(item.innerText)
@@ -219,9 +217,7 @@
       itemsValues.forEach((item,index)=>{
         if(index == itemsValues.length - 1){
          const str = itemsValues[itemsValues.length - 1].trim()
-         console.log(str);
           const matched = str.match(/(\d+)/)[0]
-         console.log(matched);
 
           const documentTitle = document.title;
           if(matched == 0 && documentTitle == "Обадете се"){
@@ -255,7 +251,6 @@
                         </div>     
            </li>
              `)
-            console.log("PROMOTION")
           }
           const firstNum = item.replace(/(\r\n|\n|\r)/gm, " ").split(" ")
           return ulDivWriting.append(`<li class="list-group text-light text-center py-2 pricingItem itemShowText itemShowContainer">
@@ -320,7 +315,6 @@ $.each(mpBtn, function(index,item){
 
   
   const price = multiplePrices[index][1]
-  console.log(price);
   $(".mpPrice").remove()
   $("#multiplePriceForm").remove()
           const firstNum = price.toString().split(".")

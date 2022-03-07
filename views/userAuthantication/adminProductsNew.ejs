@@ -113,7 +113,6 @@ $.fn.getCursorPosition = function() {
      
         //Focus on the end into the next double dots in SAME input
         if((e.key.toLowerCase() === "m"  || e.key.toLowerCase() === "м") && e.ctrlKey){
-          console.log("clicked m and control");
           // Getting all indices of dots
          const indexOfIndices = getIndicesOfDots(indexOfDoubleDots)
           const currentPosition = currentTarget.getCursorPosition()
@@ -138,7 +137,6 @@ $.fn.getCursorPosition = function() {
         }
         // Go to next item button and focus in the END of the input
         if(e.key.toLowerCase() === "," && e.ctrlKey){
-          console.log("clicked m and control");
           const tipove = findElement(nextSection, `label[for="tipove"]`).next()
           const indexOfIndices = getIndicesOfDots(tipove.val())
           tipove.selectRange(indexOfIndices[lastHitted] + 2)
@@ -147,7 +145,6 @@ $.fn.getCursorPosition = function() {
         }
         // Go to next button and focus on a section price || cena
         if(e.key.toLowerCase() === "." && e.ctrlKey){
-          console.log("clicked dot and control");
           // Get input for cena 
           
           const cena = findElement(nextSection, `label[for="cena"]`).next()
@@ -335,7 +332,6 @@ $.fn.getCursorPosition = function() {
                   }
                   sectionList.find("#isOnPromotions").click(function(){
                     if($(this).is(":checked")){
-                      console.log("checked")
                     $(this).parent().find(".isOnPromotions").append(`
                     <section class="promotionInput d-flex flex-column">
                       <div>
@@ -350,7 +346,7 @@ $.fn.getCursorPosition = function() {
                     `)
 
                     }else if($(this).is(":not(:checked)")){
-                      console.log($(this).parent().find(".isOnPromotions").find(".promotionInput").remove())
+                      $(this).parent().find(".isOnPromotions").find(".promotionInput").remove()
 
                     }
                   })
@@ -369,7 +365,6 @@ $.fn.getCursorPosition = function() {
                   })
                   sectionList.find("#deleteItemSubsec").click(function(){
                     // ulListItems.find("ul").length > 0
-                    console.log(ulListItems.find("ul").length)
                   $(this).closest("ul").fadeOut("slow",function(){
                     $(this).remove()
                   })

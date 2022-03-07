@@ -127,7 +127,6 @@
                 const path = location.pathname.split("/")
 
             $(".returnButton").click(function(){
-                console.log(path)
                 window.location = `/admin/resources/${path[3]}`
             })
             console.log(location.pathname)
@@ -416,7 +415,6 @@ $.fn.getCursorPosition = function() {
                   }
                   sectionList.find("#isOnPromotions").click(function(){
                     if($(this).is(":checked")){
-                      console.log("checked")
                     $(this).parent().find(".isOnPromotions").append(`
                     <section class="promotionInput d-flex flex-column">
                       <div>
@@ -431,7 +429,7 @@ $.fn.getCursorPosition = function() {
                     `)
 
                     }else if($(this).is(":not(:checked)")){
-                      console.log($(this).parent().find(".isOnPromotions").find(".promotionInput").remove())
+                $(this).parent().find(".isOnPromotions").find(".promotionInput").remove()
 
                     }
                   })
@@ -450,7 +448,6 @@ $.fn.getCursorPosition = function() {
                   })
                   sectionList.find("#deleteItemSubsec").click(function(){
                     // ulListItems.find("ul").length > 0
-                    console.log(ulListItems.find("ul").length)
                   $(this).closest("ul").fadeOut("slow",function(){
                     $(this).remove()
                   })

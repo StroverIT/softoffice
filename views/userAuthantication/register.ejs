@@ -119,7 +119,6 @@
 
             if(itemVal.length >=5){
                 isValid.fiveChar = true
-                console.log("fivechar");
             }
             if(/\d/.test(itemVal)){
                 isValid.number = true
@@ -132,8 +131,6 @@
                 registerBtn.removeAttr("disabled")
                 $(this).removeClass("invalidInput")
                 $(".passwordStrenght").addClass("d-none")
-                console.log($(".loginBtn"));
-                console.log("True");
             }else{
                 $(".passwordStrenght").removeClass("d-none")
 
@@ -152,8 +149,6 @@
                 }
             }
             
-            console.log(showIsValidUl);
-            console.log(isValid)
         })
     </script>
 </html>

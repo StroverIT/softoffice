@@ -137,7 +137,7 @@
                                                     </div>
                                                     <div class="d-flex justify-content-center align-items-center col-9">
                                                         <input type="text" class="text-center form-control qtyInput p-0"
-                                                            type="text" onkeypress="return GFG_Fun(this, event)"
+                                                            type="text" onkeypress="GFG_Fun(this, event)"
                                                             placeholder="Количество" />
                                                         <div class="invalid-feedback text-center"></div>
                                                     </div>
@@ -236,7 +236,6 @@
         // If -1 0 or no value
 
         $(".addQty").click(async function (e) {
-            console.log("clicked");
             const value = $(this).parent().parent().find(":input")[0].value;
             if (value > 0 && value != "") {
                 const buttonHref = await $(this).attr("href");
@@ -247,7 +246,6 @@
             e.preventDefault();
         });
         $(".reduceQty").click(async function (e) {
-            console.log("clicked");
             const value = $(this).parent().parent().find(":input")[0].value;
             if (value > 0 && value != "") {
                 const buttonHref = await $(this).attr("href");
