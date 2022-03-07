@@ -61,8 +61,8 @@ app.set("layout", "layouts/layout");
 app.use(express.static(__dirname + "/public"));
 // app.use("/", express.static(__dirname + "public"))
 app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.path}`);
-  console.log(`${__dirname}`)
+  // console.log(`Incoming request: ${req.path}`);
+  // console.log(`${__dirname}`)
   next();
 });
 app.use(passport.initialize());
@@ -193,8 +193,8 @@ app.get("/cart/:id/:qty/:multiplePrice?", async (req, res, next) => {
   const userId = req.session.passport.user
   const user = await db.collection("users").findOne({_id: ObjectId(userId)})
   const promotions = user.promotions
-  console.log(matched);
       if((promotions.includes(matched.headSection.name) && !matched.typeSection.isOnPromotion)){
+        //BUG
         console.log("Found promotion", matched.typeSection._id, matched.headSection.name);
         cart.addPromotionsList(matched.typeSection._id)
       }
@@ -256,7 +256,7 @@ app.get("/cart", async(req, res, next) => {
   
   let cart = new Cart(req.session.cart);
   let cartArray = cart.generateArray()
-console.log(cart.promotionsItems);
+// console.log(cart.promotionsItems);
   res.render(path.resolve("views/products/shopping-cart.ejs"), {
     cart: cart,
     products: cartArray,
@@ -269,7 +269,7 @@ app.get("/checkout", checkAuthanticated, (req, res, next) => {
     return res.redirect("cart");
   }
   const cart = new Cart(req.session.cart);
-  console.log(cart);
+  // console.log(cart);
   res.render(path.resolve("views/products/checkoutPage.ejs"), {
     cart
   });
@@ -302,7 +302,7 @@ app.post("/makeDelivery", async (req, res) => {
       req.session.cart = null;
       res.redirect("/account");
     });
-    console.log(order);
+    // console.log(order);
   } catch (e) {
     console.log(e.error);
   }
@@ -341,7 +341,7 @@ app.post("/getProductsSearch", async (req, res) => {
 
   //Limit search results to 10
   search = search.slice(0, 6);
-  console.log(search);
+  // console.log(search);
   res.send({ payload: search, subsection: foundItems });
   // console.log(search)
 });

@@ -168,7 +168,7 @@
                         <%promotions.forEach((promotion,indexPromotion)=>{%>        
                          <%const promotionName=  promotion.section.showName ?  promotion.section.showName.concat(" ", promotion.subSec.showName)  : promotion.subSec.showName%> 
                          <%if(addedPromotions.includes(promotionName)) return%>
-                           <%console.log(promotionName)%>
+                          
                         <div class="swiper-slide d-flex flex-column shadow ">
                             <%const price = Number(promotion.foundItem.cena)%>
                             <%const promPrice = Number(promotion.foundItem.promotionalPrice)%>
@@ -219,7 +219,7 @@
                         </div>
                         <%addedPromotions.push(promotionName)%>
                     <%})%>
-                    <%console.log(addedPromotions)%>
+              
                     <%addedPromotions.splice(0,addedPromotions.length)%>
                     </div>
                 </div>
