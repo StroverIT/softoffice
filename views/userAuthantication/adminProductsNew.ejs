@@ -160,7 +160,6 @@ $.fn.getCursorPosition = function() {
         })
           .then(async (res) => {
             const subsectionJson = await res.json();
-            // console.log(subsectionJson);
 
             //Show subsection
             if ($("ul.subsection li").length <= 0) {
@@ -239,7 +238,6 @@ $.fn.getCursorPosition = function() {
                 // End of img if
               } else {
                 if(value.type !== "array" && value.type !=="object"){
-                  // console.log(key, value)
                   subsection.append(`<li class="subsection-li"><section class="input-subsection m-2">
                           <label for="${key}">${key}</label>
                             <input type="text" class="form-control" style="width: 60%"  name="subsection[${liCounter}][${key}]" >
@@ -320,7 +318,6 @@ $.fn.getCursorPosition = function() {
                         </section></li>`)
                           break
                           case "boolean":
-                            // console.log(keyItems, valueItems, value.items)
                       sectionList.append(`<li><section>
                          <input class="form-check-input" type="checkbox" value="" id="${keyItems}"  ${(valueItems.default  == true) ? "checked"  : ""}>
                           <label class="form-check-label" for="subsection[${liCounter}][items][${counterItem}][${keyItems}]">${keyItems}  </label>

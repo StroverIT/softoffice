@@ -7,7 +7,6 @@ const collection = db.collection("users");
 function initialize(passport, getUserByEmail, getUserById) {
   const authanticateUser = async (email, password, done) => {
     const user = await collection.findOne({ email: email });
-    // console.log(user);
     if (user == null) {
       return done(null, false, { message: "Не съществуващ имейл" });
     }
@@ -37,12 +36,9 @@ function initialize(passport, getUserByEmail, getUserById) {
   passport.deserializeUser(async (_id, done) => {
     try {
       const user = await collection.findOne({ _id });
-      // console.log(`id: ${user}`);
       done(null, _id);
-      console.log("success");
     } catch (e) {
       done(e);
-      console.log("fak");
     }
   });
 }

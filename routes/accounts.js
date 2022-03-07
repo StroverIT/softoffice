@@ -85,7 +85,6 @@ router.get("/", checkAuthanticated, async (req, res) => {
     res.status(500).send("Oopss...");
   }
 
-  console.log("You enter account section");
 });
 
 // Login
@@ -116,7 +115,6 @@ router.get("/register", checkNotAuthenticated, (req, res) => {
 
 router.post("/register", checkNotAuthenticated, async (req, res) => {
   try {
-    console.log(req.body);
     let user = await Users.findOne({ email: req.body.email });
     if (user)
       return res.status(400).send("Вече същестува такъв имейл!");
@@ -142,7 +140,6 @@ await sendEmail("softofficepayment@gmail.com",user.email, "verify email", messag
     res.redirect("/account/login");
  
     // console.log(req.session);
-    console.log("success");
   } catch(error) {
     console.log(error);
     res.redirect("/account/register");
