@@ -192,10 +192,12 @@ app.get("/cart/:id/:qty/:multiplePrice?", async (req, res, next) => {
   const userId = req.session.passport.user
   const user = await db.collection("users").findOne({_id: ObjectId(userId)})
   const promotions = user.promotions
-      if((promotions.includes(matched.headSection.name) && !matched.typeSection.isOnPromotion)){
-        // BUG
-        console.log("Found promotion", matched.typeSection._id, matched.headSection.name);
-        cart.addPromotionsList(matched.typeSection._id)
+      if( !matched.typeSection.isOnPromotion && promotions){
+        if(promotions.includes(matched.headSection.name)){
+          console.log("Found promotion", matched.typeSection._id, matched.headSection.name);
+          cart.addPromotionsList(matched.typeSection._id)
+        }
+       
       }
 
 }
