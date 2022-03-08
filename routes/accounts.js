@@ -178,17 +178,22 @@ router.post("/resendVerification",checkNotAuthenticated, async(req,res)=>{
   const isFound = await users.findOne({email})
   
   if(isFound){
-    const id = isFound._id
-    const token = await db.collection("tokens").findOne({userId: ObjectId(id)})
-    req.flash("forgottenPass", "Заявката беше изпратена успешно!")
-    req.flash("isFound", "true")
-    console.log(token);
-    const message = `
-    <h3>За потвърждаване на имейла в softoffice.bg, цъкнете линка:</h2>
-    <br>
-    <a href="https://${process.env.BASE_URL}/account/verify/${id}/${token.token}">Цъкни тук</a>
-    `
-  await sendEmail("softofficepayment@gmail.com",isFound.email, "verify email", message)
+    try{
+      const id = isFound._id
+      const token = await db.collection("tokens").findOne({userId: ObjectId(id)})
+      req.flash("forgottenPass", "Заявката беше изпратена успешно!")
+      req.flash("isFound", "true")
+      console.log(token);
+      const message = `
+      <h3>За потвърждаване на имейла в softoffice.bg, цъкнете линка:</h2>
+      <br>
+      <a href="https://${process.env.BASE_URL}/account/verify/${id}/${token.token}">Цъкни тук</a>
+      `
+    await sendEmail("softofficepayment@gmail.com",isFound.email, "verify email", message)
+    }catch(e){
+      console.log(e);
+    }
+    
 
   }else{
     req.flash("forgottenPass", "Не беше намерен такъв имейл!")
