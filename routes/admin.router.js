@@ -579,7 +579,7 @@ router.get("/getUsersLength", checkAuthanticatedAdmin, async(req,res)=>{
     console.log(e);
   }
 })
-router.delete("/deleteAccount/:id", checkAuthanticatedAdmin,(res,res)=>{
+router.delete("/deleteAccount/:id", checkAuthanticatedAdmin,(req,res)=>{
   try{
     const id = req.params.id
     db.collection("users").deleteOne({_id: ObjectId(id)})
