@@ -179,6 +179,12 @@ router.post("/resendVerification",checkNotAuthenticated, async(req,res)=>{
   
   if(isFound){
     try{
+      if(isFound.isVerifed == true){
+        req.flash("forgottenPass", "Имейла вече е потвърден!")
+        req.flash("isFound", "true")
+        return  res.redirect("/account/resendVerification")
+  
+      }
       const id = isFound._id
       let token = await db.collection("tokens").findOne({userId: ObjectId(id)})
       if(!token){
