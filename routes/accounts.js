@@ -109,15 +109,18 @@ router.post("/login",checkNotAuthenticated,passport.authenticate("local", {
 // Register
 
 router.get("/register", checkNotAuthenticated, (req, res) => {
-  res.render(path.resolve("views/userAuthantication/register.ejs"));
-  // console.log(req.body.name);
+  const error = req.flash("error")
+  res.render(path.resolve("views/userAuthantication/register.ejs"), {error});
 });
 
 router.post("/register", checkNotAuthenticated, async (req, res) => {
   try {
     let user = await Users.findOne({ email: req.body.email });
-    if (user)
-      return res.status(400).send("Вече същестува такъв имейл!");
+    if (user){
+      req.flash("error", "Вече същестува такъв имейл")
+    res.redirect("/account/register");
+      return  
+    }
 
      user = await new Users({
       email: req.body.email,
@@ -136,8 +139,7 @@ router.post("/register", checkNotAuthenticated, async (req, res) => {
     <a href="https://${process.env.BASE_URL}/account/verify/${user._id}/${token.token}">Цъкни тук</a>
     `
 await sendEmail("softofficepayment@gmail.com",user.email, "verify email", message)
-
-    res.redirect("/account/login");
+    res.redirect("/account/succReg");
  
     // console.log(req.session);
   } catch(error) {
@@ -146,6 +148,9 @@ await sendEmail("softofficepayment@gmail.com",user.email, "verify email", messag
     console.log("fail");
   }
 });
+router.get("/succReg", checkNotAuthenticated, (req,res)=>{
+  res.render(path.resolve("views/userAuthantication/succReg.ejs"))
+})
 router.delete("/logout", (req, res) => {
   req.logOut();
   

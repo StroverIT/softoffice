@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("../layouts/bootstrapStyle.ejs")%>
+        <!-- Style for nav and footer -->
+        <link rel="stylesheet" href="/styles/navAndFooter.css" />
+        <!-- Google fonts Roboto -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+        <!-- User stylesheet -->
+        <link rel="stylesheet" href="../styles/user.css">
+        <!-- hamburger -->
+        <link rel="stylesheet" href="../styles/hamburger.css">
+        <!-- Main style sheet for contenct-->
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <style>
+@import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@1,300&display=swap');
+.writing-text{
+    font-size: 1.25rem;
+}
+.container-md{
+    background-color: #fafafa;
+}
+        </style>
+        <title>Sofoffice регистрация</title>
+</head>
+
+<body>
+    <%- include("../layouts/headerAndFooter/header.ejs") %>
+        <main>
+            <section class="d-flex justify-content-center align-items-center flex-column my-5">
+                <div class="container-fluid container-md succRegContainer py-5 text-center" data-aos="zoom-out-down" data-aos-duration="1000">
+                    <h2 class="text-success">Успешна регистрация!</h2>
+                    <p class="writing-text">
+                        За да имате възможност да си влезнете в акаунта, първо трябва да си потвърдите акаунта. </br>
+                        Пратили сме ви инструкции на регистрираният имейл адрес.
+                    </p>
+
+                </div>
+            </section>
+
+        </main>
+        <%- include('../layouts/headerAndFooter/footer.ejs') %>
+
+</body>
+
+
+<!-- Js bootstrap -->
+<%- include('../layouts/bootstrapScripts.ejs')%>
+
+    <!-- Custom js -->
+
+    <script src="../scripts/index.js"></script>
+    <script src="../scripts/hamburger.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <!-- Custom js -->
+    <script>
+        AOS.init();
+    </script>
+   
+</html>

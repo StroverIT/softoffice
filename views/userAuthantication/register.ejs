@@ -4,7 +4,7 @@
 <head>
     <%- include("../layouts/bootstrapStyle.ejs")%>
         <!-- Style for nav and footer -->
-        <link rel="stylesheet" href="../styles/navAndFooter.css" />
+        <link rel="stylesheet" href="/styles/navAndFooter.css" />
         <!-- Google fonts Roboto -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,8 +26,9 @@
                 <div class="container loginContainer py-5" data-aos="zoom-out-down" data-aos-duration="1000">
                     <div class="">
                         <div class="text-center text-danger">
-                        <% if (messages.error) {%>
-                            <%= messages.error %>
+                        <% if (error) {%>
+                            <%console.log(error)%>
+                            <%= error%>
                                 <% } %>
                             </div>
                         <h3 class="text-center">Регистрация</h1>
