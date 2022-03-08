@@ -192,6 +192,7 @@ router.post("/resendVerification",checkNotAuthenticated, async(req,res)=>{
     req.flash("forgottenPass", "Заявката беше изпратена успешно!")
       req.flash("isFound", "true")
     }catch(e){
+      console.log(e);
       req.flash("forgottenPass", "Възника проблем")
       req.flash("isFound", "false")
     }
