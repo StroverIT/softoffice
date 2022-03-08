@@ -181,8 +181,7 @@ router.post("/resendVerification",checkNotAuthenticated, async(req,res)=>{
     try{
       const id = isFound._id
       const token = await db.collection("tokens").findOne({userId: ObjectId(id)})
-      req.flash("forgottenPass", "Заявката беше изпратена успешно!")
-      req.flash("isFound", "true")
+      
       console.log(token);
       const message = `
       <h3>За потвърждаване на имейла в softoffice.bg, цъкнете линка:</h2>
@@ -190,6 +189,8 @@ router.post("/resendVerification",checkNotAuthenticated, async(req,res)=>{
       <a href="https://${process.env.BASE_URL}/account/verify/${id}/${token.token}">Цъкни тук</a>
       `
     await sendEmail("softofficepayment@gmail.com",isFound.email, "verify email", message)
+    req.flash("forgottenPass", "Заявката беше изпратена успешно!")
+      req.flash("isFound", "true")
     }catch(e){
       console.log(e);
     }
