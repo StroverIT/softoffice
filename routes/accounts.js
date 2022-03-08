@@ -180,9 +180,13 @@ router.post("/resendVerification",checkNotAuthenticated, async(req,res)=>{
   if(isFound){
     try{
       const id = isFound._id
-      const token = await db.collection("tokens").findOne({userId: ObjectId(id)})
-      
-      console.log(token);
+      let token = await db.collection("tokens").findOne({userId: ObjectId(id)})
+      if(!token){
+        token = await new Token({
+          userId: isFound._id,
+          token: crypto.randomBytes(32).toString("hex")
+        }).save()
+      }      
       const message = `
       <h3>За потвърждаване на имейла в softoffice.bg, цъкнете линка:</h2>
       <br>
