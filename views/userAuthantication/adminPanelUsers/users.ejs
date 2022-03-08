@@ -44,7 +44,9 @@
                     <td><%=item.isVerifed? "Да" : "Не"%></td>
                    
                     <td class="text-center">
-                      <a href="#" class="removeItem"><i class="fas fa-trash-alt"></i></a>
+                      <form action="/account/deleteAccount/<%=item._id%>?_method=DELETE" method="POST">
+                        <span class="removeItem"><i class="fas fa-trash-alt"></i></span>
+                      </form>
                   </td>
                   </tr>
               

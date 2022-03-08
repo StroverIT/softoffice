@@ -276,7 +276,6 @@ router.post("/resetPassword/:id/:token", checkNotAuthenticated, async(req,res)=>
 }catch(e){
   return console.log(e)
 }
-
 })
 function checkAuthanticated(req, res, next) {
   if (req.isAuthenticated()) {

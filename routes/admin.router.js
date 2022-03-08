@@ -579,6 +579,15 @@ router.get("/getUsersLength", checkAuthanticatedAdmin, async(req,res)=>{
     console.log(e);
   }
 })
+router.delete("/deleteAccount/:id", checkAuthanticatedAdmin,(res,res)=>{
+  try{
+    const id = req.params.id
+    db.collection("users").deleteOne({_id: ObjectId(id)})
+  }catch(e){
+    console.log(e);
+  }
+})
+
 async function checkAuthanticatedAdmin(req, res, next) {
   if (req.isAuthenticated()) {
     const Users = require("../models/Users");
