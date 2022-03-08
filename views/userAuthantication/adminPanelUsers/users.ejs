@@ -43,9 +43,9 @@
                     <td><%=item.role%></td>
                     <td><%=item.isVerifed? "Да" : "Не"%></td>
                    
-                    <td class="text-center">
-                      <form action="/account/deleteAccount/<%=item._id%>?_method=DELETE" method="POST">
-                        <span class="removeItem"><i class="fas fa-trash-alt"></i></span>
+                    <td class="text-center" id="removeAccount">
+                      <form action="/admin/deleteAccount/<%=item._id%>?_method=DELETE" method="POST">
+                        <button class="btn"><span class="removeItem"><i class="fas fa-trash-alt"></i></span></button>
                       </form>
                   </td>
                   </tr>
@@ -65,9 +65,11 @@
 
   <script>
     $(document).ready(() => {
-      $(".tableRow")
-      $(".tableRow").click(function(){
-        const itemId = $(this).attr("id")
+      $(".tableRow").children().click(function(event){
+        if(event.currentTarget.getAttribute("id") == "removeAccount"){
+          return
+        }
+        const itemId = $(this).parent().attr("id")
         window.location = `/admin/users/${itemId}/show`
       })
      

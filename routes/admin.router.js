@@ -582,7 +582,11 @@ router.get("/getUsersLength", checkAuthanticatedAdmin, async(req,res)=>{
 router.delete("/deleteAccount/:id", checkAuthanticatedAdmin,(req,res)=>{
   try{
     const id = req.params.id
-    db.collection("users").deleteOne({_id: ObjectId(id)})
+    db.collection("users").deleteOne({_id: ObjectId(id)},function(e,result){
+      if(e) console.log(e);
+      console.log(result);
+    })
+    res.redirect(req.get("referer"))
   }catch(e){
     console.log(e);
   }
