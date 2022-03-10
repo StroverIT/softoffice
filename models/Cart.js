@@ -4,12 +4,10 @@ module.exports = function Cart(oldCart) {
   this.totalQty = oldCart.totalQty || 0;
   this.totalPrice = oldCart.totalPrice || 0;
   this.ddsPrice = oldCart.totalPrice * 0.2 || 0
-  this.dostavkaPrice = oldCart.dostavkaPrice || 5
+  this.dostavkaPrice = oldCart.dostavkaPrice || 0
   this.promotionPrice = oldCart.promotionPrice || 0
   this.promotionsItems = oldCart.promotionsItems || []
-  if(this.totalCheckout >=50){
-    this.dostavkaPrice = 0
-  }
+
   // Without deliveryPrice
   console.log("PROMOTION", this.promotionPrice);
   this.priceCart = this.ddsPrice + this.totalPrice - this.promotionPrice
