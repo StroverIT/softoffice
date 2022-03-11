@@ -7,7 +7,6 @@ module.exports = function Cart(oldCart) {
   this.dostavkaPrice = oldCart.dostavkaPrice || 0
   this.promotionPrice = oldCart.promotionPrice || 0
   this.promotionsItems = oldCart.promotionsItems || []
-
   // Without deliveryPrice
   console.log("PROMOTION", this.promotionPrice);
   this.priceCart = this.ddsPrice + this.totalPrice - this.promotionPrice
@@ -29,7 +28,7 @@ module.exports = function Cart(oldCart) {
       addPrice = +storedItem.item.typeSection.cena
     }
     if(this.promotionsItems.includes(storedItem.item.typeSection._id.toString())){
-      // console.log(storedItem);
+      // console.log(storedItem);s
       const price = Number(storedItem.item.typeSection.cena) * 0.20
       this.promotionPrice+= price * addQty
     }
