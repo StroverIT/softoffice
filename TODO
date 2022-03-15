@@ -14,6 +14,8 @@ TO show katNomer on showProduct
 6. To resend verification account
 7. bug with showing only numbers and can write decimal numbers 
 8. Sorting (Find products with filter and ?lessThan20Price)
+|| Using fetch with different infos
+9. To show when delivery is made and show it ONLY on admin panel
 --------------------------------------------
 Цветовете не са вкарани
 Остана само мебели и офиси
