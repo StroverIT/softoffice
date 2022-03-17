@@ -125,11 +125,11 @@ background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
   left: 0%;
   top: 50%;
-  width: 100%;
+  width: 110%;
   height: 0;
   border: 1px solid grey;
   border-left: 30px solid grey;
-  transform: rotate(150deg) translate(0%, -0%);
+  transform: rotate(165deg) translate(0%, -0%);
 }
 
 .showing  .item-total-pricing::before{

@@ -4,15 +4,13 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8080;
-//test
 const hostname = "localhost" || "127.0.0.1";
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const bodyParser = require("body-parser");
-const logger = require("morgan");
-const cookieParser = require("cookie-parser");
-const expressHbs = require("express-handlebars");
+// const logger = require("morgan");  
+// const cookieParser = require("cookie-parser");
 const path = require("path");
 const ejs = require("ejs");
 const fs = require("fs")
