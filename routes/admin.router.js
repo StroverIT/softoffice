@@ -349,9 +349,8 @@ router.post("/products/editImage/:section/:imageId",checkAuthanticatedAdmin, upl
         break outer
       }
     }
-  
-
     if(img && img.img){
+
     const origName = img.img.originalname
 
       const filePath = path.resolve(`public/uploads/${origName}`)
