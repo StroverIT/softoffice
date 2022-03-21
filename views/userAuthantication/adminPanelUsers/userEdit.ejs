@@ -48,7 +48,12 @@
                   <div><button type="button" class="btn text-info toInput"><i class="fas fa-edit"></i></button></div>
                 <div class="px-3 itemKey"><%=itemKey%>:</div>
                 <div class="itemValue"><%=itemValue%></div>
-              
+                <!-- <div class="removeItem">
+                  <form action="/admin/user/<%=//user._id%>/<%=//itemKey%>/removeItem?_method=DELETE" method="POST" name="deleteItem">
+                  <button class="btn btn-danger" type="submit" name="deleteItem"><span>-</span></button>
+                </form>
+                || just fetch the button
+                </div> -->
               </section>
             <%}else{%>
               <section class="py-2 d-flex align-items-center">
