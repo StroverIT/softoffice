@@ -36,7 +36,8 @@ const { array_jsonSchema } = require("mongoose-schema-jsonschema/lib/types");
 //Collections
 const promotionCollection = db.collection("promotion")
 //Functions
-const sendEmail = require("./utils/email")
+const sendEmail = require("./utils/email");
+const { object } = require("joi");
 // Public
 app.use(
   session({
@@ -303,40 +304,35 @@ app.post("/makeDelivery", async (req, res) => {
     console.log(e.error);
   }
 });
+
 app.post("/getProductsSearch", async (req, res) => {
   let payload = req.body.payload.trim();
-  let search = await Products.find({
-    nameToDisplay: { $regex: new RegExp("^" + payload + ".*", "i") },
-    "subsection.items.katNomer":  { $regex: new RegExp("^" + payload + ".*", "i") },
-  }).exec();
-  let subsectionFound = await Products.find({
-    "subsection.items.katNomer": payload
+
+  const dataToSend = []
+ await Products.find({"subsection.nameToDisplay": {$regex: payload, $options: "i"}})
+  .then(data=>{
+    data.map(e=> dataToSend.push([e.name, e.subsection]))
+    // console.log(dataToSend);
   })
-  const foundItems = []
- if(subsectionFound.length > 0){
-  //  Section
-    outer: for(const searchedItem of subsectionFound){
-      // subsection
-      inner: for(const subItem of searchedItem.subsection){
-        // Items
-        innerItems: for(const items of subItem.items){
-            if(items.katNomer == payload){
-              foundItems.push({
-                section: searchedItem.name,
-                subsection: subItem.tiput,
-                secDisplay: searchedItem.nameToDisplay,
-                subSecDisplay: subItem.nameToDisplay
-              })
-            }
-        }
-      }
-    }
- }
-
-
-  //Limit search results to 10
-  search = search.slice(0, 6);
-  res.send({ payload: search, subsection: foundItems });
+  const foundItem = []
+await Products.find({"subsection.items.katNomer": {$regex:payload, $options: "i"}})
+.then(obj=>{
+  obj.map(section=>{
+    section.subsection.map(subsection=>{
+      subsection.items.map(item=>{
+        if(item.katNomer.includes(payload)) foundItem.push({
+          katNomer: item.katNomer,
+          section: section.name,
+          subsection: subsection.tiput,
+          subDisplay: subsection.nameToDisplay
+        })
+      })
+    })
+  })
+  res.send({dataSubsections: dataToSend, katNomera: foundItem})
+})
+  // search = search.slice(0, 6);
+  // res.send({ payload: search, subsection: foundItems });
 });
 
 

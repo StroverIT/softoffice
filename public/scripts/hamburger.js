@@ -1,3 +1,4 @@
+
 $("document").ready(function () {
   let burger = $("#bun");
   function changeNavbarHeight() {
@@ -71,66 +72,88 @@ $("document").ready(function () {
   // ------- Searchbar ------ \\
   
 });
+const searchResult = document.getElementById("searchResults")
+
 function sendData(e){
   // console.log(e.value)
-  const searchResult = document.getElementById("searchResults")
-  let match = e.value.match(/[a-zA-Z]*/)
-  // let match2 = e.value.match(/^\s*/)
-  // console.log(match2)
-  // if(match2[0] == e.value){
-  //   console.log("match2 failed")
-  //   searchResult.innerHTML = ""
-  //   return
-  // }
-  // if(match[0] === e.value){
-    console.log("From Search")
+  
     fetch("/getProductsSearch", {
       method: "POST",
       headers:{
         "Content-Type": "application/json"
       }, 
       body: JSON.stringify({payload: e.value})
-    }).then(res=> res.json()).then(data=>{
-      console.log(data)
-      let subsectionItems = data.subsection 
-      let payload = data.payload
-      searchResult.innerHTML = ""
-      if(payload.length < 1 && subsectionItems.length < 1){
-        searchResult.innerHTML = "<p>Няма намерен резултат</p>"
+    })
+    .then(res=> res.json())
+    .then(data=>{
+     
+      const foundDisplayName = []
+      
+      console.log("foundData", data);
+      data.dataSubsections.map(section=>{
+        section[1].map(subsection=>{
+          // console.log(subsection);
+          if(subsection.nameToDisplay.includes(e.value)){
+          foundDisplayName.push({
+            section: section[0],
+            subsection: subsection.tiput,
+            item: subsection.nameToDisplay
+          })
+          }
+        })
+      })
+
+      const displayTemplate = document.createElement("template")
+      if(foundDisplayName.length == 0 && data.katNomera.length ==0){
+        console.log("Not found");
+        const notFoundEl = document.createElement("p")
+        notFoundEl.classList.add("notFound")
+        notFoundEl.textContent = "Няма намерени резултати!"
+        searchResult.replaceChildren(notFoundEl)
         return
       }
-      if(subsectionItems.length > 0){
-        subsectionItems.forEach((item,index)=>{
-          
-          if(index > 0 )searchResult.innerHTML +=" <hr>"
-          console.log(item);
-          searchResult.innerHTML +=`
-          <a href="/products/${item.section}/${item.subsection}">
-        <div class="itemSearch">
-        ${item.secDisplay}
-        ${item.subSecDisplay}
-        </div>
-        </a>
-          `
-        })
+      if(foundDisplayName.length>0){
+        const nameDH5 = document.createElement("h5")
+        nameDH5.classList.add("title")
+        nameDH5.textContent = "Продукти"
+        displayTemplate.content.appendChild(nameDH5)
+  
+        let displayCounter = 0
+    foundDisplay:for(let obj of foundDisplayName){
+
+      if(displayCounter == 5) break foundDisplay
+
+         const ancher = document.createElement("a")
+        ancher.setAttribute("href", `/products/${obj.section}/${obj.subsection}`)       
+        ancher.textContent = obj.item
+        displayTemplate.content.appendChild(ancher)
+
+        displayCounter++
       }
-      payload.forEach((item,index)=>{
-        // console.log(item)
-        if(index > 0) searchResult.innerHTML += "<hr>"
-        searchResult.innerHTML += `
-        <a href="/products/${item.name}">
-        <div class="itemSearch">
-        ${item.nameToDisplay}
-        </div>
-        </a>
-        `
-      })
-      return
+
+      }
+      if(data.katNomera.length> 0){
+        const nameDH5 = document.createElement("h5")
+        nameDH5.classList.add("title")
+        nameDH5.textContent = "Катномера"
+        displayTemplate.content.appendChild(nameDH5)
+        let displayCounter = 0
+        foundDisplay:for(let obj of data.katNomera){
+    
+          if(displayCounter == 5) break foundDisplay
+    
+             const ancher = document.createElement("a")
+            ancher.setAttribute("href", `/products/${obj.section}/${obj.subsection}`)       
+            ancher.textContent =`${obj.subDisplay} - ${obj.katNomer}`
+            displayTemplate.content.appendChild(ancher)
+            displayCounter++
+          }
+      }
+      
+      searchResult.replaceChildren(displayTemplate.content)   
+      
     })
-  // }
-  // console.log("match", match)
-  // console.log("failed", e.value)
-  searchResult.innerHTML = ""
+
 }
 // Close navsearch
 $("#navSearch").focus(function(){
