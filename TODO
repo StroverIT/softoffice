@@ -19,6 +19,7 @@ TO show katNomer on showProduct
 10. When is on promotion and is clicked to open the chosen product
 11. Make funcionality to change slides
 12. On permissions to remove promotions IF you want add a promotion price
+13. ON LOGOUT session is not clear. But if is cleared, then all products in the cart will be deleted
 --------------------------------------------
 Цветовете не са вкарани
 -------------------------------------------------------

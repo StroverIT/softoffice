@@ -24,6 +24,7 @@
           When nothing is for edit => Make submit button not editable
          -->
            <section class="d-flex itemHeader my-2 p-3 editItemSection justify-content-center">
+             <%console.log(imageId)%>
             <form action="/admin/products/editImage/<%=section%>/<%=imageId%>" method="POST" enctype="multipart/form-data">
                 <div class="d-flex flex-column">
             <div class="my-5">

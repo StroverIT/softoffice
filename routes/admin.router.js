@@ -338,6 +338,7 @@ router.get("/products/editImage/:section/:imageId", checkAuthanticatedAdmin, asy
   res.render(path.resolve("views/userAuthantication/editImage.ejs"), {section,imageId})
 })
 router.post("/products/editImage/:section/:imageId",checkAuthanticatedAdmin, upload.any(), async(req,res)=>{
+  // Subsection id
   const imageId = req.params.imageId
   const section = req.params.section
   const collection =  db.collection("products")
@@ -350,19 +351,22 @@ router.post("/products/editImage/:section/:imageId",checkAuthanticatedAdmin, upl
       }
     }
     if(img && img.img){
-
     const origName = img.img.originalname
 
       const filePath = path.resolve(`public/uploads/${origName}`)
-      try {
-        fs.accessSync(filePath, fs.constants.R_OK | fs.constants.W_OK);
-        console.log("can read/write:", path);
-        fs.unlinkSync(filePath);
-
-      } catch (err) {
-        console.log("no access:", path);
-        console.error(err);
+      if(origName != req.files[0].originalname){
+        try {
+          fs.accessSync(filePath, fs.constants.R_OK | fs.constants.W_OK);
+          // console.log("can read/write:", path);
+          fs.unlinkSync(filePath);
+          console.log("SUccess");
+  
+        } catch (err) {
+          console.log("no access:", path);
+          console.error(err);
+        }
       }
+      
       // if(fs.existsSync(filePath)){
       //   console.log("FOUND")
       //   fs.unlinkSync(filePath);
