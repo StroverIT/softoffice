@@ -373,10 +373,11 @@ if(objForInput.currentValue > 0){
   })
 function isValid(el, evnt) {
             var charC = (evnt.which) ? evnt.which : evnt.keyCode;
-        
+          console.log(charC);
                 if (charC > 31 && (charC < 48 || charC > 57)){
                   return false;
                 }
+                console.log("mina");
             return true;
         }
   
@@ -387,12 +388,14 @@ function isValid(el, evnt) {
             var a = isValid(t, evnt);
             if (a) {
               test.removeClass("is-invalid")
-              invalidDiv.innerHTML = "";
+              invalidDiv.textContent = "";
               invalidDiv.style.display = "none"
             } else {
+              evnt.preventDefault()
               test.addClass("is-invalid")
-              invalidDiv.innerHTML = "Само числа! ";
+              invalidDiv.textContent = "Само числа! ";
               invalidDiv.style.display = "block"
+              
             }
             return a;
         }

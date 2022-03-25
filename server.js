@@ -308,6 +308,7 @@ app.post("/makeDelivery", async (req, res) => {
 app.post("/getProductsSearch", async (req, res) => {
   let payload = req.body.payload.trim();
 
+  // NEXT TIME USE AGGRERATION
   const dataToSend = []
  await Products.find({"subsection.nameToDisplay": {$regex: payload, $options: "i"}})
   .then(data=>{
