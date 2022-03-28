@@ -109,6 +109,7 @@
                       </div>
                       </div>
                       <%if(itemSubsection.isOnPromotion){%>
+
                         <div class="actualPrice d-flex justify-content-center">
                           <%const promotion = parseFloat(itemSubsection.promotionalPrice).toFixed(2).split(".")%>
                           <div class="d-flex justify-content-center align-items-center item-total-pricing ">
@@ -139,6 +140,7 @@
                 </ul>
               </section>
             </div>
+             
             <div class="itemBuying my-2 d-flex flex-column mt-auto d-none"> 
                 <form action="" method="get">
                   <section class="form-group d-flex justify-content-center">
@@ -150,8 +152,7 @@
                        <button class="btn btn-success addToCart" type="button">Добави</button>
                       </section>
                   </form>
-                     
-            </div>
+            </div>  
       </div>
       <%})%>
     </div>
