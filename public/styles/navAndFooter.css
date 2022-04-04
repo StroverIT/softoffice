@@ -140,14 +140,16 @@ footer {
   color: var(--lightBlue);
   filter: brightness(1.5);
   opacity: 0.75;
-  font-size: calc(1.4em + 0.25vw);
+  font-size: calc(1em + 0.25vw);
   font-weight: bold;
 }
 /* Ul */
 .footer a{
+  font-weight: 200;
   list-style-type: none;
   color:white;
   text-decoration: none;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 .footerByletinInput input, .footerByletin button{
   padding:0 !important;
