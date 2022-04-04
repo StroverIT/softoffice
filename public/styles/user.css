@@ -126,10 +126,14 @@ form *{
 @media (max-width: 380px) {
   main {
     margin-top: 100px;
+<<<<<<< HEAD
 <<<<<<< Updated upstream
     margin-bottom: 60px;
 =======
     margin-bottom: 80px;
 >>>>>>> Stashed changes
+=======
+    margin-bottom: 60px;
+>>>>>>> 32834de9a8d43d782184cd635dd606e5fb31d0ac
   }
 }
