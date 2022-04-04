@@ -59,8 +59,6 @@
                                         <label for="password">
                                         </label>
                                         <div class="passwordStrenght d-none">
-                                            
-                                            <ul></ul>
                                         </div>
                                     </div>
                                     <button type="submit" class="loginBtn btn disabled" disabled>Регистрирай ме</button>
@@ -101,7 +99,7 @@
     <script>
         $("#password").keyup(function(){
             const showIsValidCont = $(".passwordStrenght")
-            const showIsValidUl = showIsValidCont.children()
+            const showIsValidUl = showIsValidCont
             
             const registerBtn = $(".loginBtn")
             // invalidInput
