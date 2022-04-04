@@ -69,14 +69,13 @@ $("document").ready(function () {
       subsection.slideDown("slow");
     }
   });
-  // ------- Searchbar ------ \\
   
 });
+// ------- Searchbar ------ \\
 const searchResult = document.getElementById("searchResults")
-
+const displayTemplate = document.createElement("template")
 function sendData(e){
   // console.log(e.value)
-  
     fetch("/getProductsSearch", {
       method: "POST",
       headers:{
@@ -84,82 +83,92 @@ function sendData(e){
       }, 
       body: JSON.stringify({payload: e.value})
     })
-    .then(res=> res.json())
+    .then(res=>res.json())
     .then(data=>{
-     
-      const foundDisplayName = []
-      
-      console.log("foundData", data);
-      data.dataSubsections.map(section=>{
-        section[1].map(subsection=>{
-          // console.log(subsection);
-          if(subsection.nameToDisplay.includes(e.value)){
-          foundDisplayName.push({
-            section: section[0],
-            subsection: subsection.tiput,
-            item: subsection.nameToDisplay
-          })
-          }
+      console.log(data);
+      displayTemplate.innerHTML = ""
+
+      const sections = data.sections
+      const subsections = data.subsections
+      const katNomera = data.katNomera
+
+      if(sections.length <= 0 && subsections.length <= 0 && katNomera.length <= 0){
+        const notFound = document.createElement("p")
+        notFound.classList.add("notFound")
+        notFound.textContent = "Няма намерен резултат."
+
+        displayTemplate.content.appendChild(notFound)
+      }
+      if(sections.length > 0){
+        const secTitle = {
+          nameToDisplay: "Секции",
+          type: "title"
+        }
+        displayTemplate.content.appendChild(createElement(secTitle))
+
+        sections.map(sec=>{
+          sec.type = "link" 
+          displayTemplate.content.appendChild(createElement(sec))
         })
-      })
-
-      const displayTemplate = document.createElement("template")
-      if(foundDisplayName.length == 0 && data.katNomera.length ==0){
-        console.log("Not found");
-        const notFoundEl = document.createElement("p")
-        notFoundEl.classList.add("notFound")
-        notFoundEl.textContent = "Няма намерени резултати!"
-        searchResult.replaceChildren(notFoundEl)
-        return
-      }
-      if(foundDisplayName.length>0){
-        const nameDH5 = document.createElement("h5")
-        nameDH5.classList.add("title")
-        nameDH5.textContent = "Продукти"
-        displayTemplate.content.appendChild(nameDH5)
-  
-        let displayCounter = 0
-    foundDisplay:for(let obj of foundDisplayName){
-
-      if(displayCounter == 5) break foundDisplay
-
-         const ancher = document.createElement("a")
-        ancher.setAttribute("href", `/products/${obj.section}/${obj.subsection}`)       
-        ancher.textContent = obj.item
-        displayTemplate.content.appendChild(ancher)
-
-        displayCounter++
       }
 
+      if(subsections.length > 0){
+        const subSec = {
+          nameToDisplay: "Подсекции",
+          type: "title"
+        }
+        displayTemplate.content.appendChild(createElement(subSec))
+
+        subsections.map(sub=>{
+            sub.type = "link" 
+            displayTemplate.content.appendChild(createElement(sub))
+            
+        })
       }
-      if(data.katNomera.length> 0){
-        const nameDH5 = document.createElement("h5")
-        nameDH5.classList.add("title")
-        nameDH5.textContent = "Катномера"
-        displayTemplate.content.appendChild(nameDH5)
-        let displayCounter = 0
-        foundDisplay:for(let obj of data.katNomera){
-    
-          if(displayCounter == 5) break foundDisplay
-    
-             const ancher = document.createElement("a")
-            ancher.setAttribute("href", `/products/${obj.section}/${obj.subsection}`)       
-            ancher.textContent =`${obj.subDisplay} - ${obj.katNomer}`
-            displayTemplate.content.appendChild(ancher)
-            displayCounter++
-          }
+
+      if(katNomera.length > 0){
+        const katObj = {
+          nameToDisplay: "Катномера",
+          type: "title"
+        }
+        displayTemplate.content.appendChild(createElement(katObj))
+
+        katNomera.map(katNomer=>{
+            katNomer.type = "link" 
+          katNomer.nameToDisplay = `${katNomer.subDisplay} №: ${katNomer.katNomer}`
+          displayTemplate.content.appendChild(createElement(katNomer))
+          
+        })
       }
-      
       searchResult.replaceChildren(displayTemplate.content)   
-      
     })
+
+function createElement(data){
+  const fragment = document.createDocumentFragment();
+
+  switch(data.type){
+        case "link":
+          const a = document.createElement("a")
+          a.textContent = data.nameToDisplay
+          a.setAttribute("href", data.subsection ? `/products/${data.section}/${data.subsection}` : `/products/${data.section}`)
+          fragment.appendChild(a)
+    break    
+    case "title":
+      const title= document.createElement("h5")
+      title.className = "title"
+      title.textContent = data.nameToDisplay
+      fragment.appendChild(title)
+      break
+  }
+  return fragment
+}      
 
 }
 // Close navsearch
 $("#navSearch").focus(function(){
   let navWidth = $(this).innerWidth()
  $("#searchResults").css("width", navWidth)
-//  $("#searchResults a").css("width", navWidth)
+ 
   $(this).parent().parent().css("z-index","8")
   $("#searchResults").css("display", "block")
 

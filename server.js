@@ -37,7 +37,8 @@ const { array_jsonSchema } = require("mongoose-schema-jsonschema/lib/types");
 const promotionCollection = db.collection("promotion")
 //Functions
 const sendEmail = require("./utils/email");
-const { object } = require("joi");
+const { log } = require("console");
+
 // Public
 app.use(
   session({
@@ -308,32 +309,56 @@ app.post("/makeDelivery", async (req, res) => {
 app.post("/getProductsSearch", async (req, res) => {
   let payload = req.body.payload.trim();
 
-  const dataToSend = []
+  const subSectionItems = []
  await Products.find({"subsection.nameToDisplay": {$regex: payload, $options: "i"}})
-  .then(data=>{
-    data.map(e=> dataToSend.push([e.name, e.subsection]))
-    // console.log(dataToSend);
+  .then(section=>{
+    section.map(sec=> {
+      for(let i =0; i < sec.subsection.length; i++){
+        const sub = sec.subsection[i]
+        if(subSectionItems.length >=4) break
+        if(sub.nameToDisplay.includes(payload) && sub.nameToDisplay !=""){
+          subSectionItems.push({section: sec.name, subsection: sub.tiput, nameToDisplay: sub.nameToDisplay})
+        }
+      }
+    })
   })
-  const foundItem = []
+  const katNomeraItems = []
 await Products.find({"subsection.items.katNomer": {$regex:payload, $options: "i"}})
 .then(obj=>{
   obj.map(section=>{
     section.subsection.map(subsection=>{
-      subsection.items.map(item=>{
-        if(item.katNomer.includes(payload)) foundItem.push({
-          katNomer: item.katNomer,
-          section: section.name,
-          subsection: subsection.tiput,
-          subDisplay: subsection.nameToDisplay
-        })
-      })
+
+      for(let i = 0; i< subsection.items.length; i++){
+        if(katNomeraItems.length >= 4) break;
+        const item = subsection.items[i];
+              if(item.katNomer.includes(payload) && section.nameToDisplay != "" && subsection.nameToDisplay != "")
+            katNomeraItems.push({
+              katNomer: item.katNomer,
+              section: section.name,
+              subsection: subsection.tiput,
+              subDisplay: subsection.nameToDisplay
+            })
+      }
     })
   })
-  res.send({dataSubsections: dataToSend, katNomera: foundItem})
-})
+  })
+  const sectionItems = []
+  await Products.find({"nameToDisplay": {$regex: payload, $options: "i"}})
+  .then(obj=>{
+ 
+    const objLen = obj.length
+    for(let i = 0; i < objLen;i ++){
+      if(sectionItems.length>= 4) break
+      if(obj[i].nameToDisplay !="" && !obj[i].nameToDisplay.includes("Обадете се"))
+      sectionItems.push({section: obj[i].name, nameToDisplay: obj[i].nameToDisplay})
+      
+    }
+
+    })
+  res.send({subsections: subSectionItems, katNomera: katNomeraItems, sections: sectionItems})
   // search = search.slice(0, 6);
   // res.send({ payload: search, subsection: foundItems });
-});
+})
 
 
 // Connect to mongodb

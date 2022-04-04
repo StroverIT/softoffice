@@ -346,6 +346,7 @@ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   box-shadow: 1px 1px 10px grey;
   display: none;
   overflow-wrap: break-word;
+  overflow-y: auto;
 }
 #searchResults a{
   border-bottom:  1px solid grey;
