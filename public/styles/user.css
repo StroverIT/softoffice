@@ -23,6 +23,7 @@ body {
 main {
   margin-top: 80px;
 }
+
 .wrapper input {
   position: relative; 
 }
@@ -120,4 +121,9 @@ form *{
   list-style-type: none;
   color:rgb(255, 0, 0);
   font-size: 1em;
+}
+@media (max-width: 380px) {
+  main {
+    margin-top: 50px;
+  }
 }

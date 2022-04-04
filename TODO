@@ -2,7 +2,7 @@ Search bar LOGIC{
     To show from katNomer only 5 times,
     Section 5 times and subsection 5 times. BUT on search icon to open page with all matched
 }
-Search Just fetch 2 times for section, katNomer, tiput
+Search on server just await once on Products then search for katNomera
 
 Change "Обадете се!" to "Обадете се! {продукта}"
 If(something.includes("Обадете се!")){

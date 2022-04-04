@@ -313,17 +313,14 @@ app.post("/getProductsSearch", async (req, res) => {
  await Products.find({"subsection.nameToDisplay": {$regex: payload, $options: "i"}})
   .then(section=>{
     section.map(sec=> {
-
       for(let i =0; i < sec.subsection.length; i++){
         const sub = sec.subsection[i]
-        console.log(sub);
         if(subSectionItems.length >=4) break
         if(sub.nameToDisplay.includes(payload) && sub.nameToDisplay !=""){
           subSectionItems.push({section: sec.name, subsection: sub.tiput, nameToDisplay: sub.nameToDisplay})
         }
       }
     })
-    // console.log(dataToSend);
   })
   const katNomeraItems = []
 await Products.find({"subsection.items.katNomer": {$regex:payload, $options: "i"}})
