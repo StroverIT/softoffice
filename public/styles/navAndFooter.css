@@ -145,10 +145,11 @@ footer {
 }
 /* Ul */
 .footer a{
-  font-weight: 200;
+  font-weight: bolder;
   list-style-type: none;
   color:white;
   text-decoration: none;
+  
 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 .footerByletinInput input, .footerByletin button{
