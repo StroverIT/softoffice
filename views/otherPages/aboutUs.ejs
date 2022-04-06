@@ -26,7 +26,6 @@
     <!-- User stylesheet -->
     <!-- hamburger -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/hamburger.css" />
     <!-- Main style sheet for contenct-->
 
     <link rel="stylesheet" href="../styles/hamburger.css" />
@@ -37,30 +36,18 @@
 <body>
     <%- include("../layouts/headerAndFooter/header.ejs")%>
         <main>
-            <section class="container-fluid textContainer">
+            <section class="container-fluid textContainer d-flex justify-content-center align-items-center flex-column">
                 <section class="start">
-                <h1 class="text-center title" data-aos="zoom-in" >За Нас</h1>
+                    <h1 class="text-center title" data-aos="zoom-in">За Нас</h1>
 
-                <!-- <section class="p-5" id="testing">
-                    <div class="container">
-                        <div class="d-md-flex text-center text-md-start justify-content-between">
-                            <div class="">
-                                <p class="">Софт Офис България ЕООД е търговска фирма, която предлага комплекс от
-                                    стоки и услуги необходими за правилното функциониране на всеки офис.
-                                    Екипът на компанията е с дългогодишен опит /15години/ в областта на
-                                    офис материалите и консумативите.</p>
-                            </div>
-                            <div class=" d-flex  mx-auto justify-content-center">
-                                <img class="img-fluid " src="./images/aboutUs/firstImage.jpg" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </section> -->
-                <section class="py-3 px-5" id="testing">
+                   
+                </section>
+                <section>
                     <div class="container-fluid">
-                        <div class="row align-items-center justify-content-between">
-                            <div class="col-md text-center text-sm-start" data-aos="fade-right" >
-                                <p class="">АНИ Н 2008 ЕООД /Софт Офис Център/ е търговска фирма, която предлага комплекс от
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md text-start" data-aos="fade-right">
+                                <p>АНИ Н 2008 ЕООД /Софт Офис Център/ е търговска фирма, която предлага
+                                    комплекс от
                                     стоки и услуги необходими за правилното функциониране на всеки офис.
                                     Екипът на компанията е с дългогодишен опит /20години/ в областта на
                                     офис материалите и консумативите.
@@ -68,37 +55,37 @@
                                     Нашата мисия е да предоставим висококачествено обслужване на достъпни цени.
                                     Правим това чрез налагане на високи професионални стандарти:
 
-<ul>
-    <li> 
-    Отношение и първостепенна грижа за нашите клиенти
-    </li>
-    <li>
-        Качествени европейски продукти
-    </li>  
-    <li>
-        Бърза доставка
-        Нашият успех зависи от усмивките и удовлетвореността на нашите клиенти и ние добре знаем това.
-    </li>
-    
-</ul>                                   
-                                    
+                                <ul>
+                                    <li>
+                                        Отношение и първостепенна грижа за нашите клиенти
+                                    </li>
+                                    <li>
+                                        Качествени европейски продукти
+                                    </li>
+                                    <li>
+                                        Бърза доставка
+                                        Нашият успех зависи от усмивките и удовлетвореността на нашите клиенти и ние
+                                        добре знаем това.
+                                    </li>
+
+                                </ul>
+
                                 </p>
                             </div>
-                            <div class="col-md" data-aos="fade-left">
+                            <div class="col-md d-flex justify-content-center align-content-center" data-aos="fade-left">
                                 <img class="img-fluid images" src="./images/aboutUs/firstImage.jpg" alt="">
                             </div>
                         </div>
                     </div>
                 </section>
-            </section>
-                <section class="p-5" id="testing">
+                <section>
                     <div class="container-fluid">
                         <div class="row align-items-center justify-content-between">
-                            <div class="col-md" data-aos="fade-left">
+                            <div class="col-md order-1 order-md-0" data-aos="fade-left">
                                 <img class="img-fluid images" src="./images/aboutUs/secondImage.jpg" alt="">
                             </div>
-                            <div class="col-md text-center text-sm-start" data-aos="fade-right">
-                                <p class="lead">
+                            <div class="col-md text-start text-sm-end d-flex justify-content-center align-items-center" data-aos="fade-right">
+                                <p>
                                     Работим с български производители и с европейски партньори предлагащи
                                     утвъдени марки като XEROX, SAMSUNG, Hewlett Packard, Brother, Faber
                                     Castel, Big, Office point, EDDING, Schnaider, 3MSchotch, Canon, Lexmark,
@@ -109,11 +96,11 @@
                         </div>
                     </div>
                 </section>
-                <section class="p-5" id="testing">
+                <section>
                     <div class="container-fluid">
                         <div class="row align-items-center justify-content-between" data-aos="zoom-in">
-                            <div class="col-md text-center text-sm-start">
-                                <p class="lead">
+                            <div class="col-md text-start">
+                                <p>
                                     Софт Офис Център предлага на своите клиенти офис обзавеждане по
                                     стандарт от каталог актуален за съответната година и обзавеждане по
                                     индивидуални размери и цветове на клиента. Вземането на размери,
@@ -127,16 +114,14 @@
                     </div>
                 </section>
 
-                <section class="p-5" id="testing">
+                <section>
                     <div class="container-fluid">
                         <div class="row align-items-center justify-content-between">
-                            <div class="col-md" data-aos="fade-up"
-                            >
+                            <div class="col-md d-flex justify-content-center align-items-center order-1 order-md-0" data-aos="fade-up">
                                 <img class="img-fluid images" src="./images/aboutUs/fourthImage.jpg" alt="">
                             </div>
-                            <div class="col-md text-center text-sm-start" data-aos="fade-down" data-aos-easing="linear"
-                            >
-                                <p class="lead">
+                            <div class="col-md text-start text-sm-end" data-aos="fade-down" data-aos-easing="linear">
+                                <p>
                                     Услугите като изработка на печат се изпълняват за 24 часа след предпечатно
                                     одобрение, предпечат не се заплаща, цената на услугата изработка на визитки и
                                     рекламни материали са по индивидуални проекти различни за всеки клиент .
@@ -147,32 +132,32 @@
                     </div>
                 </section>
 
-                <section class="p-5" id="testing">
+                <section>
                     <div class="container-fluid">
                         <div class="row align-items-center justify-content-between">
-                            <div class="col-md text-center text-sm-start">
-                                <p class="lead">Компанията предлага широка гама от санитарни препарати и всички
+                            <div class="col-md text-start">
+                                <p>Компанията предлага широка гама от санитарни препарати и всички
                                     необходими
                                     средства и консумативи за почистване на вашият офис, както и доставка на
                                     минерални води, напитки и други продукти..</p>
                             </div>
                             <div class="col-md">
-                                <img class="img-fluid images" src="./images/aboutUs/fifthImage.jpg" alt="" data-aos="fade-up"
-                                data-aos-anchor-placement="top-center">
+                                <img class="img-fluid images" src="./images/aboutUs/fifthImage.jpg" alt=""
+                                    data-aos="fade-up" >
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <section class="p-5" id="testing">
+                <section>
                     <div class="container-fluid">
                         <div class="row align-items-center justify-content-between">
-                            <div class="col-md">
-                                <img class="img-fluid images" src="./images/aboutUs/sixthImage.jpg" alt="" data-aos="fade-up"
-                                data-aos-anchor-placement="top-center">
+                            <div class="col-md order-1 order-md-0">
+                                <img class="img-fluid images" src="./images/aboutUs/sixthImage.jpg" alt=""
+                                    data-aos="fade-up" data-aos-anchor-placement="top-center">
                             </div>
                             <div class="col-md text-center text-sm-start">
-                                <p class="lead">
+                                <p>
                                     Клиентите на Софт Офис Център могат да се възползват от възможността да
                                     договорят корпоративни условия за пазаруване, специални цени по договор,
                                     преференциални отстъпки идивидуални според нуждите на всяка компания.
@@ -184,7 +169,7 @@
                     </div>
                 </section>
 
-                <section class="p-5" id="testing">
+                <section>
                     <div class="container-fluid">
                         <div class="row align-items-center justify-content-between">
                             <div class="col-md text-center text-sm-start">
@@ -197,27 +182,27 @@
                                 </p>
                             </div>
                             <div class="col-md">
-                                <img class="img-fluid images" src="./images/aboutUs/seventhImage.jpg" alt="" data-aos="fade-up"
-                                data-aos-anchor-placement="top-center">
+                                <img class="img-fluid images" src="./images/aboutUs/seventhImage.jpg" alt=""
+                                    data-aos="fade-up" data-aos-anchor-placement="top-center">
                             </div>
                         </div>
                     </div>
                 </section>
-                <section class="p-5" id="testing">
+                <section class="bottomInfo">
                     <div class="container-fluid">
-                        <div class="row align-items-center justify-content-between">
-                            <div class="col-md-12 text-center ">
-                                <p class="lead">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-md-12 text-start pb-3 d-flex justify-content-center align-items-center bottomInfo__first">
+                                <p>
                                     Заявете нашия актуален каталог на посочените телефони.
                                     Надяваме се на ползотворно и дълготрайно сътрудничество!
                                 </p>
                             </div>
-                            <div class="col-md ">
-                                <img class="img-fluid images  center-block" src="./images/aboutUs/eightImage.jpg"
-                                    alt="" data-aos="zoom-out">
+                            <div class="col-md-4 d-flex justify-content-center align-items-center pb-5">
+                                <img class="img-fluid images  center-block" src="./images/aboutUs/eightImage.jpg" alt=""
+                                    data-aos="zoom-out">
                             </div>
-                            <div class="col-md-12 text-center bottomInformation">
-                                <p class="">
+                            <div class="col-md-12 text-center bottomInfo__last">
+                                <p>
                                     АНИ Н 2008 ЕООД /Софт Офис Център/
                                     <br>
                                     Офис: гр. София, Ул. Обиколна Бл. 275
@@ -252,7 +237,7 @@
 <!-- Custom js -->
 <script>
     AOS.init();
-  </script>
+</script>
 
 <script src="../scripts/index.js"></script>
 <script src="../scripts/hamburger.js"></script>
