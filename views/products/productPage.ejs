@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>
+      <%if(currentSection.nameToDisplay ){%>
+      <%=currentSection.nameToDisplay%>
+      <%}else{ %>
+        SoftOffice
+      <%}%>
+    </title>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,7 +28,7 @@
     <meta property="og:title" content="Title of the webpage.">
     <meta property="og:description" content=`Онлайн магазина SoftOffice предлага ${currentSection.nameToDisplay || "SoftOffice"}`>
     <meta property="og:image" content="https://softoffice.bg/thumbnail-image.jpg">
-    <meta property="og:url" content="https://softoffice.bg/name-of-the-blog-post/">
+    <meta property="og:url" content=`https://softoffice.bg/products/${currentSection.name}`>
     <meta name="twitter:card" content="summary_large_image">
     <!-- Boostrap -->
     <link
@@ -53,13 +60,7 @@
     <style>
   
     </style>
-    <title>
-      <%if(currentSection.nameToDisplay ){%>
-      <%=currentSection.nameToDisplay%>
-      <%}else{ %>
-        SoftOffice
-      <%}%>
-    </title>
+ 
   </head>
 
   <body>
