@@ -39,3 +39,5 @@ TO show katNomer on showProduct
 Да се слага на всеки кат номер различна снимка и главната секция(подскеция) да се казва, че там има асортимент
 Като се избере различен кат номер и той има различна снимка, да се сменя снимката на productPage & showProduct & cart
 Да може да се качва повече от една снимка
+
+https://164.138.217.83/products/hartiq BUG when is no user, can't buy promotion priced items
