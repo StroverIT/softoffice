@@ -2,11 +2,10 @@ const mongoose = require("mongoose");
 const imageSchema = new mongoose.Schema({
   name: String,
   desc: String,
-  img:
-  {
-      data: Buffer,
-      contentType: String
-  }
+  img: {
+    data: Buffer,
+    contentType: String,
+  },
 });
 const itemsSchema = new mongoose.Schema({
   cvetove: {
@@ -14,46 +13,48 @@ const itemsSchema = new mongoose.Schema({
   },
   cena: {
     type: Number,
-    required: true
-  }, 
+    required: true,
+  },
   katNomer: {
     type: String,
-    required: true
-
+    required: true,
   },
   tipove: {
     type: String,
-    required: true
-
+    required: true,
   },
-  isOnPromotions:{
+  isOnPromotions: {
+    type: Boolean,
+    default: false,
+  },
+  isOnlyNumb: {
     type: Boolean,
     default: false,
   },
   isInStock: {
     type: Boolean,
     default: true,
-  }
-})
+  },
+});
 
 const subsectionSchema = new mongoose.Schema({
   opisanie: {
-    type: String
+    type: String,
   },
   tiput: {
-    type: String
+    type: String,
   },
- 
-  nameToDisplay:{
-    type: String
+
+  nameToDisplay: {
+    type: String,
   },
   img: [imageSchema],
-  items: [itemsSchema]
-})
+  items: [itemsSchema],
+});
 const ProductsSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  nameToDisplay: { type: String, unique: false, required: false}, 
-  subsection: [subsectionSchema]
+  nameToDisplay: { type: String, unique: false, required: false },
+  subsection: [subsectionSchema],
 });
 
 module.exports = mongoose.model("Products", ProductsSchema);
