@@ -67,39 +67,40 @@
     <%- include("../layouts/headerAndFooter/header.ejs")%>
     <main>
       <section class="container-fluid">
-        <section class="items-section container d-flex flex-wrap justify-content-center align-items-center">
+        <section class="container flex-wrap items-section d-flex justify-content-center align-items-center">
           <div class="row justify-content-center">
       <%const sectionName = currentSection.nameToDisplay%>
       
       <%const itemsEntries = Object.entries(currentSection.subsection)%>
 
       <%itemsEntries.forEach((section,index)=>{%>
-        <div class="shadow item-container d-flex flex-column my-2" >
+        <div class="my-2 shadow item-container d-flex flex-column" >
             <div class="item-img d-flex justify-content-center">
               <a href="/products/<%=currentSection.name%>/<%=section[1].tiput%>">
              <img class="img-fluid"src="/uploads/<%=section[1].img ? section[1].img.originalname : ""%>"> 
             </a>
             </div>
-            <div class="item-header my-4 text-center">
+            <div class="my-4 text-center item-header">
               <span >
                 <%if(sectionName !="_" && sectionName !=""  && sectionName != "Обадете се"){%>
                   <%=sectionName%>
                 <%}%>
                 <br> <%=section[1].nameToDisplay%></span>
             </div>
-            <div class="item-typeItems d-flex flex-column  mb-2 ">
-              <div class="dropdown d-flex  justify-content-center align-items-center">
+            <div class="mb-2 item-typeItems d-flex flex-column ">
+              <div class="dropdown d-flex justify-content-center align-items-center">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Избери типа
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  
                 <ul  class="<%=section[1].items.length > 1 ? "columnsItems" : ""%>" style="list-style-type:none ;">
                   <%if(section[1].items){%>
                   <%section[1].items.forEach((itemSubsection,index)=>{%>
                     <%if(itemSubsection){%>
                     <li>
                   <button class="dropdown-item itemList" href="#" type="button" name="<%=itemSubsection._id%>">
-                    <ul class="list-group p-0 ">
+                    <ul class="p-0 list-group ">
                       <%const itemTypes = itemSubsection.tipove.split(";")%>
                         <%itemTypes.forEach((itemType)=>{%>
                           <%if(itemType == "" || itemType.includes("Устройства:")) return%>
@@ -113,7 +114,7 @@
                         <div class="d-flex justify-content-center align-items-center item-total-pricing position-relative">
                         <%=priceForOne[0]%>
                           </div>
-                        <div class="d-flex flex-column m-0 pricingDots">
+                        <div class="m-0 d-flex flex-column pricingDots">
                               <div class="decimalPrice"><%=priceForOne[1]%></div>
                             <div class="currency">лв.</div> 
                       </div>
@@ -124,7 +125,7 @@
                           <div class="d-flex justify-content-center align-items-center item-total-pricing ">
                           <%=promotion[0]%>
                             </div>
-                               <div class="d-flex flex-column pricingDots m-0 ">
+                               <div class="m-0 d-flex flex-column pricingDots ">
                           <div class="decimalPrice"><%=promotion[1]%></div>
                           <div class="currency">лв.</div> 
                         </div>
@@ -134,6 +135,7 @@
                       <div class="d-flex justify-content-center">Без ДДС</div>
                     </li>
                       </li>
+                      
                   </ul>
                   </button>
                 </li>
@@ -143,18 +145,18 @@
                 </ul>
                 </div>
               </div>
-              <section class="showItems d-flex justify-content-center align-items-start my-2 d-none">
+              <section class="my-2 showItems d-flex justify-content-center align-items-start d-none">
                 <ul class="list-group d-flex justify-content-start">
 
                 </ul>
               </section>
             </div>
-            <div class="itemBuying my-2 d-flex flex-column mt-auto d-none"> 
+            <div class="my-2 mt-auto itemBuying d-flex flex-column d-none"> 
                 <form action="" method="get">
                   <section class="form-group d-flex justify-content-center">
                     <section>
                       <input  class="text-center form-control qtyInput" type="text" onkeypress=" GFG_Fun(this, event)" placeholder="Количество">
-                      <div class="invalid-feedback text-center" >
+                      <div class="text-center invalid-feedback" >
                       </div>
                     </section>
                        <button class="btn btn-success addToCart" type="button">Добави</button>
@@ -230,8 +232,8 @@
           const matched = str.match(/(\d+)/)[0]
 
           const documentTitle = document.title;
-          if(matched == 0 && documentTitle == "Обадете се"){
-            return ulDivWriting.append(`<li class="list-group bg-primary text-light text-center py-2">+359 888 884 687</li> `)
+          if(matched == 0 || documentTitle == "Обадете се"){
+            return ulDivWriting.append(`<li class="py-2 text-center list-group bg-primary text-light">+359 888 884 687</li> `)
           }
           if(matched == 0 && multiplePrices.length > 1){
             return
@@ -240,17 +242,17 @@
           const onPromotion= $(this).find(".onPromotion")
           if(onPromotion[0]){
           const firstNum = item.replace(/(\r\n|\n|\r)/gm, " ").split(" ")
-          return ulDivWriting.append(`<li class="justify-content-center py-2 d-flex pricingItem position-relative showing itemShowContainer">
+          return ulDivWriting.append(`<li class="py-2 justify-content-center d-flex pricingItem position-relative showing itemShowContainer">
             <div class="actualPrice d-flex justify-content-center position-relative ${onPromotion[0] ? "onPromotion" : ""}">
                      <div class="d-flex justify-content-center align-items-center item-total-pricing">
                      ${firstNum[0]}
                        </div>
-                          <div class="d-flex flex-column m-0 pricingDots">
+                          <div class="m-0 d-flex flex-column pricingDots">
                      <div class="decimalPrice">${firstNum[1]}</div>
                      <div class="currency">лв.</div> 
                    </div>
               </div>
-                   <div class="actualPrice d-flex justify-content-center mx-2 itemShowText">
+                   <div class="mx-2 actualPrice d-flex justify-content-center itemShowText">
                           <div class="d-flex justify-content-center align-items-center item-total-pricing">
                             ${firstNum[3]}
                             </div>
@@ -263,12 +265,12 @@
              `)
           }
           const firstNum = item.replace(/(\r\n|\n|\r)/gm, " ").split(" ")
-          return ulDivWriting.append(`<li class="list-group text-light text-center py-2 pricingItem itemShowText itemShowContainer">
+          return ulDivWriting.append(`<li class="py-2 text-center list-group text-light pricingItem itemShowText itemShowContainer">
             <div class="actualPrice d-flex justify-content-center ${onPromotion[0] ? "onPromotion" : ""}">
                      <div class="d-flex justify-content-center align-items-center item-total-pricing">
                      ${firstNum[0]}
                        </div>
-                          <div class="d-flex flex-column m-0 pricingDots">
+                          <div class="m-0 d-flex flex-column pricingDots">
                      <div class="decimalPrice">${firstNum[1]}</div>
                      <div class="currency">лв.</div> 
                    </div>
@@ -329,12 +331,12 @@ $.each(mpBtn, function(index,item){
   $("#multiplePriceForm").remove()
           const firstNum = price.toString().split(".")
       ulDivWriting.append(`
-      <li class="list-group text-light text-center py-2 pricingItem itemShowText itemShowContainer mpPrice">
+      <li class="py-2 text-center list-group text-light pricingItem itemShowText itemShowContainer mpPrice">
             <div class="actualPrice d-flex justify-content-center">
                      <div class="d-flex justify-content-center align-items-center item-total-pricing">
                      ${firstNum[0]}
                        </div>
-                          <div class="d-flex flex-column m-0 pricingDots">
+                          <div class="m-0 d-flex flex-column pricingDots">
                      <div class="decimalPrice">${firstNum[1]}</div>
                      <div class="currency">лв.</div> 
                    </div>
