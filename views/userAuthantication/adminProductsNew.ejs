@@ -12,36 +12,46 @@
     <main>
       <!-- Here are showed collections -->
       <section class="container-fluid container-md">
-        <section class="buttons my-2 d-flex">
+        <section class="my-2 buttons d-flex">
           <a href="/admin/products" class="btn btn-info text-light">Назад</a>
         </section>
-        <form action="/admin/products/createProduct" method="post" enctype="multipart/form-data">
+        <form
+          action="/admin/products/createProduct"
+          method="post"
+          enctype="multipart/form-data"
+        >
           <section class="createItem">
             <ul>
-              <%const productEntries = Object.entries(productSchema)%> 
-              <%let i = 0 %> 
-              <%while(productEntries[i][0] != "_id"){%> 
-              <%const key =  productEntries[i][0]%> 
-              <%const value = productEntries[i][1]%>
+              <%const productEntries = Object.entries(productSchema)%> <%let i =
+              0 %> <%while(productEntries[i][0] != "_id"){%> <%const key =
+              productEntries[i][0]%> <%const value = productEntries[i][1]%>
               <li class="pt-3">
                 <ul>
-                <label for="<%=key%>" class="my-1"> <%=key%> </label>
-                <%if(value.type !== "array"){%>
+                  <label for="<%=key%>" class="my-1"> <%=key%> </label>
+                  <%if(value.type !== "array"){%>
                   <li>
-                <input type="text" class="form-control" style="width: 60%" name="<%=key%>"/>
-              </li>
-                <%}else{%>
-                <ul class="subsection d-none test"></ul>
-                <div class="my-2 text-center">
-                  <button class="btn btn-secondary" type="button" id="newSection">
-                    нова секция
-                  </button>
-                </div>
-                <%}%>
+                    <input
+                      type="text"
+                      class="form-control"
+                      style="width: 60%"
+                      name="<%=key%>"
+                    />
+                  </li>
+                  <%}else{%>
+                  <ul class="subsection d-none test"></ul>
+                  <div class="my-2 text-center">
+                    <button
+                      class="btn btn-secondary"
+                      type="button"
+                      id="newSection"
+                    >
+                      нова секция
+                    </button>
+                  </div>
+                  <%}%>
                 </ul>
               </li>
-              <% i++%>
-               <%}%>
+              <% i++%> <%}%>
             </ul>
           </section>
           <button class="btn btn-success" type="submit">Създай</button>
@@ -54,105 +64,107 @@
 
   <script>
     $(document).ready(() => {
-      let lastHitted = 0
-      $(document).keydown(function(e){
-        $.fn.selectRange = function(start, end) {
-    if(end === undefined) {
-        end = start;
-    }
-    return this.each(function() {
-        if('selectionStart' in this) {
-            this.selectionStart = start;
-            this.selectionEnd = end;
-        } else if(this.setSelectionRange) {
-            this.setSelectionRange(start, end);
-        } else if(this.createTextRange) {
-            var range = this.createTextRange();
-            range.collapse(true);
-            range.moveEnd('character', end);
-            range.moveStart('character', start);
-            range.select();
-        }
-    });
-};
-$.fn.getCursorPosition = function() {
-        var el = $(this).get(0);
-        var pos = 0;
-        if('selectionStart' in el) {
+      let lastHitted = 0;
+      $(document).keydown(function (e) {
+        $.fn.selectRange = function (start, end) {
+          if (end === undefined) {
+            end = start;
+          }
+          return this.each(function () {
+            if ("selectionStart" in this) {
+              this.selectionStart = start;
+              this.selectionEnd = end;
+            } else if (this.setSelectionRange) {
+              this.setSelectionRange(start, end);
+            } else if (this.createTextRange) {
+              var range = this.createTextRange();
+              range.collapse(true);
+              range.moveEnd("character", end);
+              range.moveStart("character", start);
+              range.select();
+            }
+          });
+        };
+        $.fn.getCursorPosition = function () {
+          var el = $(this).get(0);
+          var pos = 0;
+          if ("selectionStart" in el) {
             pos = el.selectionStart;
-        } else if('selection' in document) {
+          } else if ("selection" in document) {
             el.focus();
             var Sel = document.selection.createRange();
             var SelLength = document.selection.createRange().text.length;
-            Sel.moveStart('character', -el.value.length);
+            Sel.moveStart("character", -el.value.length);
             pos = Sel.text.length - SelLength;
-        }
-        return pos;
-    }
-        // My current input I am writing on 
-        const currentTarget = $(e.target)
-        //Targeting next section for focusing
-      
-        const nextSection = currentTarget.parent().parent().parent().next()
-        const indexOfDoubleDots = currentTarget.val()
-
-        function getIndicesOfDots(inputVal){
-          // Pushing to array indices of double DOTS
-          const indicesOfDots = []
-          
-          // Regex for finding double dots
-          const regex = /:/gm
-          // This is for while cicle to find indices
-          let result
-          // While loop 
-          while((result = regex.exec(inputVal))){
-            indicesOfDots.push(result.index)
           }
-          return indicesOfDots
+          return pos;
+        };
+        // My current input I am writing on
+        const currentTarget = $(e.target);
+        //Targeting next section for focusing
+
+        const nextSection = currentTarget.parent().parent().parent().next();
+        const indexOfDoubleDots = currentTarget.val();
+
+        function getIndicesOfDots(inputVal) {
+          // Pushing to array indices of double DOTS
+          const indicesOfDots = [];
+
+          // Regex for finding double dots
+          const regex = /:/gm;
+          // This is for while cicle to find indices
+          let result;
+          // While loop
+          while ((result = regex.exec(inputVal))) {
+            indicesOfDots.push(result.index);
+          }
+          return indicesOfDots;
         }
-     
+
         //Focus on the end into the next double dots in SAME input
-        if((e.key.toLowerCase() === "m"  || e.key.toLowerCase() === "м") && e.ctrlKey){
+        if (
+          (e.key.toLowerCase() === "m" || e.key.toLowerCase() === "м") &&
+          e.ctrlKey
+        ) {
           // Getting all indices of dots
-         const indexOfIndices = getIndicesOfDots(indexOfDoubleDots)
-          const currentPosition = currentTarget.getCursorPosition()
-         
-          const indicesLen = indexOfIndices.length
-          for(let i = 0;i < indicesLen;i++){
-            if(currentPosition <= indexOfIndices[i]){
-              lastHitted = i
-              currentTarget.selectRange(indexOfIndices[i]+ 2)
-              return  
+          const indexOfIndices = getIndicesOfDots(indexOfDoubleDots);
+          const currentPosition = currentTarget.getCursorPosition();
+
+          const indicesLen = indexOfIndices.length;
+          for (let i = 0; i < indicesLen; i++) {
+            if (currentPosition <= indexOfIndices[i]) {
+              lastHitted = i;
+              currentTarget.selectRange(indexOfIndices[i] + 2);
+              return;
             }
           }
-          if(currentPosition > indexOfIndices[indicesLen-1]){
-          currentTarget.selectRange(indexOfIndices[indexOfIndices-1]+ 2)
+          if (currentPosition > indexOfIndices[indicesLen - 1]) {
+            currentTarget.selectRange(indexOfIndices[indexOfIndices - 1] + 2);
           }
         }
         // Return if they are no next section
-        if(nextSection.length == 0) return
+        if (nextSection.length == 0) return;
         // Find the item section with that name
-        function findElement(input,type){
-          return input.find(type)
+        function findElement(input, type) {
+          return input.find(type);
         }
         // Go to next item button and focus in the END of the input
-        if(e.key.toLowerCase() === "," && e.ctrlKey){
-          const tipove = findElement(nextSection, `label[for="tipove"]`).next()
-          const indexOfIndices = getIndicesOfDots(tipove.val())
-          tipove.selectRange(indexOfIndices[lastHitted] + 2)
-          
-          tipove.focus()
+        if (e.key.toLowerCase() === "," && e.ctrlKey) {
+          const tipove = findElement(nextSection, `label[for="tipove"]`).next();
+          const indexOfIndices = getIndicesOfDots(tipove.val());
+          tipove.selectRange(indexOfIndices[lastHitted] + 2);
+
+          tipove.focus();
         }
         // Go to next button and focus on a section price || cena
-        if(e.key.toLowerCase() === "." && e.ctrlKey){
-          // Get input for cena 
-          
-          const cena = findElement(nextSection, `label[for="cena"]`).next()
+        if (e.key.toLowerCase() === "." && e.ctrlKey) {
+          // Get input for cena
+
+          const cena = findElement(nextSection, `label[for="cena"]`).next();
           // Focus the input
-          cena.focus()
+          cena.focus();
         }
-    
-      })
+      });
       //Logic for subsection
       $("#newSection").click(async function () {
         fetch("/admin/products/createProduct/newSubSection", {
@@ -174,8 +186,8 @@ $.fn.getCursorPosition = function() {
             <li class="my-2 subsectionItem"><div class="text-center text-danger">
                ${liCounter}
                </div></li>`);
-               //Head li creater
-               const subsectionUl = $(`<ul class="subsectionUlItems"></ul>`)
+            //Head li creater
+            const subsectionUl = $(`<ul class="subsectionUlItems"></ul>`);
             let i = 0;
             while (subsecEntries[i][0] != "_id") {
               const key = subsecEntries[i][0];
@@ -189,22 +201,26 @@ $.fn.getCursorPosition = function() {
                 // UL FOR HEADER ITEMS
                 let imgEntries = Object.entries(value.items.properties);
                 // UL FOR ITEMS
-                const itemUl = $(`<ul class="imgSection"></ul>`)
+                const itemUl = $(`<ul class="imgSection"></ul>`);
 
                 // Start of while loop for images
                 let j = 0;
                 while (imgEntries[j][0] !== "_id") {
                   const keyImg = imgEntries[j][0];
                   const valueImg = imgEntries[j][1];
-                  if(valueImg.type !== "object"){
-                    itemUl.append(` <li><section class="imgSectionItems"><label for="${keyImg}">${keyImg}</label><input type="text" class="form-control" style="width:30%"> </section></li> `);
-                  }else{
-                    const imageUploadUl = $("<ul></ul>")
-                    const imgUploadEntries = Object.entries(valueImg.properties)
-                    imgUploadEntries.forEach((item)=>{
-                      const uploadKey = item[0]
-                      const uploadValue = item[1]
-                      if(uploadValue.type !== "buffer"){
+                  if (valueImg.type !== "object") {
+                    itemUl.append(
+                      ` <li><section class="imgSectionItems"><label for="${keyImg}">${keyImg}</label><input type="text" class="form-control" style="width:30%"> </section></li> `
+                    );
+                  } else {
+                    const imageUploadUl = $("<ul></ul>");
+                    const imgUploadEntries = Object.entries(
+                      valueImg.properties
+                    );
+                    imgUploadEntries.forEach((item) => {
+                      const uploadKey = item[0];
+                      const uploadValue = item[1];
+                      if (uploadValue.type !== "buffer") {
                         imageUploadUl.append(`
                         <li>
                           <section class="imgUpload">
@@ -212,8 +228,8 @@ $.fn.getCursorPosition = function() {
                             <input type="text" class="form-control" style="width:30% name="" ">
                             </section>
                           </li>
-                      `)
-                      }else{
+                      `);
+                      } else {
                         imageUploadUl.append(`
                         <li>
                           <section class="imgUpload">
@@ -221,33 +237,30 @@ $.fn.getCursorPosition = function() {
                             <input type="file" class="form-control" name="subsection[${liCounter}][img][img]" style="width:30%" multiple>
                             </section>
                           </li>
-                      `)
+                      `);
                       }
-                      
-                    })
-                    itemUl.append(imageUploadUl)
-
+                    });
+                    itemUl.append(imageUploadUl);
                   }
                   // List items
                   j++;
                 }
                 // itemUl.append(sectionImg);
-                subsection.append(itemUl)
+                subsection.append(itemUl);
                 // End of while looop
-                
+
                 // End of img if
               } else {
-                if(value.type !== "array" && value.type !=="object"){
-                  subsection.append(`<li class="subsection-li"><section class="input-subsection m-2">
+                if (value.type !== "array" && value.type !== "object") {
+                  subsection.append(`<li class="subsection-li"><section class="m-2 input-subsection">
                           <label for="${key}">${key}</label>
                             <input type="text" class="form-control" style="width: 60%"  name="subsection[${liCounter}][${key}]" >
                         </section> </li>`);
-                }else{
-                  
-                   const section = $(`
+                } else {
+                  const section = $(`
                    <li class="subsection-li">
-                    <section class="input-subsection m-2">
-                      <section class="valueForItemsSection text-center d-flex justify-content-center ">
+                    <section class="m-2 input-subsection">
+                      <section class="text-center valueForItemsSection d-flex justify-content-center ">
                                 <button type="button" class="btn btn-info getFirstAddAll" id="getFirstAddToAll"> 
                                       Вземи от първата и сложи на всички секции
                                     </button>
@@ -255,129 +268,156 @@ $.fn.getCursorPosition = function() {
                                         Добави тип
                                         </button>
                       </section>
-                          <ul class="d-flex flex-wrap" id="placedCreated">
+                          <ul class="flex-wrap d-flex" id="placedCreated">
                            </ul>
                   </section>
-                    </li>`)
-                     // Create subsection Items
-                 subsection.append(section)
-                // Get from first and add to all
-                const getFirstAddAll = subsection.find("#getFirstAddToAll").click(function(){
-                const allUl = $(this).parent().parent().find("#placedCreated").find("ul")
+                    </li>`);
+                  // Create subsection Items
+                  subsection.append(section);
+                  // Get from first and add to all
+                  const getFirstAddAll = subsection
+                    .find("#getFirstAddToAll")
+                    .click(function () {
+                      const allUl = $(this)
+                        .parent()
+                        .parent()
+                        .find("#placedCreated")
+                        .find("ul");
 
-                const firstUl = allUl.first()
-                const firstUlValues = []
-                if(allUl.length <=0) return
-                  const getAllLi = firstUl.find("li :input")
-                  $.each(getAllLi, function(index,product){
-                    firstUlValues.push(product.value)
-                  })
-                  $.each(allUl, function(index, ulItem){
-                    const liItemsUl = $(ulItem).find("li :input")
-                    $.each(liItemsUl, function(listIndex, item){
-                      item.value = firstUlValues[listIndex]
-                    })
-
-                  })
-                })
-                 const buttonAdd =subsection.find("#createItemSub")
-                 const ulListItems =subsection.find("#placedCreated")
-                 const valueOfItemChose = subsection.find("#itemChooseValue")[0]
-                buttonAdd.click(function(){
-                  const requiredItems = value.items.required
-                  const properties = Object.entries(value.items.properties)
-                  const counterItem =subsection.find("#placedCreated ul").length
-                  // This is global li
-                  const sectionList = $(`
-                  <ul class="itemListSection m-2 mt-4 pt-4">
+                      const firstUl = allUl.first();
+                      const firstUlValues = [];
+                      if (allUl.length <= 0) return;
+                      const getAllLi = firstUl.find("li :input");
+                      $.each(getAllLi, function (index, product) {
+                        firstUlValues.push(product.value);
+                      });
+                      $.each(allUl, function (index, ulItem) {
+                        const liItemsUl = $(ulItem).find("li :input");
+                        $.each(liItemsUl, function (listIndex, item) {
+                          item.value = firstUlValues[listIndex];
+                        });
+                      });
+                    });
+                  const buttonAdd = subsection.find("#createItemSub");
+                  const ulListItems = subsection.find("#placedCreated");
+                  const valueOfItemChose =
+                    subsection.find("#itemChooseValue")[0];
+                  buttonAdd.click(function () {
+                    const requiredItems = value.items.required;
+                    const properties = Object.entries(value.items.properties);
+                    const counterItem =
+                      subsection.find("#placedCreated ul").length;
+                    // This is global li
+                    const sectionList = $(`
+                  <ul class="pt-4 m-2 mt-4 itemListSection">
                     <div class="text-center text-info" id="itemListCounter">${counterItem} </div>
                     <section class="itemBtn">
-                      ${ulListItems.find("ul").length > 0 ? ` <button class="btn btn-warning" type="button" id="copyBefore">Копирай предишната</button>`: "" }
+                      ${
+                        ulListItems.find("ul").length > 0
+                          ? ` <button class="btn btn-warning" type="button" id="copyBefore">Копирай предишната</button>`
+                          : ""
+                      }
                     <button class="btn btn-danger" type="button" id="deleteItemSubsec">Изтрий</button>
                     </section>
                     </ul>
-                  `)
-                  // Items for creating more sections
-                  let j = 0;
-                  while(properties[j][0] !== "_id"){
-                    // get key value pairs
-                    const keyItems = properties[j][0]
-                    const valueItems= properties[j][1]
-                    // Inner if statement
-                   switch(valueItems.type){
-                      case "string":
-                      sectionList.append(`<li><section>
+                  `);
+                    // Items for creating more sections
+                    let j = 0;
+                    while (properties[j][0] !== "_id") {
+                      // get key value pairs
+                      const keyItems = properties[j][0];
+                      const valueItems = properties[j][1];
+                      // Inner if statement
+                      switch (valueItems.type) {
+                        case "string":
+                          sectionList.append(`<li><section>
                          <label for="${keyItems}">${keyItems}</label>
-                         <textarea name="subsection[${liCounter}][items][${counterItem}][${keyItems}]" type="text" class="form-control" ${(requiredItems.indexOf(keyItems) != -1) ? "required" : ""}></textarea>
-                         </section></li>`)
-                        break
+                         <textarea name="subsection[${liCounter}][items][${counterItem}][${keyItems}]" type="text" class="form-control" ${
+                            requiredItems.indexOf(keyItems) != -1
+                              ? "required"
+                              : ""
+                          }></textarea>
+                         </section></li>`);
+                          break;
                         case "number":
-                      sectionList.append(`<li><section> 
+                          sectionList.append(`<li><section> 
                         <label for="${keyItems}">${keyItems}</label>
-                        <input name="subsection[${liCounter}][items][${counterItem}][${keyItems}]" type="text" class="form-control" ${(requiredItems.indexOf(keyItems) != -1) ? "required" : ""}>
-                        </section></li>`)
-                          break
-                          case "boolean":
-                      sectionList.append(`<li><section>
-                         <input class="form-check-input" type="checkbox" value="" id="${keyItems}"  ${(valueItems.default  == true) ? "checked"  : ""}>
+                        <input name="subsection[${liCounter}][items][${counterItem}][${keyItems}]" type="text" class="form-control" ${
+                            requiredItems.indexOf(keyItems) != -1
+                              ? "required"
+                              : ""
+                          }>
+                        </section></li>`);
+                          break;
+                        case "boolean":
+                          sectionList.append(`<li><section>
+                         <input class="form-check-input" type="checkbox" value="" id="${keyItems}"  ${
+                            valueItems.default == true ? "checked" : ""
+                          }>
                           <label class="form-check-label" for="subsection[${liCounter}][items][${counterItem}][${keyItems}]">${keyItems}  </label>
-                          ${keyItems == "isOnPromotions" ? `<section class="isOnPromotions"> </section`: "" }
-                         </section></li>`)
-                            break
-                   }
-                    j++
-                  }
-                  sectionList.find("#isOnPromotions").click(function(){
-                    if($(this).is(":checked")){
-                    $(this).parent().find(".isOnPromotions").append(`
-                    <section class="promotionInput d-flex flex-column">
-                      <div>
-                      <label for="oldPricePromotion">Стара Цена<label>
-                        <input type="text" class="form-control">
-                        </div>
-                        <div>
-                      <label for="oldPricePromotion">Нова Цена<label>
-                        <input type="text" class="form-control">
-                        </div>
-                      </section>
-                    `)
-
-                    }else if($(this).is(":not(:checked)")){
-                      $(this).parent().find(".isOnPromotions").find(".promotionInput").remove()
-
+                          ${
+                            keyItems == "isOnlyNumb"
+                              ? `<section class="isOnlyNumb"> </section`
+                              : ""
+                          }
+                         </section></li>`);
+                          break;
+                      }
+                      j++;
                     }
-                  })
-                  sectionList.find("#copyBefore").click(function(){
-                    const prevUl = $(this).parent().parent().prev()
-                    const prevUlValues = []
-                    const prevListItems = prevUl.find("li :input")
-                    $.each(prevListItems, function(index, record){
-                      prevUlValues.push(record.value)
-                    })
-                    const currentUl = $(this).parent().parent().find("li :input")
-                    $.each(currentUl, function(index, record){
-                      record.value = prevUlValues[index]
+                    // sectionList.find("#isOnlyNumb").click(function () {
+                    //   if ($(this).is(":checked")) {
+                    //     console.log($(this));
+                    //     $(this).parent().find(".isOnlyNum").append(`
+                    // <section class="onlyNumberInput d-flex flex-column">
+                    //   <div>
+                    //   <label for="oldPricePromotion"><label>
+                    //     <input type="text" class="form-control" name="isOnlyNum">
+                    //     </div>
 
-                    })
-                  })
-                  sectionList.find("#deleteItemSubsec").click(function(){
-                    // ulListItems.find("ul").length > 0
-                  $(this).closest("ul").fadeOut("slow",function(){
-                    $(this).remove()
-                  })
-                  })
-                  // Get value and append it that times
-                      ulListItems.append(sectionList)
-                })
-                // ---------- Of the the createItemSub
+                    //   </section>
+                    // `);
+                    //   } else if ($(this).is(":not(:checked)")) {
+                    //     $(this)
+                    //       .parent()
+                    //       .find(".isOnlyNumb")
+                    //       .find(".onlyNumberInput")
+                    //       .remove();
+                    //   }
+                    // });
+                    sectionList.find("#copyBefore").click(function () {
+                      const prevUl = $(this).parent().parent().prev();
+                      const prevUlValues = [];
+                      const prevListItems = prevUl.find("li :input");
+                      $.each(prevListItems, function (index, record) {
+                        prevUlValues.push(record.value);
+                      });
+                      const currentUl = $(this)
+                        .parent()
+                        .parent()
+                        .find("li :input");
+                      $.each(currentUl, function (index, record) {
+                        record.value = prevUlValues[index];
+                      });
+                    });
+                    sectionList.find("#deleteItemSubsec").click(function () {
+                      // ulListItems.find("ul").length > 0
+                      $(this)
+                        .closest("ul")
+                        .fadeOut("slow", function () {
+                          $(this).remove();
+                        });
+                    });
+                    // Get value and append it that times
+                    ulListItems.append(sectionList);
+                  });
+                  // ---------- Of the the createItemSub
                 }
-             
               }
 
               i++;
             }
             $(".subsection").append(subsection);
-            
           })
           .catch((e) => {
             if (e) {
@@ -386,9 +426,7 @@ $.fn.getCursorPosition = function() {
           });
       });
       // End of create subsection
-     
     });
   </script>
   <%- include("../layouts/headerAndFooter/adminPanelHeaderFunc.js")%>
-
 </html>
