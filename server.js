@@ -9,11 +9,11 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const bodyParser = require("body-parser");
-// const logger = require("morgan");  
+// const logger = require("morgan");
 // const cookieParser = require("cookie-parser");
 const path = require("path");
 const ejs = require("ejs");
-const fs = require("fs")
+const fs = require("fs");
 const http = require("http");
 const server = http.createServer(app);
 // var io = require("socket.io")(server);s
@@ -31,10 +31,10 @@ const admin = require("./routes/admin.router");
 const Cart = require("./models/Cart");
 const Order = require("./models/Order");
 const Products = require("./models/Products");
-const Token = require("./models/token")
+const Token = require("./models/token");
 const { array_jsonSchema } = require("mongoose-schema-jsonschema/lib/types");
 //Collections
-const promotionCollection = db.collection("promotion")
+const promotionCollection = db.collection("promotion");
 //Functions
 const sendEmail = require("./utils/email");
 const { log } = require("console");
@@ -62,23 +62,24 @@ app.use(express.static(__dirname + "/public"));
 // app.use("/", express.static(__dirname + "public"))
 app.use((req, res, next) => {
   console.log(`Incoming request: ${req.path}`);
-  console.log(`${__dirname}`)
+  console.log(`${__dirname}`);
   next();
 });
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash())
+app.use(flash());
 app.use(async function (req, res, next) {
-  if(req.session &&req.session.passport && req.session.passport ){
-    const userId = req.session.passport.user
-    const userInfo = await db.collection("users").findOne({_id: ObjectId(userId)})
-    if(userInfo){
-
-    if(userInfo.role == "admin" && req.session.cookie._expires){
-     req.session.cookie._expires= 9999999 * 60 * 1000
-     req.session.cookie.maxAge = 9999999 * 60 * 1000
+  if (req.session && req.session.passport && req.session.passport) {
+    const userId = req.session.passport.user;
+    const userInfo = await db
+      .collection("users")
+      .findOne({ _id: ObjectId(userId) });
+    if (userInfo) {
+      if (userInfo.role == "admin" && req.session.cookie._expires) {
+        req.session.cookie._expires = 9999999 * 60 * 1000;
+        req.session.cookie.maxAge = 9999999 * 60 * 1000;
+      }
     }
-  }
   }
 
   res.locals.session = req.session;
@@ -87,17 +88,17 @@ app.use(async function (req, res, next) {
 // Main page
 
 app.get("/", async (req, res) => {
-  const promotions = await promotionCollection.find({}).toArray()
+  const promotions = await promotionCollection.find({}).toArray();
   res.render(path.resolve("views/index.ejs"), {
     promotions,
   });
 });
-app.get("/allPromotions", async (req,res)=>{
-  const promotions = await promotionCollection.find({}).toArray()
+app.get("/allPromotions", async (req, res) => {
+  const promotions = await promotionCollection.find({}).toArray();
   res.render(path.resolve("views/otherPages/allPromotions.ejs"), {
     promotions,
   });
-})
+});
 
 //-----Routes-----\\
 // Accounts
@@ -111,104 +112,110 @@ app.get("/aboutUs", (req, res, next) => {
   res.render(path.resolve("views/otherPages/aboutUs.ejs"));
 });
 app.get("/contactUs", (req, res, next) => {
-  const contactMess = req.flash("contactMess")
-  res.render(path.resolve("views/otherPages/contactUs.ejs"), {contactMess});
+  const contactMess = req.flash("contactMess");
+  res.render(path.resolve("views/otherPages/contactUs.ejs"), { contactMess });
 });
-app.post("/contactUs", async (req, res, next) => {  
-  try{
-
-  const message = `от ${req.body.user} - ${req.body.message}`
-    await sendEmail( req.body.email, "softofficepayment@gmail.com", req.body.problem , message)
-    req.flash("contactMess", "Съобщението ви беше изпратено успешно")
-    res.redirect("/contactUs")
-  }catch(e){
-    if(e) console.log(e);
+app.post("/contactUs", async (req, res, next) => {
+  try {
+    const message = `от ${req.body.user} - ${req.body.message}`;
+    await sendEmail(
+      req.body.email,
+      "softofficepayment@gmail.com",
+      req.body.problem,
+      message
+    );
+    req.flash("contactMess", "Съобщението ви беше изпратено успешно");
+    res.redirect("/contactUs");
+  } catch (e) {
+    if (e) console.log(e);
   }
 });
 //Cart
 app.get("/cart/:id/:qty/:multiplePrice?", async (req, res, next) => {
   try {
-
     const productQty = req.params.qty;
     const productId = req.params.id;
-  
+
     const cart = new Cart(req.session.cart ? req.session.cart : {});
     const productCollection = db.collection("products");
 
     const item = await productCollection.findOne({
       "subsection.items._id": new ObjectId(productId),
     });
-   const name = item.name
-   const displayName = item.nameToDisplay
+    const name = item.name;
+    const displayName = item.nameToDisplay;
 
-    let matched = {}
-    const subsectionLen = item.subsection.length
- for(let i = 0; i < subsectionLen; i++){
-   let subsection = item.subsection[i]
-   subsection.items.forEach((item,index)=>{
-     if(item._id == productId){
-    
-      matched["typeSection"]=  item
-      if(req.params.multiplePrice){
-      let typesToAdd = ""
-      let mPrices= []
-        const types =  item.tipove.split(";")
-        for(let type of types){
-          if(type.includes("Цена")){
-            mPrices.push(type)
-            continue
+    let matched = {};
+    const subsectionLen = item.subsection.length;
+    for (let i = 0; i < subsectionLen; i++) {
+      let subsection = item.subsection[i];
+      subsection.items.forEach((item, index) => {
+        if (item._id == productId) {
+          matched["typeSection"] = item;
+          if (req.params.multiplePrice) {
+            let typesToAdd = "";
+            let mPrices = [];
+            const types = item.tipove.split(";");
+            for (let type of types) {
+              if (type.includes("Цена")) {
+                mPrices.push(type);
+                continue;
+              }
+
+              typesToAdd += `${type};`;
+            }
+
+            outer: for (let currItem of mPrices) {
+              if (currItem.includes(productQty)) {
+                currItem = currItem.split(":");
+                const price = currItem[1].trim();
+                typesToAdd += currItem;
+                matched["typeSection"].cena = price;
+                break outer;
+              }
+            }
+
+            matched["typeSection"].tipove = typesToAdd;
           }
-
-          typesToAdd+= `${type};`
+          matched["subSection"] = {
+            tiput: subsection.tiput,
+            nameToDisplay: subsection.nameToDisplay,
+            img: subsection.img,
+            _id: subsection._id,
+          };
+          matched["headSection"] = {
+            name: name,
+            nameToDisplay: displayName,
+          };
+          return;
         }
-        
-        outer: for(let currItem of mPrices){
-          if(currItem.includes(productQty)){
-          currItem = currItem.split(":")
-          const price = currItem[1].trim()
-          typesToAdd+= currItem
-          matched["typeSection"].cena = price
-            break outer
-          }
+      });
+    }
+    if (req.session.?passport?.user) {
+      const userId = req.session?.passport?.user;
+      const user = await db
+        .collection("users")
+        .findOne({ _id: ObjectId(userId) });
+      const promotions = user.promotions;
+      if (!matched.typeSection.isOnPromotion && promotions) {
+        if (promotions.includes(matched.headSection.name)) {
+          console.log(
+            "Found promotion",
+            matched.typeSection._id,
+            matched.headSection.name
+          );
+          cart.addPromotionsList(matched.typeSection._id);
         }
+      }
+    }
+    cart.add(
+      matched,
+      matched.typeSection._id,
+      req.params.multiplePrice ? 1 : productQty
+    );
 
-        matched["typeSection"].tipove= typesToAdd
-      }
-      matched["subSection"] = {
-        tiput: subsection.tiput,
-        nameToDisplay: subsection.nameToDisplay,
-        img: subsection.img,
-        _id: subsection._id
-      }
-      matched["headSection"] = {
-        name:name,
-        nameToDisplay: displayName,
-      }
-      return
-     }
-   })
- }
- if(req.session.passport.user){
-  const userId = req.session.passport.user
-  const user = await db.collection("users").findOne({_id: ObjectId(userId)})
-  const promotions = user.promotions
-      if( !matched.typeSection.isOnPromotion && promotions){
-        if(promotions.includes(matched.headSection.name)){
-          console.log("Found promotion", matched.typeSection._id, matched.headSection.name);
-          cart.addPromotionsList(matched.typeSection._id)
-        }
-       
-      }
-
-}
-   cart.add(
-    matched,
-          matched.typeSection._id,
-          req.params.multiplePrice ? 1 :productQty
-        );
-       
-        req.session.cart = cart;
-        res.redirect(req.get("referer"));
+    req.session.cart = cart;
+    res.redirect(req.get("referer"));
   } catch (e) {
     console.log(e);
     console.log("error found!");
@@ -218,16 +225,15 @@ app.get("/reduce/:id/:qty", (req, res, next) => {
   const quanityProudct = req.params.qty;
   const productId = req.params.id;
   const cart = new Cart(req.session.cart ? req.session.cart : {});
-  
+
   cart.reduceItem(productId, quanityProudct);
   if (cart.totalQty <= 0) {
     cart.totalQty = 0;
     cart.totalPrice = 0;
-    cart.ddsPrice = 0
-    cart.totalCheckout = 0
-    cart.promotionPrice = 0
-    cart.promotionsItems = []
-
+    cart.ddsPrice = 0;
+    cart.totalCheckout = 0;
+    cart.promotionPrice = 0;
+    cart.promotionsItems = [];
   }
   req.session.cart = cart;
   res.redirect(req.get("referer"));
@@ -240,23 +246,23 @@ app.get("/removeItem/:id", (req, res, next) => {
   if (cart.totalQty <= 0) {
     cart.totalQty = 0;
     cart.totalPrice = 0;
-    cart.ddsPrice = 0
-    cart.totalCheckout = 0
-    cart.promotionPrice = 0
-    cart.promotionsItems = []
+    cart.ddsPrice = 0;
+    cart.totalCheckout = 0;
+    cart.promotionPrice = 0;
+    cart.promotionsItems = [];
   }
   req.session.cart = cart;
   res.redirect("/cart");
 });
-app.get("/cart", async(req, res, next) => {
+app.get("/cart", async (req, res, next) => {
   if (!req.session.cart) {
     return res.render(path.resolve("views/products/shopping-cart.ejs"), {
       products: null,
     });
   }
-  
+
   let cart = new Cart(req.session.cart);
-  let cartArray = cart.generateArray()
+  let cartArray = cart.generateArray();
   res.render(path.resolve("views/products/shopping-cart.ejs"), {
     cart: cart,
     products: cartArray,
@@ -270,7 +276,7 @@ app.get("/checkout", checkAuthanticated, (req, res, next) => {
   }
   const cart = new Cart(req.session.cart);
   res.render(path.resolve("views/products/checkoutPage.ejs"), {
-    cart
+    cart,
   });
 });
 app.get("/checkoutcard", async (req, res, next) => {
@@ -309,57 +315,73 @@ app.post("/makeDelivery", async (req, res) => {
 app.post("/getProductsSearch", async (req, res) => {
   let payload = req.body.payload.trim();
 
-  const subSectionItems = []
- await Products.find({"subsection.nameToDisplay": {$regex: payload, $options: "i"}})
-  .then(section=>{
-    section.map(sec=> {
-      for(let i =0; i < sec.subsection.length; i++){
-        const sub = sec.subsection[i]
-        if(subSectionItems.length >=4) break
-        if(sub.nameToDisplay.includes(payload) && sub.nameToDisplay !=""){
-          subSectionItems.push({section: sec.name, subsection: sub.tiput, nameToDisplay: sub.nameToDisplay})
+  const subSectionItems = [];
+  await Products.find({
+    "subsection.nameToDisplay": { $regex: payload, $options: "i" },
+  }).then((section) => {
+    section.map((sec) => {
+      for (let i = 0; i < sec.subsection.length; i++) {
+        const sub = sec.subsection[i];
+        if (subSectionItems.length >= 4) break;
+        if (sub.nameToDisplay.includes(payload) && sub.nameToDisplay != "") {
+          subSectionItems.push({
+            section: sec.name,
+            subsection: sub.tiput,
+            nameToDisplay: sub.nameToDisplay,
+          });
         }
       }
-    })
-  })
-  const katNomeraItems = []
-await Products.find({"subsection.items.katNomer": {$regex:payload, $options: "i"}})
-.then(obj=>{
-  obj.map(section=>{
-    section.subsection.map(subsection=>{
-
-      for(let i = 0; i< subsection.items.length; i++){
-        if(katNomeraItems.length >= 4) break;
-        const item = subsection.items[i];
-              if(item.katNomer.includes(payload) && section.nameToDisplay != "" && subsection.nameToDisplay != "")
+    });
+  });
+  const katNomeraItems = [];
+  await Products.find({
+    "subsection.items.katNomer": { $regex: payload, $options: "i" },
+  }).then((obj) => {
+    obj.map((section) => {
+      section.subsection.map((subsection) => {
+        for (let i = 0; i < subsection.items.length; i++) {
+          if (katNomeraItems.length >= 4) break;
+          const item = subsection.items[i];
+          if (
+            item.katNomer.includes(payload) &&
+            section.nameToDisplay != "" &&
+            subsection.nameToDisplay != ""
+          )
             katNomeraItems.push({
               katNomer: item.katNomer,
               section: section.name,
               subsection: subsection.tiput,
-              subDisplay: subsection.nameToDisplay
-            })
-      }
-    })
-  })
-  })
-  const sectionItems = []
-  await Products.find({"nameToDisplay": {$regex: payload, $options: "i"}})
-  .then(obj=>{
- 
-    const objLen = obj.length
-    for(let i = 0; i < objLen;i ++){
-      if(sectionItems.length>= 4) break
-      if(obj[i].nameToDisplay !="" && !obj[i].nameToDisplay.includes("Обадете се"))
-      sectionItems.push({section: obj[i].name, nameToDisplay: obj[i].nameToDisplay})
-      
+              subDisplay: subsection.nameToDisplay,
+            });
+        }
+      });
+    });
+  });
+  const sectionItems = [];
+  await Products.find({
+    nameToDisplay: { $regex: payload, $options: "i" },
+  }).then((obj) => {
+    const objLen = obj.length;
+    for (let i = 0; i < objLen; i++) {
+      if (sectionItems.length >= 4) break;
+      if (
+        obj[i].nameToDisplay != "" &&
+        !obj[i].nameToDisplay.includes("Обадете се")
+      )
+        sectionItems.push({
+          section: obj[i].name,
+          nameToDisplay: obj[i].nameToDisplay,
+        });
     }
-
-    })
-  res.send({subsections: subSectionItems, katNomera: katNomeraItems, sections: sectionItems})
+  });
+  res.send({
+    subsections: subSectionItems,
+    katNomera: katNomeraItems,
+    sections: sectionItems,
+  });
   // search = search.slice(0, 6);
   // res.send({ payload: search, subsection: foundItems });
-})
-
+});
 
 // Connect to mongodb
 db.on("error", (error) => console.error(error));
