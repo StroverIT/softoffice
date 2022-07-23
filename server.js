@@ -191,7 +191,7 @@ app.get("/cart/:id/:qty/:multiplePrice?", async (req, res, next) => {
         }
       });
     }
-    if (req.session.?passport?.user) {
+    if (req.session?.passport?.user) {
       const userId = req.session?.passport?.user;
       const user = await db
         .collection("users")
